@@ -1,25 +1,19 @@
 //
-//  PastReportCollectionReusableView.swift
+//  PastReportDateCollectionReusableView.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 22.02.2022.
+//  Created by BaranK Kutlu on 24.02.2022.
 //
 
 import UIKit
 
-protocol PastReportCollectionReusableViewDelegate: AnyObject {
-    func didChangeLayout()
-}
-
-class PastReportCollectionReusableView: UICollectionReusableView {
+class PastReportDateCollectionReusableView: UICollectionReusableView {
     
-    weak var delegate: PastReportCollectionReusableViewDelegate?
-    
-    static let reuseIdentifier = "pastReportCollectionReusableViewIdentifier"
-    static let kind = "pastReportCollectionReusableViewKind"
+    static let reuseIdentifier = "pastReportDateCollectionReusableViewIdentifier"
+    static let kind = "pastReportDateCollectionReusableViewKind"
     
     private let reusableViewButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .red
         button.addTarget(self, action: #selector(reusableViewButtonClicked), for: .touchUpInside)
         return button
@@ -27,12 +21,12 @@ class PastReportCollectionReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.cornerRadius = width / 2
-        
         addSubview(reusableViewButton)
+        clipsToBounds = true
+        layer.cornerRadius = width / 2
         backgroundColor = .purple
     }
-    
+  
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,6 +43,8 @@ class PastReportCollectionReusableView: UICollectionReusableView {
             button.backgroundColor = .brown
         }
         
-        delegate?.didChangeLayout()
+        print("clicked")
     }
 }
+
+

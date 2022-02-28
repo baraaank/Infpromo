@@ -9,7 +9,7 @@ import UIKit
 
 class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "cell"
+    static let reuseIdentifier = "buyingOptionsCollectionViewCellIdentifier"
     
     private let numberOfReportsLabel: UILabel = {
         let label = UILabel()

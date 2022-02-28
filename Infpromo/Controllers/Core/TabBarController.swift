@@ -22,7 +22,6 @@ class TabBarController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: vc3)
         let nav4 = UINavigationController(rootViewController: vc4)
         
-        
         nav1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
         nav2.tabBarItem = UITabBarItem(title: "My Reports", image: UIImage(systemName: "book"), tag: 1)
         nav3.tabBarItem = UITabBarItem(title: "Purchase", image: UIImage(systemName: "plus.rectangle"), tag: 1)

@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.contentSize = CGSize(width: 240, height: 2400)
+//        scrollView.contentSize = CGSize(width: 240, height: 2400)
         scrollView.isScrollEnabled = true
         return scrollView
     }()
@@ -22,33 +22,30 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    private let collectionView: UICollectionView = {
+    private let mostVisitedReportsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .fractionalWidth(0.75))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.leading = 8
             section.orthogonalScrollingBehavior = .continuous
-            
             return section
         }))
         
         collectionView.register(MostVisitedReportsCollectionViewCell.self, forCellWithReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier)
+        collectionView.isScrollEnabled = false
         collectionView.backgroundColor = .white
         return collectionView
     }()
     
-    private let resultCollectionView: UICollectionView = {
+    private let searchResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.44))
@@ -56,13 +53,12 @@ class HomeViewController: UIViewController {
             
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
-//            section.orthogonalScrollingBehavior = .continuous
-            
             return section
         }))
         
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier)
         collectionView.backgroundColor = .white
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -86,49 +82,55 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         addSubviews()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: self, action: #selector(searchButtonClicked))
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: self, action: #selector(searchButtonClicked))
+        let remainingNumberOfReports = UIBarButtonItem(image: UIImage(systemName: "bubble.left"), style: .done, target: self, action: #selector(remainingNumberOfReportsClicked))
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        navigationItem.rightBarButtonItems = [searchButton, remainingNumberOfReports]
         
-        resultCollectionView.dataSource = self
-        resultCollectionView.delegate = self
+        mostVisitedReportsCollectionView.delegate = self
+        mostVisitedReportsCollectionView.dataSource = self
         
-
-        
+        searchResultCollectionView.dataSource = self
+        searchResultCollectionView.delegate = self
+           
     }
     
     func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(mostVisitedReportsLabel)
-        scrollView.addSubview(collectionView)
+        scrollView.addSubview(mostVisitedReportsCollectionView)
         scrollView.addSubview(accountCountLabel)
-        scrollView.addSubview(resultCollectionView)
+        scrollView.addSubview(searchResultCollectionView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         mostVisitedReportsLabel.frame = CGRect(x: 8, y: scrollView.top + 10, width: view.width, height: 20)
-        collectionView.frame = CGRect(x: 0, y: mostVisitedReportsLabel.bottom + 10, width: scrollView.width, height: scrollView.width * 0.75)
-        accountCountLabel.frame = CGRect(x: 8, y: collectionView.bottom + 10, width: view.width, height: 20)
-        resultCollectionView.frame = CGRect(x: 0, y: accountCountLabel.bottom + 10, width: view.width, height: 1600)
+        mostVisitedReportsCollectionView.frame = CGRect(x: 0, y: mostVisitedReportsLabel.bottom + 10, width: scrollView.width, height: scrollView.width * 0.75)
+        accountCountLabel.frame = CGRect(x: 8, y: mostVisitedReportsCollectionView.bottom + 10, width: view.width, height: 20)
+        searchResultCollectionView.frame = CGRect(x: 0, y: accountCountLabel.bottom + 10, width: view.width, height: searchResultCollectionView.contentSize.height + 20)
+        scrollView.contentSize = CGSize(width: view.width, height: mostVisitedReportsLabel.height + mostVisitedReportsCollectionView.height + accountCountLabel.height + searchResultCollectionView.height + 40)
+    }
+    
+    @objc func remainingNumberOfReportsClicked() {
+        
     }
     
     @objc func searchButtonClicked() {
         let vc = SearchViewController()
+        vc.segmentedControl.selectedSegmentIndex = 0
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
         
     }
-    
-    
+        
 }
 
-//collectionView
+//UICollectionView
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.resultCollectionView {
+        if collectionView == self.searchResultCollectionView {
             return 12
         } else {
             return 7
@@ -136,14 +138,16 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.resultCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath)
+        if collectionView == self.mostVisitedReportsCollectionView {
+            //Most visited reports cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier, for: indexPath)
             cell.backgroundColor = .white
             cell.layer.borderColor = UIColor.gray.cgColor
             cell.layer.borderWidth = 1
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier, for: indexPath)
+            //Search result reports cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath)
             cell.backgroundColor = .white
             cell.layer.borderColor = UIColor.gray.cgColor
             cell.layer.borderWidth = 1

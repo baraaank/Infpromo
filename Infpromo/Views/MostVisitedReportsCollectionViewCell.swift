@@ -9,7 +9,7 @@ import UIKit
 
 class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "cell"
+    static let reuseIdentifier = "mostVisitedReportsCollectionViewCellIdentifier"
     
     private let numberOfViewsLabel: UILabel = {
         let label = UILabel()

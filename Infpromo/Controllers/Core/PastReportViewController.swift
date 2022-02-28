@@ -9,7 +9,8 @@ import UIKit
 
 class PastReportViewController: UIViewController {
     
-    static let bedge = "bedge"
+    var openCloseView: Bool = true
+    let dateView = UIView()
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
@@ -17,11 +18,20 @@ class PastReportViewController: UIViewController {
             
             let suppViewSize = NSCollectionLayoutSize(widthDimension: .absolute(20), heightDimension: .absolute(20))
             let containerSuppAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: 0.3, y: -0.3))
-            let suppView = NSCollectionLayoutSupplementaryItem(layoutSize: suppViewSize, elementKind: PastReportViewController.bedge, containerAnchor: containerSuppAnchor)
+            let suppView = NSCollectionLayoutSupplementaryItem(layoutSize: suppViewSize, elementKind: PastReportCollectionReusableView.kind, containerAnchor: containerSuppAnchor)
+            
+            //            let suppViewSize2 = NSCollectionLayoutSize(widthDimension: .absolute(60), heightDimension: .absolute(60))
+            //
+            //            let containerSuppAnchor2 = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: 0, y: 0))
+            //            let suppView2 = NSCollectionLayoutSupplementaryItem(layoutSize: suppViewSize2, elementKind: PastReportDateCollectionReusableView.kind, containerAnchor: containerSuppAnchor2)
+            
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             
-            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [suppView])
+            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [suppView, /*suppView2*/])
+            
+            
+            
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
             
@@ -31,14 +41,15 @@ class PastReportViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
             
-            
-            
-            
             return section
         }))
         
         collectionView.register(PastReportCollectionViewCell.self, forCellWithReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier)
+        //        collectionView.register(PastReportCollectionReusableView.self, forSupplementaryViewOfKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier)
+        //        collectionView.register(PastReportDateCollectionReusableView.self, forSupplementaryViewOfKind: PastReportDateCollectionReusableView.kind, withReuseIdentifier: PastReportDateCollectionReusableView.reuseIdentifier)
         collectionView.register(PastReportCollectionReusableView.self, forSupplementaryViewOfKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier)
+        
+        
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -47,10 +58,27 @@ class PastReportViewController: UIViewController {
         super.viewDidLoad()
         
         title = "My Reports"
+        addSubviews()
+        
+        
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        addSubviews()
+        
+        dateView.backgroundColor = .purple
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func addSubviews() {
+        view.addSubview(collectionView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,15 +86,10 @@ class PastReportViewController: UIViewController {
         collectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
     }
     
-    func addSubviews() {
-        view.addSubview(collectionView)
-    }
-    
-    
 }
 
-
-extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//UICollectionView
+extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         15
@@ -80,15 +103,45 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         return cell
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let bannerView = collectionView.dequeueReusableSupplementaryView(ofKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier, for: indexPath) as! PastReportCollectionReusableView
-        bannerView.backgroundColor = .purple
-        return bannerView
+        
+        switch kind {
+            //        case PastReportDateCollectionReusableView.kind :
+            //            let bannerView2 = collectionView.dequeueReusableSupplementaryView(ofKind: PastReportDateCollectionReusableView.kind, withReuseIdentifier: PastReportDateCollectionReusableView.reuseIdentifier, for: indexPath) as! PastReportDateCollectionReusableView
+            //
+            //            return bannerView2
+        case PastReportCollectionReusableView.kind :
+            let bannerView = collectionView.dequeueReusableSupplementaryView(ofKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier, for: indexPath) as! PastReportCollectionReusableView
+            bannerView.delegate = self
+            
+            return bannerView
+        default:
+            fatalError("fatalerror")
+        }
+        
     }
     
     
     
+    
+    
+    
+}
+
+extension PastReportViewController: PastReportCollectionReusableViewDelegate {
+    
+    func didChangeLayout() {
+        if openCloseView {
+            dateView.isHidden = false
+            view.addSubview(dateView)
+        } else {
+            dateView.isHidden = true
+            dateView.removeFromSuperview()
+        }
+        
+        openCloseView = !openCloseView
+    }
     
     
 }

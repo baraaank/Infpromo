@@ -9,7 +9,7 @@ import UIKit
 
 class PastReportCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "cell"
+    static let reuseIdentifier = "pastReportCollectionViewCellIdentifier"
     
     private let imageView: UIImageView = {
         let image = UIImage(named: "pp")
@@ -74,7 +74,6 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubviews()
     }
     

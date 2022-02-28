@@ -19,23 +19,21 @@ class Section {
     }
 }
 
-
 class BuyReportViewController: UIViewController {
     
-
     private var sections = [Section]()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
         scrollView.isScrollEnabled = true
-        scrollView.contentSize = CGSize(width: 100, height: 2400)
         return scrollView
     }()
     
     private let FAQTableView: UITableView  = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -71,21 +69,36 @@ class BuyReportViewController: UIViewController {
         
         title = "Purchase"
         
+        addSubviews()
         addSections()
         
-        
         scrollView.delegate = self
-        
+
         FAQTableView.delegate = self
         FAQTableView.dataSource = self
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        addSubviews()
-        
+          
         
     }
+    
+    func addSubviews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(mailButton)
+        scrollView.addSubview(collectionView)
+        scrollView.addSubview(FAQTableView)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+        collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
+        mailButton.frame = CGRect(x: 0, y: collectionView.bottom + 20, width: view.width, height: 40)
+        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 20)
+        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 40)
+        
+    }
+    
     
     
     func addSections() {
@@ -97,44 +110,10 @@ class BuyReportViewController: UIViewController {
         ]
     }
     
-    func addSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(mailButton)
-        scrollView.addSubview(collectionView)
-        scrollView.addSubview(FAQTableView)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
-        mailButton.frame = CGRect(x: 0, y: collectionView.bottom + 20, width: view.width, height: 40)
-        
-        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-        
-        
-        
-    }
-    
-    override func updateViewConstraints() {
-        
-        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: 1200)
-        super.updateViewConstraints()
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        
-    }
-    
     
 }
 
-//collectionview
-
+//UICollectionView
 extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -150,12 +129,10 @@ extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewD
 }
 
 
-//tableview
-
+//UITableView
 extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = sections[section]
-        
         
         if section.isOpened {
             return 2
@@ -167,13 +144,10 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
-    
-    
-    
-    
+      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.accessoryType = .detailButton
+//        cell.accessoryType = .detailButton
         if indexPath.row == 0 {
             cell.textLabel?.numberOfLines = 0
             let cellString = sections[indexPath.section].title
@@ -183,52 +157,37 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.numberOfLines = 0
             let cellString = sections[indexPath.section].description
             cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium)])
+            
         }
-        
-        
+
         return cell
         
     }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//           return UITableView.automaticDimension
-//       }
-//
-//       func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//           return UITableView.automaticDimension
-//       }
-//    
-//    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
+        tableView.deselectRow(at: indexPath, animated: true)
         
         sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
         
         tableView.reloadSections([indexPath.section], with: .none)
         
         if sections[indexPath.section].isOpened {
-            
-            
             tableView.beginUpdates()
             FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-//            FAQTableView.reloadData()
+            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 60)
+            FAQTableView.reloadData()
             tableView.endUpdates()
         } else {
-//            UITableView.automaticDimension
+            tableView.beginUpdates()
+            FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
+            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 60)
+            FAQTableView.reloadData()
+            tableView.endUpdates()
+            
         }
-        
-        
-//        view.layoutIfNeeded()
-        
-
+    
     }
-    
-
-    
-
-    
-    
 }

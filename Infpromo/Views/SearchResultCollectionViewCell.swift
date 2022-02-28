@@ -9,7 +9,7 @@ import UIKit
 
 class SearchResultCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "cell"
+    static let reuseIdentifier = "searchResultCollectionViewCellIdentifier"
     
     private let imageView: UIImageView = {
         let image = UIImage(named: "pp")
