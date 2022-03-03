@@ -47,6 +47,11 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Profile"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        
+        
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
         view.backgroundColor = .white
     
         profileCollectionView.delegate = self
@@ -77,9 +82,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.reuseIdentifier, for: indexPath) as! ProfileCollectionViewCell
         
-        cell.layer.cornerRadius = 8
+        cell.backgroundColor = .white
+        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
         cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.black.cgColor
         
         cell.label.text = profileSections[indexPath.row]
         

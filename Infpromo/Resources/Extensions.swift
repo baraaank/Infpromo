@@ -27,11 +27,19 @@ extension UIView {
     }
     
     var top: CGFloat {
-        frame.origin.y
+        return frame.origin.y
     }
     
     var bottom: CGFloat {
-        frame.origin.y + frame.size.height
+        return frame.origin.y + frame.size.height
     }
-    
+}
+
+extension UIColor {
+    var infpromo: UIColor {
+        return UIColor(red: 75/255, green: 70/255, blue: 189/255, alpha: 1.0)
+    }
+    var infpromoBorder: UIColor {
+        return UIColor(red: 228/255, green: 228/255, blue: 228/255, alpha: 0.6)
+    }
 }

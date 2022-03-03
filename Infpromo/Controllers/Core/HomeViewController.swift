@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     
     private let mostVisitedReportsLabel: UILabel = {
        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Bu ay en çok ziyaret edilen raporlar", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.systemBlue])
+        label.attributedText = NSAttributedString(string: "Bu ay en çok ziyaret edilen raporlar", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         return label
     }()
     
@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
     
     private let accountCountLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "\"123423\" hesap bulundu.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.systemBlue])
+        label.attributedText = NSAttributedString(string: "\"123423\" hesap bulundu.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         return label
     }()
     
@@ -74,18 +74,60 @@ class HomeViewController: UIViewController {
         return tableView
     }()
     
+    let customView: UIView = {
+        let view = UIView(frame: .zero)
+        view.frame.size = CGSize(width: 120, height: 36)
+        view.backgroundColor = UIColor().infpromo
+        view.layer.cornerRadius = 4
+        return view
+    }()
+    
+    let customLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 10, y: 3, width: 120, height: 30))
+        
+        
+        label.attributedText = NSAttributedString(string: "Rapor: 10", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor.white])
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let customImageView: UIImageView = {
+        let image = UIImage(systemName: "doc", withConfiguration: UIImage.SymbolConfiguration.init(weight: .bold))
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = UIColor.white
+        
+        imageView.frame = CGRect(x: 95, y: 6, width: 22, height: 22)
+        imageView.clipsToBounds = true
+        
+        return imageView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Home"
+        
+        
+        title = "Infpromo"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        
         view.backgroundColor = .white
         addSubviews()
         
-        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: self, action: #selector(searchButtonClicked))
-        let remainingNumberOfReports = UIBarButtonItem(image: UIImage(systemName: "bubble.left"), style: .done, target: self, action: #selector(remainingNumberOfReportsClicked))
+        customView.addSubview(customLabel)
+        customView.addSubview(customImageView)
         
-        navigationItem.rightBarButtonItems = [searchButton, remainingNumberOfReports]
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration.init(weight: .bold)), style: .done, target: self, action: #selector(searchButtonClicked))
+        searchButton.tintColor = UIColor().infpromo
+//        let remainingNumberOfReports = UIBarButtonItem(image: UIImage(systemName: "bubble.left"), style: .done, target: self, action: #selector(remainingNumberOfReportsClicked))
+        let remainingCredits = UIBarButtonItem(customView: customView)
+        
+        navigationItem.rightBarButtonItem = searchButton
+        
+        navigationItem.leftBarButtonItem = remainingCredits
+        
+        
         
         mostVisitedReportsCollectionView.delegate = self
         mostVisitedReportsCollectionView.dataSource = self
@@ -119,7 +161,6 @@ class HomeViewController: UIViewController {
     
     @objc func searchButtonClicked() {
         let vc = SearchViewController()
-        vc.segmentedControl.selectedSegmentIndex = 0
         vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
         
@@ -142,14 +183,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //Most visited reports cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier, for: indexPath)
             cell.backgroundColor = .white
-            cell.layer.borderColor = UIColor.gray.cgColor
+            cell.layer.borderColor = UIColor().infpromoBorder.cgColor
+            
             cell.layer.borderWidth = 1
             return cell
         } else {
             //Search result reports cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath)
             cell.backgroundColor = .white
-            cell.layer.borderColor = UIColor.gray.cgColor
+            cell.layer.borderColor = UIColor().infpromoBorder.cgColor
             cell.layer.borderWidth = 1
             return cell
         }

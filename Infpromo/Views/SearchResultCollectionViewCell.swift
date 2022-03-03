@@ -29,7 +29,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private  let usernameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "@cemalcancansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.systemBlue])
+        label.attributedText = NSAttributedString(string: "@cemalcancansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
 //        label.textAlignment = .center
         return label
     }()
@@ -65,7 +65,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         button.setTitle("Detay -1", for: .normal)
         return button
@@ -76,6 +76,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubviews()
+        configureCell()
     }
     
     required init?(coder: NSCoder) {
@@ -94,6 +95,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         imageView.frame = CGRect(x: 10, y: 10, width: width / 5, height: width / 5)
         imageView.layer.cornerRadius = width / 10
         nameLabel.frame = CGRect(x: 10, y: imageView.bottom + 10, width: 160, height: 20)
@@ -103,6 +105,29 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         numberOfEngagementsAndRatesLabel.frame = CGRect(x: numberOfFollowersLabel.right + 30, y: 20, width: width - 240, height: 20)
         engagementsAndRatesLabel.frame = CGRect(x: followersLabel.right + 30, y: numberOfEngagementsAndRatesLabel.bottom + 10, width: width - 240, height: 20)
         button.frame = CGRect(x: imageView.right + 110, y: imageView.bottom + 10, width: 150, height: 50)
+        
+    }
+    
+    func configureCell() {
+
+        
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.masksToBounds = true
+
+        layer.cornerRadius = 5.0
+        layer.masksToBounds = false
+        
+        layer.shadowRadius = 4.0
+
+        // The color of the drop shadow
+        layer.shadowColor = UIColor.lightGray.cgColor
+
+        // How transparent the drop shadow is
+        layer.shadowOpacity = 0.4
+
+        // How far the shadow is offset from the UICollectionViewCell’s frame
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        
         
     }
 }

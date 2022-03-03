@@ -9,15 +9,20 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let segmentedControl: UISegmentedControl = {
+    private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Instagram", "Youtube", "Tiktok"])
         segmentedControl.sizeToFit()
         if #available(iOS 13.0, *) {
-            segmentedControl.selectedSegmentTintColor = UIColor.systemBlue
+            segmentedControl.selectedSegmentTintColor = UIColor().infpromo
         } else {
-            segmentedControl.tintColor = UIColor.systemBlue
+            segmentedControl.tintColor = UIColor().infpromo
         }
         
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor().infpromo], for: .normal)
+        segmentedControl.layer.borderWidth = 1
+        segmentedControl.layer.borderColor = UIColor().infpromo.cgColor
+        segmentedControl.sizeToFit()
         return segmentedControl
     }()
     
@@ -46,7 +51,7 @@ class SearchViewController: UIViewController {
         return vc
     }()
     
-    let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+    let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +60,16 @@ class SearchViewController: UIViewController {
         
         navigationItem.titleView = segmentedControl
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        title = "Search"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        
+        navigationController?.navigationBar.tintColor = UIColor().infpromo
+        
         
         searchController.delegate = self
         
@@ -81,6 +96,7 @@ class SearchViewController: UIViewController {
         childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         childViewController.didMove(toParent: self)
         
+        blurEffectView.frame = view.bounds
         view.addSubview(blurEffectView)
         blurEffectView.isHidden = true
     }
@@ -117,11 +133,13 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
+        tabBarController?.tabBar.isHidden = true
         blurEffectView.isHidden = false
     }
 
-    
+
     func willDismissSearchController(_ searchController: UISearchController) {
+        tabBarController?.tabBar.isHidden = false
         blurEffectView.isHidden = true
     }
 }

@@ -7,6 +7,13 @@
 
 import UIKit
 
+struct BuyingOptions {
+    let reportNumber: String
+    let reportPriceBeforeDisc: String
+    let reportPrice: String
+    let earningPercent: String
+}
+
 class Section {
     let title: String
     let description: String
@@ -22,6 +29,13 @@ class Section {
 class BuyReportViewController: UIViewController {
     
     private var sections = [Section]()
+    
+    var buyingOptionsArray = [
+        BuyingOptions(reportNumber: "2 Rapor", reportPriceBeforeDisc: "", reportPrice: "16 TL", earningPercent: ""),
+        BuyingOptions(reportNumber: "10 Rapor", reportPriceBeforeDisc: "80 TL", reportPrice: "70 TL", earningPercent: "(%12,5 Kazanç)"),
+        BuyingOptions(reportNumber: "25 Rapor", reportPriceBeforeDisc: "200 TL", reportPrice: "160 TL", earningPercent: "(%20 Kazanç)"),
+        BuyingOptions(reportNumber: "50 Rapor", reportPriceBeforeDisc: "400 TL", reportPrice: "300 TL", earningPercent: "(%25 Kazanç)"),
+    ]
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -60,14 +74,26 @@ class BuyReportViewController: UIViewController {
     private let mailButton: UIButton = {
         let button = UIButton()
         button.setTitle("Daha fazla seçenek için bizimle iletişime geçin", for: .normal)
-        button.backgroundColor = .purple
+        
+        button.setTitleColor(.black, for: .normal)
+
         return button
+    }()
+    
+    private let FAQTitleTextLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Raporda neler var ?"
+        label.attributedText = NSAttributedString(string: "Raporda neler var ?", attributes: [NSAttributedString.Key.foregroundColor : UIColor().infpromo, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 24, weight: .bold)])
+        return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Purchase"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor().infpromo]
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor().infpromo]
         
         addSubviews()
         addSections()
@@ -87,15 +113,18 @@ class BuyReportViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(mailButton)
         scrollView.addSubview(collectionView)
+        scrollView.addSubview(FAQTitleTextLabel)
         scrollView.addSubview(FAQTableView)
+        
     }
     
     override func viewWillLayoutSubviews() {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
-        mailButton.frame = CGRect(x: 0, y: collectionView.bottom + 20, width: view.width, height: 40)
-        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 20)
-        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 40)
+        mailButton.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
+        FAQTitleTextLabel.frame = CGRect(x: 20, y: mailButton.bottom + 20, width: view.width - 60, height: 60)
+        FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 20)
+        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
         
     }
     
@@ -122,8 +151,9 @@ extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BuyingOptionsCollectionViewCell.reuseIdentifier, for: indexPath) as! BuyingOptionsCollectionViewCell
         cell.backgroundColor = .white
-        cell.layer.borderColor = UIColor.gray.cgColor
+        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
         cell.layer.borderWidth = 1
+        cell.configureCellContent(with: buyingOptionsArray[indexPath.row])
         return cell
     }
 }
@@ -151,12 +181,12 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             cell.textLabel?.numberOfLines = 0
             let cellString = sections[indexPath.section].title
-            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 22)])
+            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 22), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         } else {
             cell.accessoryType = .none
             cell.textLabel?.numberOfLines = 0
             let cellString = sections[indexPath.section].description
-            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium)])
+            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
             
         }
 
@@ -176,14 +206,14 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
         
         if sections[indexPath.section].isOpened {
             tableView.beginUpdates()
-            FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 60)
+            FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
+            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
             FAQTableView.reloadData()
             tableView.endUpdates()
         } else {
             tableView.beginUpdates()
-            FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + 60)
+            FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
+            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
             FAQTableView.reloadData()
             tableView.endUpdates()
             

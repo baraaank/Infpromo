@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B0CD727CD13B9004730DA /* SearchHeadings.swift */; };
 		813D750427C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */; };
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		811B0CD727CD13B9004730DA /* SearchHeadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadings.swift; sourceTree = "<group>"; };
 		813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastReportDateCollectionReusableView.swift; sourceTree = "<group>"; };
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		81AF02A127A27CF00054F4C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,12 +141,12 @@
 			isa = PBXGroup;
 			children = (
 				81AF0293279E9A980054F4C5 /* LaunchScreen.storyboard */,
-				819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */,
 				819FFBD727C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift */,
 				819FFBDA27C2B8030083D3A2 /* SearchResultCollectionViewCell.swift */,
 				819FFBDD27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift */,
 				81B943B427C4BC0500F4C376 /* PastReportCollectionReusableView.swift */,
 				813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */,
+				819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */,
 				819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */,
 				819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */,
 			);
@@ -256,6 +259,7 @@
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
 				819C5CE227CCF1BA00DAB0FE /* YoutubeSearchViewController.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
+				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				81B943B527C4BC0500F4C376 /* PastReportCollectionReusableView.swift in Sources */,
 				813D750427C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,

@@ -9,21 +9,47 @@ import UIKit
 
 class TiktokSearchViewController: UIViewController {
 
+    private let tableView: UITableView = {
+       let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tiktokCell")
+        tableView.backgroundColor = .brown
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .orange
+        addSubviews()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func addSubviews() {
+        view.addSubview(tableView)
     }
-    */
+    
+    override func viewDidLayoutSubviews() {
+        tableView.frame = view.bounds
+    }
 
 }
+
+//Table View
+extension TiktokSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        12
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tiktokCell", for: indexPath)
+        
+        return cell
+    }
+    
+    
+    
+}
+

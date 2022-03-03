@@ -21,7 +21,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     private let nameLabel: UILabel = {
        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .semibold)])
+        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         return label
     }()
     

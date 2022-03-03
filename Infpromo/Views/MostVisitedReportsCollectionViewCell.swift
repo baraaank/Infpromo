@@ -13,7 +13,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let numberOfViewsLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "1234 kez görüntülendi.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.systemBlue])
+        label.attributedText = NSAttributedString(string: "1234 kez görüntülendi.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         return label
     }()
     
@@ -27,7 +27,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.systemBlue])
+        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         label.textAlignment = .center
         return label
     }()
@@ -48,7 +48,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         button.setTitle("Detay -1", for: .normal)
         return button
@@ -58,6 +58,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
+        configureCell()
     }
     
     required init?(coder: NSCoder) {
@@ -74,6 +75,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         numberOfViewsLabel.frame = CGRect(x: 10, y: 10, width: width - 20, height: 20)
         imageView.frame = CGRect(x: width / 4, y: numberOfViewsLabel.bottom + 10, width: width / 2, height: width / 2)
         imageView.layer.cornerRadius = width / 4
@@ -81,6 +83,29 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameLabel.bottom + 10, width: width / 1.5, height: 20)
         numberOfEngagementRateLabel.frame = CGRect(x: width / 6, y: numberOfFollowersLabel.bottom + 10, width: width / 1.5, height: 20)
         button.frame = CGRect(x: width / 6, y: numberOfEngagementRateLabel.bottom + 10, width: width / 1.5, height: 30)
+    }
+    
+    func configureCell() {
+
+        
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.masksToBounds = true
+
+        layer.cornerRadius = 5.0
+        layer.masksToBounds = false
+        
+        layer.shadowRadius = 4.0
+
+        // The color of the drop shadow
+        layer.shadowColor = UIColor.lightGray.cgColor
+
+        // How transparent the drop shadow is
+        layer.shadowOpacity = 0.4
+
+        // How far the shadow is offset from the UICollectionViewCell’s frame
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        
+        
     }
     
     
