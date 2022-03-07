@@ -13,7 +13,8 @@ class ProfileViewController: UIViewController {
         "Profil Bilgilerim",
         "Parolamı Değiştir",
         "Raporlarım",
-        "Hesabımı Sil"
+        "Hesabımı Sil",
+        "Çıkış"
     ]
 
     
@@ -25,11 +26,11 @@ class ProfileViewController: UIViewController {
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: ProfileHeaderCollectionReusableView.kind, alignment: .top)
             
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.16))
             let item = NSCollectionLayoutItem(layoutSize: itemSize/*, supplementaryItems: [headerView]*/)
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.4))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.32))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
@@ -72,11 +73,9 @@ class ProfileViewController: UIViewController {
 
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        profileSections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -96,8 +95,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         if kind == ProfileHeaderCollectionReusableView.kind {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath)
             
-            
-            
             return header
         } else {
             fatalError()
@@ -107,7 +104,31 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
 
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
+        case 0:
+            print(indexPath.item)
+        case 1:
+            let vc = ChangePswAndDeleteAccountViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        case 2:
+            let vc = PastReportViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        case 3:
+            print(indexPath.item)
+            let vc = ChangePswAndDeleteAccountViewController()
+            vc.explainlabel.text = "Hesabınızı silmeniz durumunda satın aldığını tüm raporlar da silinecektir."
+            vc.sendButton.setTitle("Hesabımı Sil", for: .normal)
+            vc.sendButton.backgroundColor = .systemRed
+            navigationController?.pushViewController(vc, animated: true)
+        case 4:
+            let vc = LogInViewController()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        default:
+            print("error")
+        }
+    }
     
     
     

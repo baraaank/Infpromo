@@ -11,6 +11,11 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "pastReportCollectionViewCellIdentifier"
     
+    var initialFrame: CGRect?
+    var initialCornerRadius: CGFloat?
+    
+    
+    
     private let imageView: UIImageView = {
         let image = UIImage(named: "pp")
         let imageView = UIImageView()
@@ -34,25 +39,21 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-//
-//    private let numberOfFollowersLabel: UILabel = {
-//        let label = UILabel()
-//        label.attributedText = NSAttributedString(string: "3,2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold)])
-//        label.textAlignment = .center
-//        return label
-//    }()
-//
-//    private let followersLabel: UILabel = {
-//        let label = UILabel()
-//        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
-//        label.textAlignment = .center
-//        return label
-//    }()
-//
+
+
+    private let followersLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.textAlignment = .center
+        
+        return label
+    }()
+
     private let numberOfFollowersLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "1,1M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold)])
         label.textAlignment = .center
+        
         
         return label
     }()
@@ -64,28 +65,68 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-//
-//    private let engagementsAndRatesLabel: UILabel = {
-//        let label = UILabel()
-//        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
-//        // add line break
-//        label.textAlignment = .center
-//        return label
-//    }()
-//
-//    private let button: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = .systemBlue
-//        button.layer.cornerRadius = 4
-//        button.setTitle("Detay -1", for: .normal)
-//        return button
-//    }()
+
+    private let engagementsAndRatesLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        // add line break
+        label.textAlignment = .center
+        
+        return label
+    }()
+
+    private let button: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor().infpromo
+        button.layer.cornerRadius = 4
+        button.setTitle("Detay", for: .normal)
+        return button
+    }()
+    
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Alındığı Tarih", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        // add line break
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    private let originalDateLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Cts, 12 Eyl 2021 21:20", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
+        // add line break
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    private let platformLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Platform", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        // add line break
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    private let originalPlatformLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Instagram", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
+        // add line break
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
         configureCell()
+        changeLayoutLabels()
     }
     
     required init?(coder: NSCoder) {
@@ -96,29 +137,30 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         addSubview(imageView)
         addSubview(nameLabel)
         addSubview(usernameLabel)
-//        addSubview(numberOfFollowersLabel)
-//        addSubview(followersLabel)
+        addSubview(numberOfFollowersLabel)
+        addSubview(followersLabel)
         addSubview(numberOfFollowersLabel)
         addSubview(numberOfEngagementsLabel)
-//        addSubview(engagementsAndRatesLabel)
-//        addSubview(button)
+        addSubview(engagementsAndRatesLabel)
+        addSubview(button)
+        addSubview(dateLabel)
+        addSubview(originalDateLabel)
+        addSubview(platformLabel)
+        addSubview(originalPlatformLabel)
     }
     
-    override func layoutSubviews() {
+    
+    func changeLayoutLabels() {
         imageView.frame = CGRect(x: 10, y: 10, width: width / 5, height: width / 5)
         imageView.layer.cornerRadius = width / 10
-//        nameLabel.frame = CGRect(x: 10, y: imageView.bottom + 10, width: 160, height: 20)
-//        usernameLabel.frame = CGRect(x: 10, y: nameLabel.bottom + 10, width: 160, height: 20)
-//        numberOfFollowersLabel.frame = CGRect(x: imageView.right + 30, y: 20, width: 80, height: 20)
-//        followersLabel.frame = CGRect(x: imageView.right + 30, y: numberOfFollowersLabel.bottom + 10, width: 80, height: 20)
-//        numberOfEngagementsAndRatesLabel.frame = CGRect(x: numberOfFollowersLabel.right + 30, y: 20, width: width - 240, height: 20)
-//        engagementsAndRatesLabel.frame = CGRect(x: followersLabel.right + 30, y: numberOfEngagementsAndRatesLabel.bottom + 10, width: width - 240, height: 20)
-//        button.frame = CGRect(x: imageView.right + 110, y: imageView.bottom + 10, width: 150, height: 50)
         
         nameLabel.frame = CGRect(x: imageView.right + 10, y: width / 10 - 20, width: width / 2.2, height: 30)
-        usernameLabel.frame = CGRect(x: imageView.right + 10, y: width / 10, width: width / 2.2, height: 30)
+        usernameLabel.frame = CGRect(x: imageView.right + 10, y: nameLabel.bottom + 5, width: width / 2.2, height: 30)
         numberOfFollowersLabel.frame = CGRect(x: nameLabel.right + 10, y: width / 10 - 20, width: width / 4, height: 30)
-        numberOfEngagementsLabel.frame = CGRect(x: usernameLabel.right + 10, y: width / 10, width: width / 4, height: 30)
+        numberOfEngagementsLabel.frame = CGRect(x: usernameLabel.right + 10, y: numberOfFollowersLabel.bottom + 5, width: width / 4, height: 30)
+    }
+    override func layoutSubviews() {
+        
         
     }
     
@@ -146,3 +188,127 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     }
 }
 
+
+extension PastReportCollectionViewCell {
+    
+    
+    func expand(in collectionView: UICollectionView) {
+        initialFrame = self.frame
+        initialCornerRadius = self.contentView.layer.cornerRadius
+        
+        self.contentView.layer.cornerRadius = 0
+        
+        if width < 400 {
+            frame = CGRect(x: 8, y: collectionView.contentOffset.y + width / 2.2, width: collectionView.frame.width - 16, height: collectionView.frame.height - width / 1.1)
+        } else {
+            frame = CGRect(x: 8, y: collectionView.contentOffset.y + width / 1.44, width: collectionView.frame.width - 16, height: collectionView.frame.height - width / 0.72)
+        }
+        
+        dateLabel.frame = CGRect(x: 10, y: 10, width: width / 2 - 20, height: 30)
+        originalDateLabel.frame = CGRect(x: 10, y: dateLabel.bottom, width: width / 2 - 20, height: 30)
+        
+        platformLabel.frame = CGRect(x: dateLabel.right + 10, y: 10, width: width / 2 - 20, height: 30)
+        originalPlatformLabel.frame = CGRect(x: dateLabel.right + 10, y: platformLabel.bottom, width: width / 2 - 20, height: 30)
+        
+        imageView.frame = CGRect(x: width / 2 - width / 10, y: originalPlatformLabel.bottom + 10, width: width / 5, height: width / 5)
+        imageView.layer.cornerRadius = width / 10
+        
+        nameLabel.frame = CGRect(x: width / 2 - width / 4, y: imageView.bottom + 5, width: width / 2, height: 30)
+        usernameLabel.frame = CGRect(x: width / 2 - width / 4, y: nameLabel.bottom, width: width / 2, height: 30)
+        
+        numberOfFollowersLabel.frame = CGRect(x: 10, y: usernameLabel.bottom + 5, width: width / 2 - 20, height: 30)
+        followersLabel.frame = CGRect(x: 10, y: numberOfFollowersLabel.bottom, width: width / 2 - 20, height: 30)
+        
+        numberOfEngagementsLabel.frame = CGRect(x: followersLabel.right + 10, y: usernameLabel.bottom + 5, width: width / 2 - 20, height: 30)
+        engagementsAndRatesLabel.frame = CGRect(x: followersLabel.right + 10, y: numberOfFollowersLabel.bottom, width: width / 2 - 20, height: 30)
+        
+        button.frame = CGRect(x: 80, y: engagementsAndRatesLabel.bottom + 10, width: width - 160, height: 40)
+        
+        dateLabel.isHidden = false
+        originalDateLabel.isHidden = false
+        platformLabel.isHidden = false
+        originalPlatformLabel.isHidden = false
+        
+        followersLabel.isHidden = false
+        
+        engagementsAndRatesLabel.isHidden = false
+        
+        button.isHidden = false
+        
+        nameLabel.textAlignment = .center
+        usernameLabel.textAlignment = .center
+        
+        
+
+        layoutIfNeeded()
+    }
+    
+    func collapse() {
+        
+        self.contentView.layer.cornerRadius = initialCornerRadius ?? self.contentView.layer.cornerRadius
+        self.frame = initialFrame ?? self.frame
+        
+        
+        
+        
+        initialFrame = nil
+        initialCornerRadius = nil
+        
+        dateLabel.isHidden = true
+        originalDateLabel.isHidden = true
+        platformLabel.isHidden = true
+        originalPlatformLabel.isHidden = true
+        
+        followersLabel.isHidden = true
+        
+        engagementsAndRatesLabel.isHidden = true
+        
+        button.isHidden = true
+        
+        nameLabel.textAlignment = .left
+        usernameLabel.textAlignment = .left
+
+        
+        
+    }
+    
+    func hide(in collectionView: UICollectionView, frameOfSelectedCell: CGRect) {
+        initialFrame = self.frame
+        
+        
+        let currentY = self.frame.origin.y
+        let newY: CGFloat
+        if width < 400 {
+            if currentY < frameOfSelectedCell.origin.y {
+                let offset = frameOfSelectedCell.origin.y - currentY - width / 2.2
+                newY = collectionView.contentOffset.y - offset
+            } else {
+                let offset = currentY - frameOfSelectedCell.maxY - width / 2.2
+                newY = collectionView.contentOffset.y + collectionView.frame.height + offset
+            }
+        } else {
+            if currentY < frameOfSelectedCell.origin.y {
+                
+                let offset = frameOfSelectedCell.origin.y - currentY - width / 1.44
+                newY = collectionView.contentOffset.y - offset
+            } else {
+                let offset = currentY - frameOfSelectedCell.maxY - width / 1.44
+                newY = collectionView.contentOffset.y + collectionView.frame.height + offset
+            }
+        }
+        
+        
+        self.frame.origin.y = newY
+          
+          layoutIfNeeded()
+    }
+    
+    func show() {
+        self.frame = initialFrame ?? self.frame
+           
+           initialFrame = nil
+           
+           layoutIfNeeded()
+        
+    }
+}

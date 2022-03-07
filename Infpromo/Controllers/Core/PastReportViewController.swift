@@ -9,22 +9,23 @@ import UIKit
 
 class PastReportViewController: UIViewController {
     
-    var openCloseView: Bool = true
-    let dateView = UIView()
+   
+    
+    private var expendableCell: PastReportCollectionViewCell?
+    private var isStatusBarHidden = false
+    private var hiddenCells: [PastReportCollectionViewCell] = []
+    
+    override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
-//
-//            let suppViewSize = NSCollectionLayoutSize(widthDimension: .absolute(20), heightDimension: .absolute(20))
-//            let containerSuppAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: 0.3, y: -0.3))
-//            let suppView = NSCollectionLayoutSupplementaryItem(layoutSize: suppViewSize, elementKind: PastReportCollectionReusableView.kind, containerAnchor: containerSuppAnchor)
-//
-//
-            
+ 
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             
-//            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [suppView, /*suppView2*/])
+
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             
@@ -42,13 +43,14 @@ class PastReportViewController: UIViewController {
         
         collectionView.register(PastReportCollectionViewCell.self, forCellWithReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier)
 
-//        collectionView.register(PastReportDateCollectionReusableView.self, forSupplementaryViewOfKind: PastReportDateCollectionReusableView.kind, withReuseIdentifier: PastReportDateCollectionReusableView.reuseIdentifier)
-//        collectionView.register(PastReportCollectionReusableView.self, forSupplementaryViewOfKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier)
-        
+
         
         collectionView.backgroundColor = .white
         return collectionView
     }()
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +65,6 @@ class PastReportViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        
-        dateView.backgroundColor = .purple
-        
-        
-        
-        
-        
         
         
         
@@ -102,45 +96,86 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         return cell
     }
     
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//
-//        switch kind {
-//            //        case PastReportDateCollectionReusableView.kind :
-//            //            let bannerView2 = collectionView.dequeueReusableSupplementaryView(ofKind: PastReportDateCollectionReusableView.kind, withReuseIdentifier: PastReportDateCollectionReusableView.reuseIdentifier, for: indexPath) as! PastReportDateCollectionReusableView
-//            //
-//            //            return bannerView2
-//        case PastReportCollectionReusableView.kind :
-//            let bannerView = collectionView.dequeueReusableSupplementaryView(ofKind: PastReportCollectionReusableView.kind, withReuseIdentifier: PastReportCollectionReusableView.reuseIdentifier, for: indexPath) as! PastReportCollectionReusableView
-//            bannerView.delegate = self
-//
-//            return bannerView
-//        default:
-//            fatalError("fatalerror")
-//        }
-//
-//    }
-//
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        let dampingRatio: CGFloat = 0.8
+        let initialVelocity = CGVector.zero
+        let springParameters = UISpringTimingParameters(dampingRatio: dampingRatio, initialVelocity: initialVelocity)
+        let animator = UIViewPropertyAnimator(duration: 0.8, timingParameters: springParameters)
+        
+        
+
+        self.view.isUserInteractionEnabled = false
+        
+        if let selectedCell = expendableCell {
+            
+            isStatusBarHidden = false
+            animator.addAnimations {
+                
+                selectedCell.collapse()
+                
+                selectedCell.changeLayoutLabels()
+                
+                
+                for cell in self.hiddenCells {
+                    cell.show()
+                }
+                
+            }
+            
+            animator.addCompletion { _ in
+                collectionView.isScrollEnabled = true
+                self.expendableCell = nil
+                self.hiddenCells.removeAll()
+
+            }
+
+            
+        } else {
+            isStatusBarHidden = true
+            
+            collectionView.isScrollEnabled = false
+            
+            let selectedCell = collectionView.cellForItem(at: indexPath)! as! PastReportCollectionViewCell
+            let frameOfSelectedCell = selectedCell.frame
+            
+            expendableCell = selectedCell
+            hiddenCells = collectionView.visibleCells.map({
+                $0 as! PastReportCollectionViewCell
+                
+            }).filter({
+                $0 != selectedCell
+            })
+            
+            
+            animator.addAnimations {
+                selectedCell.expand(in: collectionView)
+                
+                
+                for cell in self.hiddenCells {
+                    cell.hide(in: collectionView, frameOfSelectedCell: frameOfSelectedCell)
+                }
+            }
+        }
+        
+        animator.addAnimations {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+        
+        animator.addCompletion { _ in
+            self.view.isUserInteractionEnabled = true
+        }
+        
+        animator.startAnimation()
+        
+//        setNeedsStatusBarAppearanceUpdate()
+
+    }
     
     
     
     
 }
 
-//extension PastReportViewController: PastReportCollectionReusableViewDelegate {
-//    
-//    func didChangeLayout() {
-//        if openCloseView {
-//            dateView.isHidden = false
-//            view.addSubview(dateView)
-//        } else {
-//            dateView.isHidden = true
-//            dateView.removeFromSuperview()
-//        }
-//        
-//        openCloseView = !openCloseView
-//    }
-//    
-//    
-//}

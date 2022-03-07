@@ -40,6 +40,6 @@ extension UIColor {
         return UIColor(red: 75/255, green: 70/255, blue: 189/255, alpha: 1.0)
     }
     var infpromoBorder: UIColor {
-        return UIColor(red: 228/255, green: 228/255, blue: 228/255, alpha: 0.6)
+        return UIColor(red: 228/255, green: 228/255, blue: 228/255, alpha: 0.8)
     }
 }

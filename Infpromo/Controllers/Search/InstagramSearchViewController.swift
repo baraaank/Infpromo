@@ -25,12 +25,14 @@ class InstagramSearchViewController: UIViewController {
         SearchHeadings(heading: "Takipçi Cinsiyet Yoğunluğu", options: ["Kadın", "Erkek"], isCollapse: true),
         SearchHeadings(heading: "Takipçi Yaş Aralığı", options: ["18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"], isCollapse: true),
         SearchHeadings(heading: "Takipçi İlgi Alanları", options: ["Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"], isCollapse: true),
-        SearchHeadings(heading: "Takipçi Dili", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true)
+        SearchHeadings(heading: "Takipçi Dili", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
+        SearchHeadings(heading: "", options: [""], isCollapse: true),
+        SearchHeadings(heading: "", options: [""], isCollapse: true),
     ]
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "instagramCell")
+        tableView.register(InstagramSearchTableViewCell.self, forCellReuseIdentifier: InstagramSearchTableViewCell.reuseIdentifier)
         
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -83,12 +85,13 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "instagramCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: InstagramSearchTableViewCell.reuseIdentifier, for: indexPath) as! InstagramSearchTableViewCell
         
-        let headingText = headingsArray[indexPath.section].options[indexPath.row]
         
-        cell.textLabel?.textColor = UIColor().infpromo
-        cell.textLabel?.text = headingText
+        
+        cell.fillOptions(with: headingsArray[indexPath.section], index: indexPath.row)
+        
+//        cell.textLabel?.text = headingText
         
         return cell
     }
@@ -108,6 +111,8 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
             button.setAttributedTitle(attributedString, for: .normal)
             button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
             button.backgroundColor = UIColor().infpromo
+            button.isEnabled = false
+        } else if section == 14 || section == 15 || section == 16  {
             button.isEnabled = false
         } else {
             let attributedString = NSAttributedString(string: sectionTitle, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])

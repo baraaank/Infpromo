@@ -51,6 +51,15 @@ class SearchViewController: UIViewController {
         return vc
     }()
     
+    private let stickyButton: UIButton = {
+        let button = UIButton()
+        
+        button.backgroundColor = UIColor().infpromo
+        button.layer.cornerRadius = 4
+        button.setTitle("Filtrele", for: .normal)
+        return button
+    }()
+    
     let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     override func viewDidLoad() {
@@ -81,7 +90,8 @@ class SearchViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        view.addSubview(stickyButton)
+        stickyButton.frame = CGRect(x: 60, y: view.height - 80 - view.safeAreaInsets.bottom, width: view.width - 120, height: 60)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,8 +103,9 @@ class SearchViewController: UIViewController {
         addChild(childViewController)
         view.addSubview(childViewController.view)
         childViewController.view.frame = view.bounds
-        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         childViewController.didMove(toParent: self)
+        
         
         blurEffectView.frame = view.bounds
         view.addSubview(blurEffectView)
@@ -135,11 +146,13 @@ extension SearchViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
         tabBarController?.tabBar.isHidden = true
         blurEffectView.isHidden = false
+        stickyButton.isHidden = true
     }
 
 
     func willDismissSearchController(_ searchController: UISearchController) {
         tabBarController?.tabBar.isHidden = false
         blurEffectView.isHidden = true
+        stickyButton.isHidden = false
     }
 }
