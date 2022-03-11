@@ -29,6 +29,11 @@ class SearchViewController: UIViewController {
     
     private let searchController: UISearchController = {
         let searchController = UISearchController()
+        searchController.searchBar.placeholder = "Kullanıcı Adı"
+//        searchController.searchBar.barTintColor = UIColor().infpromo
+//        searchController.searchBar.layer.borderWidth = 3
+//        searchController.searchBar.layer.borderColor = UIColor().infpromo.cgColor
+//        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass"), for: .search, state: .normal)
         
         return searchController
     }()
@@ -66,12 +71,13 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        title = "Search"
         
         navigationItem.titleView = segmentedControl
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        title = "Search"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
@@ -83,7 +89,7 @@ class SearchViewController: UIViewController {
         searchController.delegate = self
         
         segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
-        
+        firstDidMove()
         
         
     }
@@ -96,6 +102,10 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         segmentedControl.selectedSegmentIndex = 0
+        
+    }
+    
+    func firstDidMove() {
         instagramViewController.didMove(toParent: self)
     }
     
@@ -110,6 +120,7 @@ class SearchViewController: UIViewController {
         blurEffectView.frame = view.bounds
         view.addSubview(blurEffectView)
         blurEffectView.isHidden = true
+        
     }
     
     @objc func segmentedControlTapped() {

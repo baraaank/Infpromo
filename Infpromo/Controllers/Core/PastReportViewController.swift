@@ -100,7 +100,7 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
-        let dampingRatio: CGFloat = 0.8
+        let dampingRatio: CGFloat = 0.9
         let initialVelocity = CGVector.zero
         let springParameters = UISpringTimingParameters(dampingRatio: dampingRatio, initialVelocity: initialVelocity)
         let animator = UIViewPropertyAnimator(duration: 0.8, timingParameters: springParameters)

@@ -9,8 +9,6 @@ import UIKit
 
 class InstagramSearchViewController: UIViewController {
     
-    
-    
     var headingsArray: [SearchHeadings] = [
         SearchHeadings(heading: "Influencer Özellikleri", options: ["nil"], isCollapse: false),
         SearchHeadings(heading: "Min Takipçi Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"], isCollapse: true),
@@ -203,12 +201,7 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
         
     }
     
-    func animate(button: UIImageView) {
-        UIView.animate(withDuration: 0.2) {
-            button.backgroundColor = .red
-        }
-    }
-    
+
     
     
 }

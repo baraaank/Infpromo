@@ -154,8 +154,8 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         imageView.frame = CGRect(x: 10, y: 10, width: width / 5, height: width / 5)
         imageView.layer.cornerRadius = width / 10
         
-        nameLabel.frame = CGRect(x: imageView.right + 10, y: width / 10 - 20, width: width / 2.2, height: 30)
-        usernameLabel.frame = CGRect(x: imageView.right + 10, y: nameLabel.bottom + 5, width: width / 2.2, height: 30)
+        nameLabel.frame = CGRect(x: imageView.right + 10, y: width / 10 - 20 + 5, width: width / 2.2, height: 30)
+        usernameLabel.frame = CGRect(x: imageView.right + 10, y: nameLabel.bottom, width: width / 2.2, height: 30)
         numberOfFollowersLabel.frame = CGRect(x: nameLabel.right + 10, y: width / 10 - 20, width: width / 4, height: 30)
         numberOfEngagementsLabel.frame = CGRect(x: usernameLabel.right + 10, y: numberOfFollowersLabel.bottom + 5, width: width / 4, height: 30)
     }

@@ -44,6 +44,11 @@ class HomeViewController: UIViewController {
     
     private let searchResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
+            
+            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3))
+
+            let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: SearchResultCollectionReusableView.kind, alignment: .bottom)
+            
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
@@ -53,10 +58,12 @@ class HomeViewController: UIViewController {
             
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
+            section.boundarySupplementaryItems = [footerView]
             return section
         }))
         
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier)
+        collectionView.register(SearchResultCollectionReusableView.self, forSupplementaryViewOfKind: SearchResultCollectionReusableView.kind, withReuseIdentifier: SearchResultCollectionReusableView.reuseIdentifier)
         collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         return collectionView
@@ -194,6 +201,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.layer.borderColor = UIColor().infpromoBorder.cgColor
             cell.layer.borderWidth = 1
             return cell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if collectionView == self.searchResultCollectionView {
+            if kind == SearchResultCollectionReusableView.kind {
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: SearchResultCollectionReusableView.kind, withReuseIdentifier: SearchResultCollectionReusableView.reuseIdentifier, for: indexPath) as! SearchResultCollectionReusableView
+                
+                return footer
+            } else {
+                fatalError()
+            }
+        } else {
+            fatalError()
         }
         
     }

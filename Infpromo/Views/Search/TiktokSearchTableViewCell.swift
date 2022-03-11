@@ -1,17 +1,17 @@
 //
-//  InstagramSearchTableViewCell.swift
+//  TiktokSearchTableViewCell.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 5.03.2022.
+//  Created by BaranK Kutlu on 7.03.2022.
 //
 
 import UIKit
 
-class InstagramSearchTableViewCell: UITableViewCell {
+class TiktokSearchTableViewCell: UITableViewCell {
 
-    static let reuseIdentifier = "instagramSearchTableViewCellIdentifier"
+    static let reuseIdentifier = "tiktokSearchTableViewCellIdentifier"
     
-    
+    var gestureBoolean: Bool = false
     
     private let selectButton: UIButton = {
        let button = UIButton()
@@ -30,6 +30,8 @@ class InstagramSearchTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognizersTapped))
+        addGestureRecognizer(tapGestureRecognizer)
         
     }
     
@@ -51,7 +53,21 @@ class InstagramSearchTableViewCell: UITableViewCell {
     func fillOptions(with: SearchHeadings, index: Int) {
         optionsLabel.text = with.options[index]
     }
+
     
+    @objc func tapGestureRecognizersTapped() {
+        print("tapped")
+        if gestureBoolean == true {
+            selectButton.setImage(UIImage(systemName: "square"), for: .normal)
+        } else {
+            selectButton.setImage(UIImage(systemName: "square.inset.filled"), for: .normal)
+        }
+        gestureBoolean = !gestureBoolean
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        selectButton.setImage(UIImage(systemName: "square"), for: .normal)
+    }
 }
-
-

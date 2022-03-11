@@ -54,6 +54,7 @@ class ProfileViewController: UIViewController {
         
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
         view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = UIColor().infpromo
     
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
@@ -102,12 +103,15 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
     }
     
+    
+    
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
         case 0:
-            print(indexPath.item)
+            let vc = ProfileInformationsViewController()
+            navigationController?.pushViewController(vc, animated: true)
         case 1:
             let vc = ChangePswAndDeleteAccountViewController()
             navigationController?.pushViewController(vc, animated: true)

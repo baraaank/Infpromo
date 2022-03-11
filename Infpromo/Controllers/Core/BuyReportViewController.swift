@@ -204,20 +204,25 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
         
         tableView.reloadSections([indexPath.section], with: .none)
         
-        if sections[indexPath.section].isOpened {
-            tableView.beginUpdates()
-            FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
-            FAQTableView.reloadData()
-            tableView.endUpdates()
-        } else {
-            tableView.beginUpdates()
-            FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height)
-            scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
-            FAQTableView.reloadData()
-            tableView.endUpdates()
-            
+       
+        UIView.animate(withDuration: 0.6) {
+            if self.sections[indexPath.section].isOpened {
+                tableView.beginUpdates()
+                
+                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
+                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
+                self.FAQTableView.reloadData()
+                tableView.endUpdates()
+            } else {
+                tableView.beginUpdates()
+                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
+                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
+                self.FAQTableView.reloadData()
+                tableView.endUpdates()
+                
+            }
         }
+        
     
     }
 }

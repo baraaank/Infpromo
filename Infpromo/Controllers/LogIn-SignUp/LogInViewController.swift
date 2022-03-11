@@ -85,6 +85,12 @@ class LogInViewController: UIViewController {
         arrangeLayouts()
         
         view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func addSubViews() {
@@ -165,5 +171,40 @@ extension LogInViewController: UITextFieldDelegate {
         } completion: { _ in
             
         }
+    }
+}
+
+
+//keyboard layout changes
+extension LogInViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                
+                if logInButton.frame.maxY > keyboardSize.minY {
+//                    self.view.frame.origin.y -= keyboardSize.height
+                    logoImageView.frame = CGRect(x: 10, y: 40, width: view.width - 20, height: 60)
+                    usernameTextField.frame = CGRect(x: 20, y: logoImageView.bottom + 40, width: view.width - 40, height: 50)
+                    passwordTextField.frame = CGRect(x: 20, y: usernameTextField.bottom + 10, width: view.width - 40, height: 50)
+                    logInButton.frame = CGRect(x: 20, y: passwordTextField.bottom + 10, width: view.width - 40, height: 50)
+                    forgotPasswordButton.isHidden = true
+                    dontYouHaveAnAccountLabel.isHidden = true
+                    createAnAccountButton.isHidden = true
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+        
+        arrangeLayouts()
+        forgotPasswordButton.isHidden = false
+        dontYouHaveAnAccountLabel.isHidden = false
+        createAnAccountButton.isHidden = false
+//        if view.frame.origin.y != 0 {
+//                self.view.frame.origin.y = 0
+//            }
+        
     }
 }
