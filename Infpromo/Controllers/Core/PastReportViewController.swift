@@ -56,9 +56,9 @@ class PastReportViewController: UIViewController {
         super.viewDidLoad()
         
         title = "My Reports"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
         addSubviews()
         
         
@@ -90,9 +90,10 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .white
-        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
-        cell.layer.borderWidth = 1
+//        cell.backgroundColor = .white
+//        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
+//        cell.layer.borderWidth = 1
+        cell.backgroundColor = .tertiarySystemFill
         return cell
     }
     
@@ -116,7 +117,7 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
                 
                 selectedCell.collapse()
                 
-                selectedCell.changeLayoutLabels()
+                
                 
                 
                 for cell in self.hiddenCells {
@@ -144,7 +145,6 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
             expendableCell = selectedCell
             hiddenCells = collectionView.visibleCells.map({
                 $0 as! PastReportCollectionViewCell
-                
             }).filter({
                 $0 != selectedCell
             })
@@ -158,6 +158,7 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
                     cell.hide(in: collectionView, frameOfSelectedCell: frameOfSelectedCell)
                 }
             }
+            
         }
         
         animator.addAnimations {
@@ -170,8 +171,11 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         
         animator.startAnimation()
         
+        
 //        setNeedsStatusBarAppearanceUpdate()
+        
 
+        
     }
     
     

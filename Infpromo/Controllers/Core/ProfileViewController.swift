@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
             section.boundarySupplementaryItems = [headerView]
             return section
         }))
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .systemGray6
         collectionView.register(ProfileHeaderCollectionReusableView.self, forSupplementaryViewOfKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier)
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: ProfileCollectionViewCell.reuseIdentifier)
         return collectionView
@@ -48,14 +48,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Profile"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
-        
-        
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
-        view.backgroundColor = .white
+//
+//
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+
         navigationController?.navigationBar.tintColor = UIColor().infpromo
-    
+
+        view.backgroundColor = .white
+        
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
         addSubviews()
@@ -82,10 +84,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.reuseIdentifier, for: indexPath) as! ProfileCollectionViewCell
         
+//        cell.backgroundColor = .white
+//        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
+//        cell.layer.borderWidth = 1
+//
         cell.backgroundColor = .white
-        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
-        cell.layer.borderWidth = 1
-        
         cell.label.text = profileSections[indexPath.row]
         
         return cell

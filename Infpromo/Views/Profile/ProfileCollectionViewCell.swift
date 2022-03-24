@@ -13,7 +13,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     let label: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Profil bilgilerimmmmmmm....", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "Profil bilgilerimmmmmmm....", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
@@ -46,17 +46,17 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 5.0
         layer.masksToBounds = false
         
-        layer.shadowRadius = 4.0
-
-        // The color of the drop shadow
-        layer.shadowColor = UIColor.lightGray.cgColor
-
-        // How transparent the drop shadow is
-        layer.shadowOpacity = 0.4
-
-        // How far the shadow is offset from the UICollectionViewCell’s frame
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        
-        
+//        layer.shadowRadius = 4.0
+//
+//        // The color of the drop shadow
+//        layer.shadowColor = UIColor.lightGray.cgColor
+//
+//        // How transparent the drop shadow is
+//        layer.shadowOpacity = 0.4
+//
+//        // How far the shadow is offset from the UICollectionViewCell’s frame
+//        layer.shadowOffset = CGSize(width: 0, height: 3)
+//        
+//        
     }
 }

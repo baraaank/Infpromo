@@ -26,7 +26,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium)])
 //        label.textAlignment = .center
         
         return label
@@ -51,7 +51,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
 
     private let numberOfFollowersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "1,1M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        label.attributedText = NSAttributedString(string: "1,1M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium)])
         label.textAlignment = .center
         
         
@@ -60,7 +60,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let numberOfEngagementsLabel: UILabel = {
        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "7.34 %", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        label.attributedText = NSAttributedString(string: "7.34 %", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium)])
         label.textAlignment = .center
         
         return label
@@ -138,15 +138,8 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         addSubview(nameLabel)
         addSubview(usernameLabel)
         addSubview(numberOfFollowersLabel)
-        addSubview(followersLabel)
-        addSubview(numberOfFollowersLabel)
         addSubview(numberOfEngagementsLabel)
-        addSubview(engagementsAndRatesLabel)
-        addSubview(button)
-        addSubview(dateLabel)
-        addSubview(originalDateLabel)
-        addSubview(platformLabel)
-        addSubview(originalPlatformLabel)
+        
     }
     
     
@@ -159,6 +152,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         numberOfFollowersLabel.frame = CGRect(x: nameLabel.right + 10, y: width / 10 - 20, width: width / 4, height: 30)
         numberOfEngagementsLabel.frame = CGRect(x: usernameLabel.right + 10, y: numberOfFollowersLabel.bottom + 5, width: width / 4, height: 30)
     }
+    
     override func layoutSubviews() {
         
         
@@ -173,17 +167,17 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 5.0
         layer.masksToBounds = false
         
-        layer.shadowRadius = 4.0
-
-        // The color of the drop shadow
-        layer.shadowColor = UIColor.lightGray.cgColor
-
-        // How transparent the drop shadow is
-        layer.shadowOpacity = 0.4
-
-        // How far the shadow is offset from the UICollectionViewCell’s frame
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        
+//        layer.shadowRadius = 4.0
+//
+//        // The color of the drop shadow
+//        layer.shadowColor = UIColor.lightGray.cgColor
+//
+//        // How transparent the drop shadow is
+//        layer.shadowOpacity = 0.4
+//
+//        // How far the shadow is offset from the UICollectionViewCell’s frame
+//        layer.shadowOffset = CGSize(width: 0, height: 3)
+//        
         
     }
 }
@@ -203,6 +197,15 @@ extension PastReportCollectionViewCell {
         } else {
             frame = CGRect(x: 8, y: collectionView.contentOffset.y + width / 1.44, width: collectionView.frame.width - 16, height: collectionView.frame.height - width / 0.72)
         }
+        
+        addSubview(followersLabel)
+        addSubview(numberOfFollowersLabel)
+        addSubview(engagementsAndRatesLabel)
+        addSubview(button)
+        addSubview(dateLabel)
+        addSubview(originalDateLabel)
+        addSubview(platformLabel)
+        addSubview(originalPlatformLabel)
         
         dateLabel.frame = CGRect(x: 10, y: 10, width: width / 2 - 20, height: 30)
         originalDateLabel.frame = CGRect(x: 10, y: dateLabel.bottom, width: width / 2 - 20, height: 30)
@@ -224,47 +227,55 @@ extension PastReportCollectionViewCell {
         
         button.frame = CGRect(x: 80, y: engagementsAndRatesLabel.bottom + 10, width: width - 160, height: 40)
         
-        dateLabel.isHidden = false
-        originalDateLabel.isHidden = false
-        platformLabel.isHidden = false
-        originalPlatformLabel.isHidden = false
         
-        followersLabel.isHidden = false
         
-        engagementsAndRatesLabel.isHidden = false
-        
-        button.isHidden = false
-        
+//        dateLabel.isHidden = false
+//        originalDateLabel.isHidden = false
+//        platformLabel.isHidden = false
+//        originalPlatformLabel.isHidden = false
+//        followersLabel.isHidden = false
+//        engagementsAndRatesLabel.isHidden = false
+//        button.isHidden = false
         nameLabel.textAlignment = .center
         usernameLabel.textAlignment = .center
         
-        
 
+        
+        
         layoutIfNeeded()
     }
     
     func collapse() {
         
+        dateLabel.removeFromSuperview()
+        originalDateLabel.removeFromSuperview()
+        platformLabel.removeFromSuperview()
+        originalPlatformLabel.removeFromSuperview()
+        followersLabel.removeFromSuperview()
+        engagementsAndRatesLabel.removeFromSuperview()
+        button.removeFromSuperview()
+        
+        
+        
         self.contentView.layer.cornerRadius = initialCornerRadius ?? self.contentView.layer.cornerRadius
         self.frame = initialFrame ?? self.frame
         
         
-        
+
         
         initialFrame = nil
         initialCornerRadius = nil
         
-        dateLabel.isHidden = true
-        originalDateLabel.isHidden = true
-        platformLabel.isHidden = true
-        originalPlatformLabel.isHidden = true
+//        dateLabel.isHidden = true
+//        originalDateLabel.isHidden = true
+//        platformLabel.isHidden = true
+//        originalPlatformLabel.isHidden = true
+//        followersLabel.isHidden = true
+//        engagementsAndRatesLabel.isHidden = true
+//        button.isHidden = true
         
-        followersLabel.isHidden = true
         
-        engagementsAndRatesLabel.isHidden = true
-        
-        button.isHidden = true
-        
+        changeLayoutLabels()
         nameLabel.textAlignment = .left
         usernameLabel.textAlignment = .left
 

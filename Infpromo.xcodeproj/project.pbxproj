@@ -18,7 +18,7 @@
 		810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */; };
 		810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */; };
 		811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B0CD727CD13B9004730DA /* SearchHeadings.swift */; };
-		813D750427C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */; };
+		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
 		819C5CE027CCF1AE00DAB0FE /* InstagramSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CDF27CCF1AE00DAB0FE /* InstagramSearchViewController.swift */; };
@@ -39,7 +39,9 @@
 		81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF02AF27A284070054F4C5 /* PastReportViewController.swift */; };
 		81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF02B227A284140054F4C5 /* ProfileViewController.swift */; };
 		81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B943B027C410CB00F4C376 /* SearchViewController.swift */; };
-		81B943B527C4BC0500F4C376 /* PastReportCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B943B427C4BC0500F4C376 /* PastReportCollectionReusableView.swift */; };
+		81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */; };
+		81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */; };
+		81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EE0127E9475400FDA44B /* APICaller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +56,7 @@
 		810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionReusableView.swift; sourceTree = "<group>"; };
 		810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationCollectionReusableView.swift; sourceTree = "<group>"; };
 		811B0CD727CD13B9004730DA /* SearchHeadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadings.swift; sourceTree = "<group>"; };
-		813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastReportDateCollectionReusableView.swift; sourceTree = "<group>"; };
+		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		819C5CDF27CCF1AE00DAB0FE /* InstagramSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramSearchViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +79,9 @@
 		81AF02AF27A284070054F4C5 /* PastReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastReportViewController.swift; sourceTree = "<group>"; };
 		81AF02B227A284140054F4C5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		81B943B027C410CB00F4C376 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		81B943B427C4BC0500F4C376 /* PastReportCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastReportCollectionReusableView.swift; sourceTree = "<group>"; };
+		81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsInReportsViewController.swift; sourceTree = "<group>"; };
+		81E9EE0127E9475400FDA44B /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 		81AF0287279E9A960054F4C5 /* Infpromo */ = {
 			isa = PBXGroup;
 			children = (
+				81E9EDBB27E2221900FDA44B /* Helpers */,
 				81AF029F27A27CDB0054F4C5 /* Resources */,
 				81AF02A027A27CE60054F4C5 /* Managers */,
 				81AF02A127A27CF00054F4C5 /* Models */,
@@ -163,8 +168,7 @@
 		81AF02A027A27CE60054F4C5 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				81B943B427C4BC0500F4C376 /* PastReportCollectionReusableView.swift */,
-				813D750327C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift */,
+				81E9EE0127E9475400FDA44B /* APICaller.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -173,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
+				81386A5327EA0D450051A886 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 				819C5CDE27CCF18500DAB0FE /* Search */,
 				81AF02A427A27E430054F4C5 /* Core */,
 				810AE0C327D6418500F23713 /* ProfileExtra */,
+				81E9EDFE27E8E6B800FDA44B /* BuyReportExtra */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -258,6 +264,22 @@
 				810AE0CA27D6518D00F23713 /* TiktokSearchTableViewCell.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		81E9EDBB27E2221900FDA44B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		81E9EDFE27E8E6B800FDA44B /* BuyReportExtra */ = {
+			isa = PBXGroup;
+			children = (
+				81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */,
+			);
+			path = BuyReportExtra;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,6 +355,7 @@
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
+				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
@@ -344,22 +367,23 @@
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
 				81AF028B279E9A960054F4C5 /* SceneDelegate.swift in Sources */,
 				81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */,
 				819C5CE027CCF1AE00DAB0FE /* InstagramSearchViewController.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
 				819C5CE227CCF1BA00DAB0FE /* YoutubeSearchViewController.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
+				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
 				810AE0C927D6517D00F23713 /* YoutubeSearchTableViewCell.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
-				81B943B527C4BC0500F4C376 /* PastReportCollectionReusableView.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
-				813D750427C81A7B001ADFB3 /* PastReportDateCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,
 				819FFBDB27C2B8030083D3A2 /* SearchResultCollectionViewCell.swift in Sources */,
+				81386A5427EA0D450051A886 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

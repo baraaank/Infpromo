@@ -14,28 +14,28 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     private let numberOfReportsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "2 Rapor", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "2 Rapor", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
     private let actualPriceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "80 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo, NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue])
+        label.attributedText = NSAttributedString(string: "80 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue])
         return label
     }()
     
     private let reducedPriceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "70 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "70 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
     private let percentageOfEarning: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "(%11 Kazanç)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "(%11 Kazanç)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray])
         return label
     }()
     
@@ -85,17 +85,17 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 5.0
         layer.masksToBounds = false
         
-        layer.shadowRadius = 4.0
-
-        // The color of the drop shadow
-        layer.shadowColor = UIColor.lightGray.cgColor
-
-        // How transparent the drop shadow is
-        layer.shadowOpacity = 0.4
-
-        // How far the shadow is offset from the UICollectionViewCell’s frame
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        
+//        layer.shadowRadius = 4.0
+//
+//        // The color of the drop shadow
+//        layer.shadowColor = UIColor.lightGray.cgColor
+//
+//        // How transparent the drop shadow is
+//        layer.shadowOpacity = 0.4
+//
+//        // How far the shadow is offset from the UICollectionViewCell’s frame
+//        layer.shadowOffset = CGSize(width: 0, height: 3)
+//        
         
     }
     

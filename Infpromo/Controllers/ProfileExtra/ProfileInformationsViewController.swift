@@ -66,6 +66,8 @@ class ProfileInformationsViewController: UIViewController {
         
         profileInformationsCollectionView.delegate = self
         profileInformationsCollectionView.dataSource = self
+        
+        
     }
     
     func addSubviews() {

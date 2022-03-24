@@ -1,17 +1,36 @@
-//
-//  SearchViewController.swift
-//  Infpromo
-//
-//  Created by BaranK Kutlu on 21.02.2022.
-//
+
 
 import UIKit
 
 class SearchViewController: UIViewController {
     
+    private let searchBar: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray4.cgColor
+        textField.placeholder = "Influencer Ara"
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 60))
+        customView.backgroundColor = .clear
+        let customImageView = UIImageView()
+        customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
+        let customImage = UIImage(systemName: "magnifyingglass")
+        customImageView.tintColor = UIColor().infpromo
+        customImageView.contentMode = .scaleAspectFit
+        customImageView.image = customImage
+        customImageView.backgroundColor = .clear
+        customView.addSubview(customImageView)
+        textField.leftView = customView
+//        textField.delegate = self
+        
+        textField.leftViewMode = .always
+        return textField
+    }()
+    
+    
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Instagram", "Youtube", "Tiktok"])
-        segmentedControl.sizeToFit()
+        
         if #available(iOS 13.0, *) {
             segmentedControl.selectedSegmentTintColor = UIColor().infpromo
         } else {
@@ -23,19 +42,29 @@ class SearchViewController: UIViewController {
         segmentedControl.layer.borderWidth = 1
         segmentedControl.layer.borderColor = UIColor().infpromo.cgColor
         segmentedControl.sizeToFit()
+        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
+        
         return segmentedControl
     }()
     
     
-    private let searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.searchBar.placeholder = "Kullanıcı Adı"
-//        searchController.searchBar.barTintColor = UIColor().infpromo
-//        searchController.searchBar.layer.borderWidth = 3
-//        searchController.searchBar.layer.borderColor = UIColor().infpromo.cgColor
-//        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass"), for: .search, state: .normal)
+    private let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.numberOfPages = 3
+        pageControl.backgroundColor = .clear
+        pageControl.currentPageIndicatorTintColor = UIColor().infpromo
+        pageControl.pageIndicatorTintColor = .systemGray4
         
-        return searchController
+        return pageControl
+    }()
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .systemGray4
+        //        scrollView.showsHorizontalScrollIndicator = false
+        //        scrollView.showsVerticalScrollIndicator = false
+        
+        return scrollView
     }()
     
     lazy var instagramViewController: InstagramSearchViewController = {
@@ -56,75 +85,66 @@ class SearchViewController: UIViewController {
         return vc
     }()
     
-    private let stickyButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor().infpromo
-        button.layer.cornerRadius = 4
-        button.setTitle("Filtrele", for: .normal)
-        return button
-    }()
-    
-    let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        title = "Search"
         
-        navigationItem.titleView = segmentedControl
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
-        
-        navigationController?.navigationBar.tintColor = UIColor().infpromo
-        
-        
-        searchController.delegate = self
-        
-        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
         firstDidMove()
         
         
+        addSubviews()
+        
+        view.backgroundColor = .white
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.addSubview(stickyButton)
-        stickyButton.frame = CGRect(x: 60, y: view.height - 80 - view.safeAreaInsets.bottom, width: view.width - 120, height: 60)
+    func addSubviews() {
+        view.addSubview(segmentedControl)
+        view.addSubview(searchBar)
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         segmentedControl.selectedSegmentIndex = 0
         
     }
     
-    func firstDidMove() {
-        instagramViewController.didMove(toParent: self)
+    
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        segmentedControl.frame = CGRect(x: 30, y: 40, width: view.width - 60, height: 30)
+        searchBar.frame = CGRect(x: 20, y: segmentedControl.bottom + 20, width: view.width - 40, height: 40)
     }
+    
+    func firstDidMove() {
+        addChildViewController(childViewController: instagramViewController)
+        
+    }
+    
     
     private func addChildViewController(childViewController: UIViewController) {
         addChild(childViewController)
         view.addSubview(childViewController.view)
-        childViewController.view.frame = view.bounds
-//        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        childViewController.view.frame = CGRect(x: 0, y: 120, width: view.width, height: view.height - 70)
+        childViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         childViewController.didMove(toParent: self)
-        
-        
-        blurEffectView.frame = view.bounds
-        view.addSubview(blurEffectView)
-        blurEffectView.isHidden = true
         
     }
     
-    @objc func segmentedControlTapped() {
-        switch segmentedControl.selectedSegmentIndex {
+    
+    @objc func segmentedControlTapped(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
         case 0:
             youtubeViewController.view.removeFromSuperview()
             tiktokViewController.view.removeFromSuperview()
@@ -132,6 +152,7 @@ class SearchViewController: UIViewController {
             tiktokViewController.removeFromParent()
             instagramViewController.didMove(toParent: self)
             addChildViewController(childViewController: instagramViewController)
+            print("0")
         case 1:
             instagramViewController.view.removeFromSuperview()
             tiktokViewController.view.removeFromSuperview()
@@ -139,6 +160,7 @@ class SearchViewController: UIViewController {
             tiktokViewController.removeFromParent()
             youtubeViewController.didMove(toParent: self)
             addChildViewController(childViewController: youtubeViewController)
+            print("1")
         case 2:
             instagramViewController.view.removeFromSuperview()
             youtubeViewController.view.removeFromSuperview()
@@ -146,24 +168,17 @@ class SearchViewController: UIViewController {
             youtubeViewController.removeFromParent()
             tiktokViewController.didMove(toParent: self)
             addChildViewController(childViewController: tiktokViewController)
+            print("2")
         default:
             print("errorrrrr")
         }
     }
-     
+    
+    
+    
+    
+    
 }
 
-extension SearchViewController: UISearchControllerDelegate {
-    func willPresentSearchController(_ searchController: UISearchController) {
-        tabBarController?.tabBar.isHidden = true
-        blurEffectView.isHidden = false
-        stickyButton.isHidden = true
-    }
 
 
-    func willDismissSearchController(_ searchController: UISearchController) {
-        tabBarController?.tabBar.isHidden = false
-        blurEffectView.isHidden = true
-        stickyButton.isHidden = false
-    }
-}

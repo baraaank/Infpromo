@@ -29,6 +29,8 @@ class TabBarController: UITabBarController {
         nav4.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
         
         tabBar.tintColor = UIColor().infpromo
+//        tabBar.tintColor = UIColor.black
+        navigationController?.navigationBar.tintColor = .white
         
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
     }

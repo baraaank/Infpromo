@@ -14,21 +14,11 @@ struct BuyingOptions {
     let earningPercent: String
 }
 
-class Section {
-    let title: String
-    let description: String
-    var isOpened: Bool = false
-    
-    init(title: String, description: String, isOpened: Bool = false) {
-        self.title = title
-        self.description = description
-        self.isOpened = isOpened
-    }
-}
+
 
 class BuyReportViewController: UIViewController {
     
-    private var sections = [Section]()
+    
     
     var buyingOptionsArray = [
         BuyingOptions(reportNumber: "2 Rapor", reportPriceBeforeDisc: "", reportPrice: "16 TL", earningPercent: ""),
@@ -41,13 +31,17 @@ class BuyReportViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
         scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = .systemGray6
         return scrollView
     }()
     
     private let FAQTableView: UITableView  = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.isScrollEnabled = false
+        
+        
+        tableView.backgroundColor = .systemGray6
+        
         return tableView
     }()
     
@@ -66,8 +60,9 @@ class BuyReportViewController: UIViewController {
         }) )
         
         collectionView.register(BuyingOptionsCollectionViewCell.self, forCellWithReuseIdentifier: BuyingOptionsCollectionViewCell.reuseIdentifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemGray6
         collectionView.isScrollEnabled = false
+        
         return collectionView
     }()
     
@@ -83,7 +78,7 @@ class BuyReportViewController: UIViewController {
     private let FAQTitleTextLabel: UILabel = {
         let label = UILabel()
         label.text = "Raporda neler var ?"
-        label.attributedText = NSAttributedString(string: "Raporda neler var ?", attributes: [NSAttributedString.Key.foregroundColor : UIColor().infpromo, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 24, weight: .bold)])
+        label.attributedText = NSAttributedString(string: "Raporda neler var ?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 24, weight: .regular)])
         return label
     }()
     
@@ -91,12 +86,12 @@ class BuyReportViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Purchase"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor().infpromo]
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor().infpromo]
+//        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor().infpromo]
         
         addSubviews()
-        addSections()
+        
         
         scrollView.delegate = self
 
@@ -106,7 +101,7 @@ class BuyReportViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
           
-        
+        view.backgroundColor = .systemGray6
     }
     
     func addSubviews() {
@@ -122,23 +117,14 @@ class BuyReportViewController: UIViewController {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
         mailButton.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
-        FAQTitleTextLabel.frame = CGRect(x: 20, y: mailButton.bottom + 20, width: view.width - 60, height: 60)
-        FAQTableView.frame = CGRect(x: 0, y: FAQTitleTextLabel.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 20)
-        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height + FAQTitleTextLabel.height + 60)
+        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 100)
+        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height)
         
     }
     
     
     
-    func addSections() {
-        sections = [
-            Section(title: "Influencerın profil özellikleri", description: "influencerın takipçi, ortalama beğeni (grafikler halinde),ortalama yorum sayıları, toplam etkileşimi ve etkileşim oranı."),
-            Section(title: "Influencerın post özellikleri", description: "influencerın paylaştığı en çok etkileşim alan postları, son 8 post etkileşimi ve beğeni sayılarındaki artış azalış grafikler halinde. En çok kullandığı #hashtagler ve @mentionlar."),
-            Section(title: "Influencerın takipçilerine göre kitle verileri", description: "influencerın fake takipçi oranları, takipçilerin (grafikler halinde) yaş aralıkları, cinsiyet oranları, marka yakınlıkları ve ilgi alanları."),
-            Section(title: "Influencerın post beğenilerine göre kitle verileri", description: "influencerın postlarını beğenen kullanıcıların reel oranı, takipçi olmayan kullanıcılardan gelen beğeni oranı, beğenen kullanıcıların (grafikler halinde) lokasyon, cinsiyet ve yaş aralıkları.")
-        ]
-    }
-    
+   
     
 }
 
@@ -151,8 +137,9 @@ extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BuyingOptionsCollectionViewCell.reuseIdentifier, for: indexPath) as! BuyingOptionsCollectionViewCell
         cell.backgroundColor = .white
-        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
-        cell.layer.borderWidth = 1
+//        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
+//        cell.layer.borderWidth = 1
+//        cell.backgroundColor = .tertiarySystemFill
         cell.configureCellContent(with: buyingOptionsArray[indexPath.row])
         return cell
     }
@@ -162,67 +149,54 @@ extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewD
 //UITableView
 extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = sections[section]
-        
-        if section.isOpened {
-            return 2
-        } else {
-            return 1
-        }
+        1
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
-    }
-      
+   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.accessoryType = .detailButton
-        if indexPath.row == 0 {
-            cell.textLabel?.numberOfLines = 0
-            let cellString = sections[indexPath.section].title
-            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 22), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
-        } else {
-            cell.accessoryType = .none
-            cell.textLabel?.numberOfLines = 0
-            let cellString = sections[indexPath.section].description
-            cell.textLabel?.attributedText = NSAttributedString(string: cellString, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
-            
-        }
-
+        cell.textLabel?.text = "Raporda Neler Var?"
+        cell.accessoryType = .disclosureIndicator
         return cell
         
     }
     
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
-        
-        tableView.reloadSections([indexPath.section], with: .none)
-        
-       
-        UIView.animate(withDuration: 0.6) {
-            if self.sections[indexPath.section].isOpened {
-                tableView.beginUpdates()
-                
-                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
-                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
-                self.FAQTableView.reloadData()
-                tableView.endUpdates()
-            } else {
-                tableView.beginUpdates()
-                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
-                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
-                self.FAQTableView.reloadData()
-                tableView.endUpdates()
-                
-            }
-        }
-        
-    
+        let vc = WhatsInReportsViewController()
+//        vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        tableView.deselectRow(at: indexPath, animated: true)
+//
+//        sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
+//
+//        tableView.reloadSections([indexPath.section], with: .none)
+//
+//
+//        UIView.animate(withDuration: 0.6) {
+//            if self.sections[indexPath.section].isOpened {
+//                tableView.beginUpdates()
+//
+//                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
+//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
+//                self.FAQTableView.reloadData()
+//                tableView.endUpdates()
+//            } else {
+//                tableView.beginUpdates()
+//                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
+//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
+//                self.FAQTableView.reloadData()
+//                tableView.endUpdates()
+//
+//            }
+//        }
+//
+//
+//    }
 }

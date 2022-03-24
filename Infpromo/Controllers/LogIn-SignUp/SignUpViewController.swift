@@ -135,8 +135,10 @@ class SignUpViewController: UIViewController {
         addSubViews()
         arrangeLayouts()
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+       
        
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -273,6 +275,7 @@ extension SignUpViewController {
                 
                 if signUpButton.frame.maxY > keyboardSize.minY {
                     logoImageView.isHidden = true
+                    logoImageView.alpha = 0.0
                     nameTextField.frame = CGRect(x: 20, y: 40, width: view.width - 40, height: 50)
                     surnameTextField.frame = CGRect(x: 20, y: nameTextField.bottom + 10, width: view.width - 40, height: 50)
                     emailTextField.frame = CGRect(x: 20, y: surnameTextField.bottom + 10, width: view.width - 40, height: 50)
@@ -280,9 +283,13 @@ extension SignUpViewController {
                     passwordAgainTextField.frame = CGRect(x: 20, y: passwordTextField.bottom + 10, width: view.width - 40, height: 50)
                     signUpButton.frame = CGRect(x: 20, y: passwordAgainTextField.bottom + 10, width: view.width - 40, height: 50)
                     checkBoxButton.isHidden = true
+                    checkBoxButton.alpha = 0.0
                     userAgreementButton.isHidden = true
+                    userAgreementButton.alpha = 0.0
                     youHaveAnAccountLabel.isHidden = true
+                    youHaveAnAccountLabel.alpha = 0.0
                     backToLogInButton.isHidden = true
+                    backToLogInButton.alpha = 0.0
                 }
             }
         }
@@ -290,13 +297,32 @@ extension SignUpViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 2.5) {
+                self.arrangeLayouts()
+                self.logoImageView.isHidden = false
+                self.checkBoxButton.isHidden = false
+                self.userAgreementButton.isHidden = false
+                self.youHaveAnAccountLabel.isHidden = false
+                self.backToLogInButton.isHidden = false
+                self.logoImageView.alpha = 0.8
+                self.checkBoxButton.alpha = 1.0
+                self.userAgreementButton.alpha = 1.0
+                self.youHaveAnAccountLabel.alpha = 1.0
+                self.backToLogInButton.alpha = 1.0
+            } completion: { _ in
+                self.logoImageView.alpha = 1.0
+            }
+
+        }
         
-        arrangeLayouts()
-        logoImageView.isHidden = false
-        checkBoxButton.isHidden = false
-        userAgreementButton.isHidden = false
-        youHaveAnAccountLabel.isHidden = false
-        backToLogInButton.isHidden = false
+   
+        
+            
+            
+            
+        
+        
         
 //        if view.frame.origin.y != 0 {
 //                self.view.frame.origin.y = 0

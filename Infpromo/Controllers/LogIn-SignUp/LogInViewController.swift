@@ -136,6 +136,15 @@ class LogInViewController: UIViewController {
     }
     
     @objc func logInButtonTapped() {
+        
+        APICaller.shared.logInUser(email: usernameTextField.text!, password: passwordTextField.text!) { response in
+            switch response {
+            case .success(let model):
+                print(model.token)
+            case .failure(let error):
+                print(error)
+            }
+        }
         let vc = TabBarController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
