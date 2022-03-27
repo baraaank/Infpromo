@@ -210,92 +210,74 @@
 import UIKit
 
 
-var headingsArray: [SearchHeadings] = [
-        SearchHeadings(heading: "Influencer Özellikleri", options: ["nil"], isCollapse: false),
-        SearchHeadings(heading: "Min Takipçi Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"], isCollapse: true),
-        SearchHeadings(heading: "Max Takipçi Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000", "5.000.000", "5.000.000+"], isCollapse: true),
-        SearchHeadings(heading: "Lokasyon", options: ["Turkey", "France", "United States", "Brazil", "Italy", "Germany", "India", "Russia", "Canada", "Mexico City", "Australia", "United Kingdom", "Iran", "Greece", "Spain", "Japan", "Poland", "Argentina", "New York City", "Mexico"], isCollapse: true),
-        SearchHeadings(heading: "Cinsiyet", options: ["Kadın", "Erkek"], isCollapse: true),
-        SearchHeadings(heading: "İlgi Alanları", options: ["Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"], isCollapse: true),
-        SearchHeadings(heading: "Dil", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
-        SearchHeadings(heading: "Etkileşim Oranı", options: ["\u{2265}1 %", "\u{2265}2 %", "\u{2265}3 %", "\u{2265}4 %", "\u{2265}5 %", "\u{2265}6 %", "\u{2265}7 %", "\u{2265}8 %", "\u{2265}9 %", "\u{2265}10 %", "\u{2265}11 %", "\u{2265}12 %", "\u{2265}13 %", "\u{2265}14 %", "\u{2265}15 %", "\u{2265}16 %", "\u{2265}17 %", "\u{2265}18 %", "\u{2265}19 %", "\u{2265}20 %",], isCollapse: true),
-        SearchHeadings(heading: "Youtube Hesabı", options: ["Var", "Yok"], isCollapse: true),
-        SearchHeadings(heading: "Takipçi Özellikleri", options: ["nil"], isCollapse: false),
-        SearchHeadings(heading: "Takipçi Cinsiyet Yoğunluğu", options: ["Kadın", "Erkek"], isCollapse: true),
-        SearchHeadings(heading: "Takipçi Yaş Aralığı", options: ["18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"], isCollapse: true),
-        SearchHeadings(heading: "Takipçi İlgi Alanları", options: ["Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"], isCollapse: true),
-        SearchHeadings(heading: "Takipçi Dili", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
-        SearchHeadings(heading: "", options: [""], isCollapse: true),
-        SearchHeadings(heading: "", options: [""], isCollapse: true),
-    ]
+
 
 class InstagramSearchViewController: UIViewController {
     
     
     //InfluencersProperties
-    let influencerPropertiesHeadings = [
+    let influencerPropertiesHeadingsInstagram = [
         "Min Takipçi Sayısı", "Max Takipçi Sayısı", "Lokasyon", "Cinsiyet", "İlgi Alanları", "Dil", "Etkileşim Oranı", "Youtube Hesabı"
     ]
     
-    let arrayOneInfluencer = [
+    let arrayOneInfluencerInstagram = [
         "25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"
     ]
     
-    let arrayTwoInfluencer = [
+    let arrayTwoInfluencerInstagram = [
         "25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000", "5.000.000", "5.000.000+"
     ]
     
-    let arrayThreeInfluencer = [
+    let arrayThreeInfluencerInstagram = [
         "Turkey", "France", "United States", "Brazil", "Italy", "Germany", "India", "Russia", "Canada", "Mexico City", "Australia", "United Kingdom", "Iran", "Greece", "Spain", "Japan", "Poland", "Argentina", "New York City", "Mexico"
     ]
     
-    let arrayFourInfluencer = [
+    let arrayFourInfluencerInstagram = [
         "Kadın", "Erkek"
     ]
     
-    let arrayFiveInfluencer = [
+    let arrayFiveInfluencerInstagram = [
         "Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"
     ]
     
-    let arraySixInfluencer = [
+    let arraySixInfluencerInstagram = [
         "Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"
     ]
     
-    let arraySevenInfluencer = [
+    let arraySevenInfluencerInstagram = [
         "\u{2265}1 %", "\u{2265}2 %", "\u{2265}3 %", "\u{2265}4 %", "\u{2265}5 %", "\u{2265}6 %", "\u{2265}7 %", "\u{2265}8 %", "\u{2265}9 %", "\u{2265}10 %", "\u{2265}11 %", "\u{2265}12 %", "\u{2265}13 %", "\u{2265}14 %", "\u{2265}15 %", "\u{2265}16 %", "\u{2265}17 %", "\u{2265}18 %", "\u{2265}19 %", "\u{2265}20 %"
     ]
     
-    let arrayEightInfluencer = [
+    let arrayEightInfluencerInstagram = [
         "Var", "Yok"
     ]
     
-    var populateInfluencer = [
+    var populateInfluencerInstagram = [
         "25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"
     ]
     
-    
     //FollowersProperties
-    let followersPropertiesHeadings = [
+    let followersPropertiesHeadingsInstagram = [
         "Takipçi Cinsiyet Yoğunluğu", "Takipçi Yaş Aralığı", "Takipçi İlgi Alanları", "Takipçi Dili"
     ]
     
-    let arrayOneFollowers = [
+    let arrayOneFollowersInstagram = [
         "Kadın", "Erkek"
     ]
     
-    let arrayTwoFollowers = [
+    let arrayTwoFollowersInstagram = [
         "18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"
     ]
     
-    let arrayThreeFollowers = [
+    let arrayThreeFollowersInstagram = [
         "Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"
     ]
     
-    let arrayFourFollowers = [
+    let arrayFourFollowersInstagram = [
         "Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"
     ]
     
-    var populateFollowers = [
+    var populateFollowersInstagram = [
         "Kadın", "Erkek"
     ]
     
@@ -419,12 +401,14 @@ class InstagramSearchViewController: UIViewController {
         view.addSubview(followersPropertiesOptionsTableView)
     }
     
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         searchBar.frame = CGRect(x: 10, y: segmented.bottom + 20, width: view.width - 20, height: 40)
         searchButton.frame = CGRect(x: 20, y: view.height - 120 , width: view.width - 40, height: 50)
-        influencerPropertiesHeadingsTableView.frame = CGRect(x: 0, y: segmented.bottom + 20, width: view.width / 3, height: view.height - label.height - searchButton.height - 70 - 100)
+        influencerPropertiesHeadingsTableView.frame = CGRect(x: 0, y: segmented.bottom + 20, width: view.width / 3, height: view.height - searchButton.height - 70 - 100)
         influencerPropertiesOptionsTableView.frame = CGRect(x: influencerPropertiesHeadingsTableView.right, y: segmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: influencerPropertiesHeadingsTableView.height)
         followersPropertiesHeadingsTableView.frame = CGRect(x: 0, y: segmented.bottom + 20, width: view.width / 3, height: view.height - label.height - searchButton.height - 70 - 100)
         followersPropertiesOptionsTableView.frame = CGRect(x: followersPropertiesHeadingsTableView.right, y: segmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: followersPropertiesHeadingsTableView.height)
@@ -467,13 +451,13 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case influencerPropertiesHeadingsTableView:
-            return influencerPropertiesHeadings.count
+            return influencerPropertiesHeadingsInstagram.count
         case influencerPropertiesOptionsTableView:
-            return populateInfluencer.count
+            return populateInfluencerInstagram.count
         case followersPropertiesHeadingsTableView:
-            return followersPropertiesHeadings.count
+            return followersPropertiesHeadingsInstagram.count
         case followersPropertiesOptionsTableView:
-            return populateFollowers.count
+            return populateFollowersInstagram.count
         default:
             return 1
         }
@@ -483,19 +467,19 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
         switch tableView {
         case influencerPropertiesHeadingsTableView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "influencerPropertiesHeadingsCell", for: indexPath)
-            cell.textLabel?.text = influencerPropertiesHeadings[indexPath.row]
+            cell.textLabel?.text = influencerPropertiesHeadingsInstagram[indexPath.row]
             return cell
         case influencerPropertiesOptionsTableView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "influencerPropertiesOptionsCell", for: indexPath)
-            cell.textLabel?.text = populateInfluencer[indexPath.row]
+            cell.textLabel?.text = populateInfluencerInstagram[indexPath.row]
             return cell
         case followersPropertiesHeadingsTableView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "followersPropertiesHeadingsCell", for: indexPath)
-            cell.textLabel?.text = followersPropertiesHeadings[indexPath.row]
+            cell.textLabel?.text = followersPropertiesHeadingsInstagram[indexPath.row]
             return cell
         case followersPropertiesOptionsTableView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "followersPropertiesOptionsCell", for: indexPath)
-            cell.textLabel?.text = populateFollowers[indexPath.row]
+            cell.textLabel?.text = populateFollowersInstagram[indexPath.row]
             return cell
         default:
             return UITableViewCell()
@@ -556,40 +540,40 @@ extension InstagramSearchViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func populateInfluencerArray(sender: Int) {
-        populateInfluencer.removeAll()
+        populateInfluencerInstagram.removeAll()
         switch sender {
         case 0:
-            populateInfluencer = arrayOneInfluencer
+            populateInfluencerInstagram = arrayOneInfluencerInstagram
         case 1:
-            populateInfluencer = arrayTwoInfluencer
+            populateInfluencerInstagram = arrayTwoInfluencerInstagram
         case 2:
-            populateInfluencer = arrayThreeInfluencer
+            populateInfluencerInstagram = arrayThreeInfluencerInstagram
         case 3:
-            populateInfluencer = arrayFourInfluencer
+            populateInfluencerInstagram = arrayFourInfluencerInstagram
         case 4:
-            populateInfluencer = arrayFiveInfluencer
+            populateInfluencerInstagram = arrayFiveInfluencerInstagram
         case 5:
-            populateInfluencer = arraySixInfluencer
+            populateInfluencerInstagram = arraySixInfluencerInstagram
         case 6:
-            populateInfluencer = arraySevenInfluencer
+            populateInfluencerInstagram = arraySevenInfluencerInstagram
         case 7:
-            populateInfluencer = arrayEightInfluencer
+            populateInfluencerInstagram = arrayEightInfluencerInstagram
         default:
             print("oooooerrrrrororoorororor")
         }
     }
     
     func populateFollowersArray(sender: Int) {
-        populateFollowers.removeAll()
+        populateFollowersInstagram.removeAll()
         switch sender {
         case 0:
-            populateFollowers = arrayOneFollowers
+            populateFollowersInstagram = arrayOneFollowersInstagram
         case 1:
-            populateFollowers = arrayTwoFollowers
+            populateFollowersInstagram = arrayTwoFollowersInstagram
         case 2:
-            populateFollowers = arrayThreeFollowers
+            populateFollowersInstagram = arrayThreeFollowersInstagram
         case 3:
-            populateFollowers = arrayFourFollowers
+            populateFollowersInstagram = arrayFourFollowersInstagram
         default:
             print("oooooerrrrrororoorororor")
         }

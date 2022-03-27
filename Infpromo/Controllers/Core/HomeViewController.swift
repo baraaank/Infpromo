@@ -9,6 +9,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
 //        scrollView.contentSize = CGSize(width: 240, height: 2400)
@@ -25,7 +27,7 @@ class HomeViewController: UIViewController {
     
     private let mostVisitedReportsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.6))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.40), heightDimension: .fractionalWidth(0.65))
@@ -44,18 +46,18 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    private let searchResultCollectionView: UICollectionView = {
+    let searchResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
             let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3))
 
             let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: SearchResultCollectionReusableView.kind, alignment: .bottom)
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.33))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
@@ -123,8 +125,15 @@ class HomeViewController: UIViewController {
         return imageView
     }()
     
+    var mostViewedArray: [MostViewedProfileData] = []
+    var viewCountArray: [Int] = []
+    
+    var directProfileResponseArray: [DirectProfileResponse] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         
         
@@ -173,8 +182,70 @@ class HomeViewController: UIViewController {
         searchResultCollectionView.delegate = self
         
         filterButton.addTarget(self, action: #selector(filterButtonClicked), for: .touchUpInside)
-           
+        
+        print("viewdidload")
+        
+        loadViewElements()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByUsername), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
+      
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.searchResultCollectionView.reloadData()
+        }
+        print("view will appear called")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
+        print("view did appear called")
+    }
+    
+    @objc func refreshUIByUsername(_ notification: NSNotification) {
+
+        if let byUsernameDict = notification.userInfo?["dataDict"] as? [DirectProfileResponse] {
+            directProfileResponseArray = byUsernameDict
+            DispatchQueue.main.async {
+                self.searchResultCollectionView.reloadData()
+            }
+        }
+    }
+    
+    
+    func loadViewElements() {
+        APICaller.shared.getMostViews { response in
+            switch response {
+            case .success(let response):
+                var mostViewedProfileData: [MostViewedProfileData] = []
+                mostViewedProfileData.append(contentsOf: response.data.reports.map({.init(fullname: $0.data.profile.profile.fullname,
+                                                                                        username: $0.data.profile.profile.username,
+                                                                                        url: $0.data.profile.profile.url,
+                                                                                        picture: $0.data.profile.profile.picture,
+                                                                                        followers: $0.data.profile.profile.followers,
+                                                                                        engagementRate: $0.data.profile.profile.engagementRate,
+                                                                                        engagements: $0.data.profile.profile.engagements)}))
+                self.mostViewedArray = mostViewedProfileData.prefix(8).map({$0}) // get first 8 item
+                var viewCount: [Int] = []
+                viewCount.append(contentsOf: response.data.reports.map({
+                    $0.viewCount
+                }))
+                self.viewCountArray = viewCount
+                
+                DispatchQueue.main.async {
+                    self.mostVisitedReportsCollectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     
     func addSubviews() {
         view.addSubview(scrollView)
@@ -202,24 +273,28 @@ class HomeViewController: UIViewController {
     
     @objc func filterButtonClicked() {
         let vc = SearchViewController()
-        let navVc = UINavigationController(rootViewController: vc)
-        navVc.modalPresentationStyle = .formSheet
+//        let navVc = UINavigationController(rootViewController: vc)
+//        navVc.modalPresentationStyle = .formSheet
+        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
         
         
 //        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         
-        navigationController?.present(navVc, animated: true)
+//        navigationController?.present(navVc, animated: true)
     }
     
     @objc func searchButtonClicked() {
         let vc = SearchViewController()
-        let navVc = UINavigationController(rootViewController: vc)
-        navVc.modalPresentationStyle = .formSheet
+//        let navVc = UINavigationController(rootViewController: vc)
+//        navVc.modalPresentationStyle = .formSheet
+        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
         
         
 //        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         
-        navigationController?.present(navVc, animated: true)
+//        navigationController?.present(navVc, animated: true)
         
     }
         
@@ -229,29 +304,74 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.searchResultCollectionView {
-            return 12
+            
+            if directProfileResponseArray.count == 0 {
+                return 12
+            } else {
+                return 1
+            }
+            
         } else {
-            return 7
+            if mostViewedArray.count == 0 {
+                return 12
+            } else {
+                return mostViewedArray.count
+            }
+            
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.mostVisitedReportsCollectionView {
             //Most visited reports cell
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MostVisitedReportsCollectionViewCell.reuseIdentifier, for: indexPath) as! MostVisitedReportsCollectionViewCell
             cell.backgroundColor = .white
-//            cell.layer.borderColor = UIColor.systemGray4.cgColor
-//
-//            cell.layer.borderWidth = 1
-//            cell.backgroundColor = .tertiarySystemFill
+
+            if mostViewedArray.count == 0 {
+                // do skeleton view
+                cell.contentView.backgroundColor = .white
+            } else {
+                let mostViewed = mostViewedArray[indexPath.row]
+                let viewCount = viewCountArray[indexPath.row]
+                cell.configureCellData(with: MostViewedProfileDataCellViewModel(viewCount: viewCount,
+                                                                                fullname: mostViewed.fullname ?? "",
+                                                                                username: "",
+                                                                                url: "",
+                                                                                picture: mostViewed.picture,
+                                                                                followers: mostViewed.followers ?? 1,
+                                                                                engagementRate: mostViewed.engagementRate ?? 1,
+                                                                                engagements: 1))
+                cell.contentView.backgroundColor = .clear
+            }
+            
+            
+            
+            
+
             return cell
         } else {
             //Search result reports cell
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath) as! SearchResultCollectionViewCell
             cell.backgroundColor = .white
-//            cell.layer.borderColor = UIColor.systemGray4.cgColor
-//            cell.layer.borderWidth = 1
-//            cell.backgroundColor = .tertiarySystemFill
+
+            
+            if directProfileResponseArray.count == 0 {
+                cell.contentView.backgroundColor = .white
+            } else {
+                let directProfileResponse = directProfileResponseArray[indexPath.row]
+                cell.configureCellData(with: SearchByUsernameCellViewModel(engagementRate: directProfileResponse.engagementRate,
+                                                                           engagements: directProfileResponse.engagements,
+                                                                           followers: directProfileResponse.followers,
+                                                                           fullName: directProfileResponse.fullName,
+                                                                           picture: directProfileResponse.picture,
+                                                                           username: directProfileResponse.username))
+                cell.contentView.backgroundColor = .clear
+            }
+                
+            
+                
+            
+            
             return cell
         }
         
@@ -274,4 +394,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     
 }
+
+
 

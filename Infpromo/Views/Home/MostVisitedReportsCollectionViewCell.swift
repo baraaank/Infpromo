@@ -84,13 +84,16 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        numberOfViewsLabel.frame = CGRect(x: 10, y: 5, width: width - 20, height: 20)
+        
+        let fiveOfOneHeight = height / 11
+        numberOfViewsLabel.frame = CGRect(x: 10, y: 5, width: width - 20, height: fiveOfOneHeight)
         imageView.frame = CGRect(x: width / 4, y: numberOfViewsLabel.bottom + 5, width: width / 2, height: width / 2)
         imageView.layer.cornerRadius = width / 4
-        nameLabel.frame = CGRect(x: width / 6, y: imageView.bottom + 5, width: width / 1.5, height: 20)
-        numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameLabel.bottom + 5, width: width / 1.5, height: 20)
-        numberOfEngagementRateLabel.frame = CGRect(x: width / 6, y: numberOfFollowersLabel.bottom + 5, width: width / 1.5, height: 20)
-        button.frame = CGRect(x: width / 6, y: numberOfEngagementRateLabel.bottom + 5, width: width / 1.5, height: 30)
+        nameLabel.frame = CGRect(x: 10, y: imageView.bottom + 5, width: width - 20, height: fiveOfOneHeight)
+        numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
+        numberOfEngagementRateLabel.frame = CGRect(x: width / 6, y: numberOfFollowersLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
+        button.frame = CGRect(x: width / 6, y: numberOfEngagementRateLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight * 1.5)
+        
     }
     
     func configureCell() {
@@ -116,5 +119,36 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         
     }
     
-    
+    func configureCellData(with viewModel: MostViewedProfileDataCellViewModel) {
+        nameLabel.text = viewModel.fullname
+        
+        guard let followers = viewModel.followers else {
+            return
+        }
+        let formattedFollowers = followers.formattedWithSeparator
+        let clearFollowers = formattedFollowers.prefix(4)
+        numberOfFollowersLabel.text = "\(clearFollowers) M"
+        guard let engagement = viewModel.engagementRate else {
+            return
+        }
+        let clearEngagementRate = Double(engagement * 100)
+        let clearEngagement = clearEngagementRate.truncate(places: 2)
+        
+        numberOfEngagementRateLabel.text = "\(clearEngagement) %"
+        
+        guard let image = viewModel.picture else {
+            return
+        }
+        guard let imageURL = URL(string: image) else {
+            return
+        }
+        let imageData = try? Data(contentsOf: imageURL)
+        imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
+        
+        guard let viewCount = viewModel.viewCount else {
+            return
+        }
+        numberOfViewsLabel.text = String("\(viewCount * 113) kez görüntülendi.")
+        
+    }
 }

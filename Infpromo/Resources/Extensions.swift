@@ -43,3 +43,22 @@ extension UIColor {
         return UIColor(red: 228/255, green: 228/255, blue: 228/255, alpha: 0.8)
     }
 }
+
+extension Double {
+    func truncate(places: Int) -> Double {
+        return Double(floor(pow(10.0, Double(places)) * self) / pow(10.0, Double(places)))
+    }
+}
+
+extension Formatter {
+    static let dotSeparator: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        return formatter
+    }()
+}
+
+extension Numeric {
+    var formattedWithSeparator: String { Formatter.dotSeparator.string(for: self) ?? "" }
+}

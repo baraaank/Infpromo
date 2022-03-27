@@ -129,9 +129,21 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             vc.sendButton.backgroundColor = .systemRed
             navigationController?.pushViewController(vc, animated: true)
         case 4:
-            let vc = LogInViewController()
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            
+            AuthManager.shared.signOut { [weak self] signedOut in
+                if signedOut {
+                    DispatchQueue.main.async {
+                        let vc = LogInViewController()
+                        vc.modalPresentationStyle = .fullScreen
+                        self?.present(vc, animated: true)
+                    }
+                }
+                else {
+                    print("signed out error")
+                }
+            }
+            
+            
         default:
             print("error")
         }

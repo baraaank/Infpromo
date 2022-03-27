@@ -39,6 +39,7 @@ class BuyReportViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
+        tableView.isScrollEnabled = false
         
         tableView.backgroundColor = .systemGray6
         

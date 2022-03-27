@@ -9,23 +9,23 @@
 //
 //class YoutubeSearchViewController: UIViewController {
 //
-//    var headingsArray: [SearchHeadings] = [
-//        SearchHeadings(heading: "Influencer Özellikleri", options: ["nil"], isCollapse: false),
-//        SearchHeadings(heading: "Min Abone Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"], isCollapse: true),
-//        SearchHeadings(heading: "Max Abone Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000", "5.000.000", "5.000.000+"], isCollapse: true),
-//        SearchHeadings(heading: "Min Görüntülenme Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000"], isCollapse: true),
-//        SearchHeadings(heading: "Max Görüntülenme Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.000.000+"], isCollapse: true),
-//        SearchHeadings(heading: "Lokasyon", options: ["Turkey", "France", "United States", "Brazil", "Italy", "Germany", "India", "Russia", "Canada", "Mexico City", "Australia", "United Kingdom", "Iran", "Greece", "Spain", "Japan", "Poland", "Argentina", "New York City", "Mexico"], isCollapse: true),
-//        SearchHeadings(heading: "Cinsiyet", options: ["Kadın", "Erkek"], isCollapse: true),
-//        SearchHeadings(heading: "Dil", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
-//        SearchHeadings(heading: "Etkileşim Oranı", options: ["\u{2265}1 %", "\u{2265}2 %", "\u{2265}3 %", "\u{2265}4 %", "\u{2265}5 %", "\u{2265}6 %", "\u{2265}7 %", "\u{2265}8 %", "\u{2265}9 %", "\u{2265}10 %", "\u{2265}11 %", "\u{2265}12 %", "\u{2265}13 %", "\u{2265}14 %", "\u{2265}15 %", "\u{2265}16 %", "\u{2265}17 %", "\u{2265}18 %", "\u{2265}19 %", "\u{2265}20 %",], isCollapse: true),
-//        SearchHeadings(heading: "Takipçi Özellikleri", options: ["nil"], isCollapse: false),
-//        SearchHeadings(heading: "Takipçi Cinsiyet Yoğunluğu", options: ["Kadın", "Erkek"], isCollapse: true),
-//        SearchHeadings(heading: "Takipçi Yaş Aralığı", options: ["18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"], isCollapse: true),
-//        SearchHeadings(heading: "Takipçi Dili", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
-//        SearchHeadings(heading: "", options: [""], isCollapse: true),
-//        SearchHeadings(heading: "", options: [""], isCollapse: true)
-//    ]
+    var headingsArray: [SearchHeadings] = [
+        SearchHeadings(heading: "Influencer Özellikleri", options: ["nil"], isCollapse: false),
+        SearchHeadings(heading: "Min Abone Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000"], isCollapse: true),
+        SearchHeadings(heading: "Max Abone Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000", "3.000.000", "4.000.000", "5.000.000", "5.000.000+"], isCollapse: true),
+        SearchHeadings(heading: "Min Görüntülenme Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000"], isCollapse: true),
+        SearchHeadings(heading: "Max Görüntülenme Sayısı", options: ["25.000", "50.000", "75.000", "100.000", "150.000", "200.000", "300.000", "500.000", "1.000.000", "1.000.000+"], isCollapse: true),
+        SearchHeadings(heading: "Lokasyon", options: ["Turkey", "France", "United States", "Brazil", "Italy", "Germany", "India", "Russia", "Canada", "Mexico City", "Australia", "United Kingdom", "Iran", "Greece", "Spain", "Japan", "Poland", "Argentina", "New York City", "Mexico"], isCollapse: true),
+        SearchHeadings(heading: "Cinsiyet", options: ["Kadın", "Erkek"], isCollapse: true),
+        SearchHeadings(heading: "Dil", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
+        SearchHeadings(heading: "Etkileşim Oranı", options: ["\u{2265}1 %", "\u{2265}2 %", "\u{2265}3 %", "\u{2265}4 %", "\u{2265}5 %", "\u{2265}6 %", "\u{2265}7 %", "\u{2265}8 %", "\u{2265}9 %", "\u{2265}10 %", "\u{2265}11 %", "\u{2265}12 %", "\u{2265}13 %", "\u{2265}14 %", "\u{2265}15 %", "\u{2265}16 %", "\u{2265}17 %", "\u{2265}18 %", "\u{2265}19 %", "\u{2265}20 %"], isCollapse: true),
+        SearchHeadings(heading: "Takipçi Özellikleri", options: ["nil"], isCollapse: false),
+        SearchHeadings(heading: "Takipçi Cinsiyet Yoğunluğu", options: ["Kadın", "Erkek"], isCollapse: true),
+        SearchHeadings(heading: "Takipçi Yaş Aralığı", options: ["18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"], isCollapse: true),
+        SearchHeadings(heading: "Takipçi Dili", options: ["Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"], isCollapse: true),
+        SearchHeadings(heading: "", options: [""], isCollapse: true),
+        SearchHeadings(heading: "", options: [""], isCollapse: true)
+    ]
 //
 //    private let tableView: UITableView = {
 //        let tableView = UITableView()

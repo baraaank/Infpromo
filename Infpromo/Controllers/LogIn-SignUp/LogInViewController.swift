@@ -137,17 +137,25 @@ class LogInViewController: UIViewController {
     
     @objc func logInButtonTapped() {
         
-        APICaller.shared.logInUser(email: usernameTextField.text!, password: passwordTextField.text!) { response in
+        guard let email = usernameTextField.text, let password = passwordTextField.text else {
+            print("username and password is not exist")
+            return
+        }
+        
+        AuthManager.shared.logInUser(email: email, password: password) { response in
             switch response {
-            case .success(let model):
-                print(model.token)
+            case .success(_):
+                DispatchQueue.main.async {
+                    let vc = TabBarController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+                
+               
             case .failure(let error):
-                print(error)
+                print("log in unsuccessful \(error)")
             }
         }
-        let vc = TabBarController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
 
 }
@@ -205,7 +213,6 @@ extension LogInViewController {
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        
         
         arrangeLayouts()
         forgotPasswordButton.isHidden = false

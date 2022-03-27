@@ -42,6 +42,11 @@
 		81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */; };
 		81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */; };
 		81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EE0127E9475400FDA44B /* APICaller.swift */; };
+		81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF227F04E9600A91739 /* AuthManager.swift */; };
+		81F61EF527F068D900A91739 /* MostViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF427F068D900A91739 /* MostViews.swift */; };
+		81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */; };
+		81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF927F0C1F700A91739 /* SearchByUsername.swift */; };
+		81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +87,11 @@
 		81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsInReportsViewController.swift; sourceTree = "<group>"; };
 		81E9EE0127E9475400FDA44B /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		81F61EF227F04E9600A91739 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		81F61EF427F068D900A91739 /* MostViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostViews.swift; sourceTree = "<group>"; };
+		81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostViewedProfileDataCellViewModel.swift; sourceTree = "<group>"; };
+		81F61EF927F0C1F700A91739 /* SearchByUsername.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsername.swift; sourceTree = "<group>"; };
+		81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsernameCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +157,7 @@
 				81AF029F27A27CDB0054F4C5 /* Resources */,
 				81AF02A027A27CE60054F4C5 /* Managers */,
 				81AF02A127A27CF00054F4C5 /* Models */,
+				81F61EF627F088D100A91739 /* ViewModel */,
 				81AF02A227A27CF70054F4C5 /* Views */,
 				81AF02A327A27CFD0054F4C5 /* Controllers */,
 				81AF0296279E9A980054F4C5 /* Info.plist */,
@@ -168,6 +179,7 @@
 		81AF02A027A27CE60054F4C5 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				81F61EF227F04E9600A91739 /* AuthManager.swift */,
 				81E9EE0127E9475400FDA44B /* APICaller.swift */,
 			);
 			path = Managers;
@@ -176,8 +188,10 @@
 		81AF02A127A27CF00054F4C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
 				81386A5327EA0D450051A886 /* User.swift */,
+				81F61EF427F068D900A91739 /* MostViews.swift */,
+				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
+				81F61EF927F0C1F700A91739 /* SearchByUsername.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +296,15 @@
 			path = BuyReportExtra;
 			sourceTree = "<group>";
 		};
+		81F61EF627F088D100A91739 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */,
+				81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -358,20 +381,24 @@
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
+				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				810AE0BD27D389BD00F23713 /* InstagramSearchTableViewCell.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
 				810AE0CB27D6518D00F23713 /* TiktokSearchTableViewCell.swift in Sources */,
+				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */,
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
+				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
 				81AF028B279E9A960054F4C5 /* SceneDelegate.swift in Sources */,
 				81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */,
 				819C5CE027CCF1AE00DAB0FE /* InstagramSearchViewController.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
+				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
 				819C5CE227CCF1BA00DAB0FE /* YoutubeSearchViewController.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
@@ -383,6 +410,7 @@
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,
 				819FFBDB27C2B8030083D3A2 /* SearchResultCollectionViewCell.swift in Sources */,
+				81F61EF527F068D900A91739 /* MostViews.swift in Sources */,
 				81386A5427EA0D450051A886 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

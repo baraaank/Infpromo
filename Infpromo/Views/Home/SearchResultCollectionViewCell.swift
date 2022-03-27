@@ -112,18 +112,19 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 ////        button.frame = CGRect(x: imageView.right + 110, y: imageView.bottom + 10, width: 150, height: 50)
 //        button.frame = CGRect(x: width - 120, y: height - 65, width: 100, height: 40)
         
+        let fiveOfOneHeight: CGFloat = height / 5.88
        
-        numberOfEngagementsAndRatesLabel.frame = CGRect(x: imageView.right + 5, y: 10, width: width / 2.2, height: 20)
-        engagementsAndRatesLabel.frame = CGRect(x: imageView.right + 5, y: numberOfEngagementsAndRatesLabel.bottom , width: width / 2.2, height: 20)
+        numberOfEngagementsAndRatesLabel.frame = CGRect(x: imageView.right + 5, y: 10, width: width / 2.2, height: fiveOfOneHeight)
+        engagementsAndRatesLabel.frame = CGRect(x: imageView.right + 5, y: numberOfEngagementsAndRatesLabel.bottom , width: width / 2.2, height: fiveOfOneHeight)
         
         
-        numberOfFollowersLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.right + 5, y: 10, width: width / 3.8, height: 20)
-        followersLabel.frame = CGRect(x: numberOfFollowersLabel.left, y: numberOfFollowersLabel.bottom , width: width / 3.8, height: 20)
+        numberOfFollowersLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.right + 5, y: 10, width: width / 3.8, height: fiveOfOneHeight)
+        followersLabel.frame = CGRect(x: numberOfFollowersLabel.left, y: numberOfFollowersLabel.bottom , width: width / 3.8, height: fiveOfOneHeight)
         
-        nameLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.left, y: engagementsAndRatesLabel.bottom + 15, width: width / 2.2, height: 20)
-        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: 20)
+        nameLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.left, y: engagementsAndRatesLabel.bottom + 15, width: width / 2.2, height: fiveOfOneHeight)
+        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
         
-        button.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: 40)
+        button.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
         
     }
     
@@ -148,5 +149,13 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 //        layer.shadowOffset = CGSize(width: 0, height: 3)
         
         
+    }
+    
+    func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
+        imageView.image = UIImage(named: viewModel.picture!) ?? UIImage(systemName: "pp")
+        nameLabel.text = viewModel.fullName ?? "aa"
+        usernameLabel.text = viewModel.username ?? "aa"
+        numberOfEngagementsAndRatesLabel.text = "\(viewModel.engagements)M (\(viewModel.engagementRate))" ?? "\(123)"
+        numberOfFollowersLabel.text = "\(viewModel.followers)" ?? "\(123)"
     }
 }
