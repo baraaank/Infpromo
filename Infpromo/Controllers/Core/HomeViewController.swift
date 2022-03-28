@@ -184,8 +184,10 @@ class HomeViewController: UIViewController {
         filterButton.addTarget(self, action: #selector(filterButtonClicked), for: .touchUpInside)
         
         print("viewdidload")
+        DispatchQueue.main.async {
+            self.loadViewElements()
+        }
         
-        loadViewElements()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByUsername), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
       
@@ -213,6 +215,7 @@ class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 self.searchResultCollectionView.reloadData()
             }
+            
         }
     }
     
@@ -222,6 +225,7 @@ class HomeViewController: UIViewController {
             switch response {
             case .success(let response):
                 var mostViewedProfileData: [MostViewedProfileData] = []
+                
                 mostViewedProfileData.append(contentsOf: response.data.reports.map({.init(fullname: $0.data.profile.profile.fullname,
                                                                                         username: $0.data.profile.profile.username,
                                                                                         url: $0.data.profile.profile.url,
@@ -356,7 +360,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
             
             if directProfileResponseArray.count == 0 {
-                cell.contentView.backgroundColor = .white
+//                cell.contentView.backgroundColor = .white
             } else {
                 let directProfileResponse = directProfileResponseArray[indexPath.row]
                 cell.configureCellData(with: SearchByUsernameCellViewModel(engagementRate: directProfileResponse.engagementRate,
@@ -365,7 +369,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                                            fullName: directProfileResponse.fullName,
                                                                            picture: directProfileResponse.picture,
                                                                            username: directProfileResponse.username))
-                cell.contentView.backgroundColor = .clear
+                print(directProfileResponse)
+//                cell.contentView.backgroundColor = .clear
             }
                 
             

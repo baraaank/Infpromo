@@ -151,4 +151,13 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         numberOfViewsLabel.text = String("\(viewCount * 113) kez görüntülendi.")
         
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.text = ""
+        numberOfFollowersLabel.text = ""
+        numberOfEngagementRateLabel.text = ""
+        imageView.image = nil
+        numberOfViewsLabel.text = ""
+    }
 }

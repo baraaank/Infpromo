@@ -8,9 +8,9 @@
 import Foundation
 
 struct SearchByUsernameCellViewModel {
-    let engagementRate: Double?
-    let engagements: Int?
-    let followers: Int?
+    let engagementRate: Float?
+    let engagements: Float?
+    let followers: Float?
     let fullName: String?
     let picture: String?
 //    let url: String?

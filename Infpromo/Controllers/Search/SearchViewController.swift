@@ -331,7 +331,8 @@ class SearchViewController: UIViewController {
                 directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
                     .init(engagementRate: $0.profile.engagementRate,
                           engagements: $0.profile.engagements,
-                          followers: $0.profile.followers, fullName: $0.profile.fullName,
+                          followers: $0.profile.followers,
+                          fullName: $0.profile.fullName,
                           picture: $0.profile.picture,
                           url: $0.profile.url,
                           username: $0.profile.username,

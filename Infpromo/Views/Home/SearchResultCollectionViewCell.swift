@@ -139,23 +139,39 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
 //        layer.shadowRadius = 4.0
 //
-//        // The color of the drop shadow
 //        layer.shadowColor = UIColor.lightGray.cgColor
 //
-//        // How transparent the drop shadow is
 //        layer.shadowOpacity = 0.4
 //
-//        // How far the shadow is offset from the UICollectionViewCell’s frame
 //        layer.shadowOffset = CGSize(width: 0, height: 3)
         
         
     }
     
     func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
-        imageView.image = UIImage(named: viewModel.picture!) ?? UIImage(systemName: "pp")
-        nameLabel.text = viewModel.fullName ?? "aa"
-        usernameLabel.text = viewModel.username ?? "aa"
-        numberOfEngagementsAndRatesLabel.text = "\(viewModel.engagements)M (\(viewModel.engagementRate))" ?? "\(123)"
-        numberOfFollowersLabel.text = "\(viewModel.followers)" ?? "\(123)"
+        
+        if let username = viewModel.username {
+            usernameLabel.text = username
+        }
+        
+        if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(engagementsRate))"
+        }
+       
+        if let followers = viewModel.followers {
+            numberOfFollowersLabel.text = "\(followers)"
+        }
+        
+        if let image = viewModel.picture {
+            if let imageURL = URL(string: image) {
+                let imageData = try? Data(contentsOf: imageURL)
+                imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
+            }
+        }
+        
+        
+        if let name = viewModel.fullName {
+            nameLabel.text = name
+        }
     }
 }
