@@ -130,6 +130,68 @@ final class APICaller {
     // barkutanlu@gmail.com
     
     
+    func getUser(completion: @escaping (Result<UserResponse, Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        createRequest(with: URL(string:Constants.baseAPIURL + "/users/\(userId)"), type: .GET) { baseRequest in
+            var request = baseRequest
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(GetUser.self, from: data)
+                    completion(.success(result.data.userPublic))
+                } catch {
+                    completion(.failure(error))
+                }
+                
+            }
+            task.resume()
+        }
+    }
+    
+    func getUserReports(completion: @escaping (Result<[ProfResResponse], Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+
+        createRequest(with: URL(string:Constants.baseAPIURL + "/users/\(userId)"), type: .GET) { baseRequest in
+            var request = baseRequest
+
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+
+                do {
+//                    let result = try JSONDecoder().decode(User.self, from: data)
+//                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    let result = try JSONDecoder().decode(GetUser.self, from: data)
+                    let resp = result.data.userPublic.reportsLog.map({
+                        $0.data.profile.profile
+                    })
+                    completion(.success(resp))
+                    
+                    
+                } catch {
+                    print("catching an error")
+                    completion(.failure(error))
+                }
+
+            }
+            task.resume()
+        }
+        
+    }
+    
     
     
 }

@@ -150,7 +150,6 @@ class LogInViewController: UIViewController {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 }
-                
                
             case .failure(let error):
                 print("log in unsuccessful \(error)")

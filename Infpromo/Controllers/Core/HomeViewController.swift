@@ -183,7 +183,7 @@ class HomeViewController: UIViewController {
         
         filterButton.addTarget(self, action: #selector(filterButtonClicked), for: .touchUpInside)
         
-        print("viewdidload")
+        
         DispatchQueue.main.async {
             self.loadViewElements()
         }
@@ -194,19 +194,6 @@ class HomeViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        DispatchQueue.main.async {
-            self.searchResultCollectionView.reloadData()
-        }
-        print("view will appear called")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-       
-        print("view did appear called")
-    }
     
     @objc func refreshUIByUsername(_ notification: NSNotification) {
 
@@ -366,10 +353,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.configureCellData(with: SearchByUsernameCellViewModel(engagementRate: directProfileResponse.engagementRate,
                                                                            engagements: directProfileResponse.engagements,
                                                                            followers: directProfileResponse.followers,
-                                                                           fullName: directProfileResponse.fullName,
+                                                                           fullname: directProfileResponse.fullname,
                                                                            picture: directProfileResponse.picture,
                                                                            username: directProfileResponse.username))
-                print(directProfileResponse)
+                
 //                cell.contentView.backgroundColor = .clear
             }
                 

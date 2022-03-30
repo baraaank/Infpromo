@@ -46,4 +46,12 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         nameLabel.frame = CGRect(x: 140 + 20, y: height / 2 - 20, width: width - profilePicture.width, height: 40)
     }
     
+    func configureHeader(with viewModel: ProfileHeaderReusableViewModel) {
+        if let name = viewModel.name {
+            if let surname = viewModel.surName {
+                nameLabel.text = "\(name) \(surname)"
+            }
+        }
+    }
+    
 }

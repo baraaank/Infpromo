@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
@@ -142,8 +143,9 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         guard let imageURL = URL(string: image) else {
             return
         }
-        let imageData = try? Data(contentsOf: imageURL)
-        imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
+//        let imageData = try? Data(contentsOf: imageURL)
+//        imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
+        imageView.sd_setImage(with: imageURL, completed: nil)
         
         guard let viewCount = viewModel.viewCount else {
             return

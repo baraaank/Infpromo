@@ -145,7 +145,7 @@ class SearchViewController: UIViewController {
     
     
     private let topLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Influencer Filtrele"
         
         label.textAlignment = .center
@@ -153,7 +153,7 @@ class SearchViewController: UIViewController {
     }()
     
     private let dismissViewButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         let image = UIImage(systemName: "xmark.square")
         button.imageView?.contentMode = .scaleAspectFit
         button.contentVerticalAlignment = .fill
@@ -254,7 +254,7 @@ class SearchViewController: UIViewController {
         customSegmented.delegate = self
         view.addSubview(customSegmented)
         
-//        searchButton.addTarget(self, action: searchButtonTapped, for: .touchUpInside)
+        //        searchButton.addTarget(self, action: searchButtonTapped, for: .touchUpInside)
         
         addSubviews()
         
@@ -332,13 +332,13 @@ class SearchViewController: UIViewController {
                     .init(engagementRate: $0.profile.engagementRate,
                           engagements: $0.profile.engagements,
                           followers: $0.profile.followers,
-                          fullName: $0.profile.fullName,
+                          fullname: $0.profile.fullname,
                           picture: $0.profile.picture,
                           url: $0.profile.url,
                           username: $0.profile.username,
                           isPrivate: $0.profile.isPrivate)
                 })
-            )
+                )
                 
                 
                 let dataDict: [String: [DirectProfileResponse]] = ["dataDict": directProfileResponse]
@@ -391,17 +391,20 @@ extension SearchViewController: CustomSegmentedControlDelegate {
             influencerOptionsTableView.isHidden = false
             followersHeadingsTableView.isHidden = true
             followersOptionsTableView.isHidden = true
+        
+            
             
             reloadTableViews()
-            print("changed1")
+            
         case 1:
             influencerHeadingsTableView.isHidden = true
             influencerOptionsTableView.isHidden = true
             followersHeadingsTableView.isHidden = false
             followersOptionsTableView.isHidden = false
+
             
             reloadTableViews()
-            print("changed2")
+            
         default:
             print("custom segmented switch default")
         }
@@ -464,6 +467,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -471,19 +476,27 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             switch tableView {
             case influencerHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = influencerPropertiesHeadingsInstagram[indexPath.row]
+                let cellText = influencerPropertiesHeadingsInstagram[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
+                
                 return cell
             case influencerOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateInfluencerInstagram[indexPath.row]
+                let cellText = populateInfluencerInstagram[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
+                cell.selectionStyle = .none
                 return cell
             case followersHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = followersPropertiesHeadingsInstagram[indexPath.row]
+                let cellText = followersPropertiesHeadingsInstagram[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
+                
                 return cell
             case followersOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateFollowersInstagram[indexPath.row]
+                let cellText = populateFollowersInstagram[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
+                cell.selectionStyle = .none
                 return cell
                 
             default:
@@ -497,19 +510,23 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             switch tableView {
             case influencerHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = influencerPropertiesHeadingsYT[indexPath.row]
+                let cellText = influencerPropertiesHeadingsYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case influencerOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateInfluencerYT[indexPath.row]
+                let cellText = populateInfluencerYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case followersHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = followersPropertiesHeadingsYT[indexPath.row]
+                let cellText = followersPropertiesHeadingsYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case followersOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateFollowersYT[indexPath.row]
+                let cellText = populateFollowersYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
                 
             default:
@@ -518,31 +535,35 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 
             }
             
-          
+            
         case 2:
             switch tableView {
             case influencerHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = influencerPropertiesHeadingsYT[indexPath.row]
+                let cellText = influencerPropertiesHeadingsYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case influencerOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateInfluencerYT[indexPath.row]
+                let cellText = populateInfluencerYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case followersHeadingsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
-                cell.textLabel?.text = followersPropertiesHeadingsYT[indexPath.row]
+                let cellText = followersPropertiesHeadingsYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
             case followersOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
-                cell.textLabel?.text = populateFollowersYT[indexPath.row]
+                let cellText = populateFollowersYT[indexPath.row]
+                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
                 return cell
                 
             default:
                 print("cellforrowat error")
             }
             
-     
+            
         default:
             print("")
         }
@@ -550,59 +571,91 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    //cell text attributtes
+    func cellConfig(cell: UITableViewCell, cellText: String, tableView: UITableView, indexPath: IndexPath) {
+        cell.textLabel?.attributedText = NSAttributedString(string: cellText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        cell.textLabel?.numberOfLines = 0
+        
+        
+        if let selectedRows = tableView.indexPathsForSelectedRows, selectedRows.contains(indexPath) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
+    }
+    
+    
+    //cell checkmark handled
+    func handleCheck(tableView: UITableView, indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        if cell?.accessoryType == .checkmark {
+            cell?.accessoryType = .none
+        } else {
+            cell?.accessoryType = .checkmark
+        }
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let headIndex = indexPath.row
+        
+        handleCheck(tableView: influencerOptionsTableView, indexPath: indexPath)
+        handleCheck(tableView: followersOptionsTableView, indexPath: indexPath)
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            
             switch tableView {
             case influencerHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateInfluencerArray(sender: x)
-                    
-                    influencerOptionsTableView.reloadData()
-                }
+                
+                populateInfluencerArray(sender: headIndex)
+                influencerOptionsTableView.reloadData()
+                
             case followersHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateFollowersArray(sender: x)
-                    
-                    followersOptionsTableView.reloadData()
-                }
+                
+                populateFollowersArray(sender: headIndex)
+                followersOptionsTableView.reloadData()
+                
+            case influencerOptionsTableView:
+                print(populateInfluencerInstagram[indexPath.row])
+            case followersOptionsTableView:
+                print(populateFollowersInstagram[indexPath.row])
+                
+                
             default:
-                print("default")
+                print("????")
+                
             }
             
         case 1:
             switch tableView {
             case influencerHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateInfluencerArray(sender: x)
-                    
-                    influencerOptionsTableView.reloadData()
-                }
+                
+                populateInfluencerArray(sender: headIndex)
+                influencerOptionsTableView.reloadData()
+                
             case followersHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateFollowersArray(sender: x)
-                    
-                    followersOptionsTableView.reloadData()
-                }
+                
+                populateFollowersArray(sender: headIndex)
+                followersOptionsTableView.reloadData()
+                
             default:
                 print("default")
             }
         case 2:
             switch tableView {
             case influencerHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateInfluencerArray(sender: x)
-                  
-                    influencerOptionsTableView.reloadData()
-                }
+                
+                populateInfluencerArray(sender: headIndex)
+                influencerOptionsTableView.reloadData()
+                
             case followersHeadingsTableView:
-                for x in 0...indexPath.row {
-                    populateFollowersArray(sender: x)
-                   
-                    followersOptionsTableView.reloadData()
-                }
+                
+                populateFollowersArray(sender: headIndex)
+                followersOptionsTableView.reloadData()
+                
             default:
                 print("default")
             }
@@ -611,6 +664,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
     }
+    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        let cell = tableView.cellForRow(at: indexPath)
+//        cell?.accessoryType = .none
+//    }
     
     
     func populateInfluencerArray(sender: Int) {
@@ -668,5 +726,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
 }
+
 
 

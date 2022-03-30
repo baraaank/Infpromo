@@ -10,52 +10,51 @@ import UIKit
 class PastReportViewController: UIViewController {
     
    
-    
-    private var expendableCell: PastReportCollectionViewCell?
-    private var isStatusBarHidden = false
-    private var hiddenCells: [PastReportCollectionViewCell] = []
-    
-    override var prefersStatusBarHidden: Bool {
-        return isStatusBarHidden
-    }
-    
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
  
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let topLeftAnchor = NSCollectionLayoutAnchor(edges: [.top, .leading], fractionalOffset: CGPoint(x: 0.03, y: -0.6))
+            let topLeftView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsDateCollectionReusableView.kind, containerAnchor: topLeftAnchor)
             
+            let topRightAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: -0.04, y: -0.45))
+            let topRightView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.08), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsPlatformCollectionReusableView.kind, containerAnchor: topRightAnchor)
 
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            
-            
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [topLeftView, topRightView])
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.26))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.34))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
+
             
             return section
         }))
         
         collectionView.register(PastReportCollectionViewCell.self, forCellWithReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier)
+        collectionView.register(MyReportsDateCollectionReusableView.self, forSupplementaryViewOfKind: MyReportsDateCollectionReusableView.kind, withReuseIdentifier: MyReportsDateCollectionReusableView.reuseIdentifier)
+        collectionView.register(MyReportsPlatformCollectionReusableView.self, forSupplementaryViewOfKind: MyReportsPlatformCollectionReusableView.kind, withReuseIdentifier: MyReportsPlatformCollectionReusableView.reuseIdentifier)
+        collectionView.backgroundColor = .systemGray6
 
 
         
-        collectionView.backgroundColor = .white
+        
         return collectionView
     }()
     
     
     
+    var profileResponseArray: [ProfResResponse] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "My Reports"
+        view.backgroundColor = .systemGray6
 //        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
 //        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
@@ -66,8 +65,35 @@ class PastReportViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        loadViewElements()
         
-        
+    }
+//
+    func loadViewElements() {
+        APICaller.shared.getUserReports { response in
+            switch response {
+            case .success(let model):
+                var responseArray: [ProfResResponse] = []
+                
+                responseArray.append(contentsOf: model.map({
+                    .init(fullname: $0.fullname,
+                          username: $0.username,
+                          url: $0.url,
+                          picture: $0.picture,
+                          followers: $0.followers,
+                          engagementRate: $0.engagementRate,
+                          engagements: $0.engagements)
+                }))
+                
+                self.profileResponseArray = responseArray
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func addSubviews() {
@@ -76,6 +102,7 @@ class PastReportViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         collectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
     }
     
@@ -85,96 +112,61 @@ class PastReportViewController: UIViewController {
 extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        15
+        if profileResponseArray.count == 0 {
+            return 10
+        } else {
+            return profileResponseArray.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier, for: indexPath)
-//        cell.backgroundColor = .white
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier, for: indexPath) as! PastReportCollectionViewCell
+        cell.backgroundColor = .white
 //        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
 //        cell.layer.borderWidth = 1
-        cell.backgroundColor = .tertiarySystemFill
+        if profileResponseArray.count == 0{
+            //do skeleton view
+            cell.contentView.backgroundColor = .white
+        } else {
+            let profileResponse = profileResponseArray[indexPath.row]
+            cell.configureCellData(with: MyReportsCollectionViewCellViewModel(fullname: profileResponse.fullname,
+                                                                              username: profileResponse.username,
+                                                                              url: profileResponse.url,
+                                                                              picture: profileResponse.picture,
+                                                                              followers: profileResponse.followers,
+                                                                              engagementRate: profileResponse.engagementRate,
+                                                                              engagements: profileResponse.engagements))
+            cell.contentView.backgroundColor = .clear
+            //configure cell with model
+        }
         return cell
     }
     
 
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+       
+        
+        switch kind {
+        case MyReportsDateCollectionReusableView.kind:
+            let dateLabel = collectionView.dequeueReusableSupplementaryView(ofKind: MyReportsDateCollectionReusableView.kind, withReuseIdentifier: MyReportsDateCollectionReusableView.reuseIdentifier, for: indexPath) as! MyReportsDateCollectionReusableView
+            dateLabel.layer.cornerRadius = 2
+            
+            return dateLabel
+        case MyReportsPlatformCollectionReusableView.kind:
+            let platformLabel = collectionView.dequeueReusableSupplementaryView(ofKind: MyReportsPlatformCollectionReusableView.kind, withReuseIdentifier: MyReportsPlatformCollectionReusableView.reuseIdentifier, for: indexPath) as! MyReportsPlatformCollectionReusableView
+            platformLabel.layer.cornerRadius = 2
+            
+            return platformLabel
+        default:
+            print("default error")
+        }
+        
+        return UICollectionReusableView()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
-        let dampingRatio: CGFloat = 0.9
-        let initialVelocity = CGVector.zero
-        let springParameters = UISpringTimingParameters(dampingRatio: dampingRatio, initialVelocity: initialVelocity)
-        let animator = UIViewPropertyAnimator(duration: 0.8, timingParameters: springParameters)
-        
-        
-
-        self.view.isUserInteractionEnabled = false
-        
-        if let selectedCell = expendableCell {
-            
-            isStatusBarHidden = false
-            animator.addAnimations {
-                
-                selectedCell.collapse()
-                
-                
-                
-                
-                for cell in self.hiddenCells {
-                    cell.show()
-                }
-                
-            }
-            
-            animator.addCompletion { _ in
-                collectionView.isScrollEnabled = true
-                self.expendableCell = nil
-                self.hiddenCells.removeAll()
-
-            }
-
-            
-        } else {
-            isStatusBarHidden = true
-            
-            collectionView.isScrollEnabled = false
-            
-            let selectedCell = collectionView.cellForItem(at: indexPath)! as! PastReportCollectionViewCell
-            let frameOfSelectedCell = selectedCell.frame
-            
-            expendableCell = selectedCell
-            hiddenCells = collectionView.visibleCells.map({
-                $0 as! PastReportCollectionViewCell
-            }).filter({
-                $0 != selectedCell
-            })
-            
-            
-            animator.addAnimations {
-                selectedCell.expand(in: collectionView)
-                
-                
-                for cell in self.hiddenCells {
-                    cell.hide(in: collectionView, frameOfSelectedCell: frameOfSelectedCell)
-                }
-            }
-            
-        }
-        
-        animator.addAnimations {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-        
-        animator.addCompletion { _ in
-            self.view.isUserInteractionEnabled = true
-        }
-        
-        animator.startAnimation()
-        
-        
-//        setNeedsStatusBarAppearanceUpdate()
-        
-
         
     }
     

@@ -16,6 +16,8 @@ class ProfileViewController: UIViewController {
         "Hesabımı Sil",
         "Çıkış"
     ]
+    
+    var userResponse: ProfileHeaderReusableViewModel?
 
     
     private let profileCollectionView: UICollectionView = {
@@ -61,6 +63,23 @@ class ProfileViewController: UIViewController {
         profileCollectionView.delegate = self
         profileCollectionView.dataSource = self
         addSubviews()
+        
+        loadViewElements()
+    }
+    
+    func loadViewElements() {
+        APICaller.shared.getUser { response in
+            switch response {
+            case .success(let model):
+                self.userResponse = ProfileHeaderReusableViewModel(name: model.name, surName: model.surName)
+                
+                DispatchQueue.main.async {
+                    self.profileCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print("failure \(error)")
+            }
+        }
     }
     
 
@@ -97,7 +116,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == ProfileHeaderCollectionReusableView.kind {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileHeaderCollectionReusableView
+            header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name, surName: userResponse?.surName))
             
             return header
         } else {

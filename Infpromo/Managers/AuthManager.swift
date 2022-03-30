@@ -59,6 +59,7 @@ final class AuthManager {
                 completion(.success(result))
                 
             } catch {
+                
                 completion(.failure(error))
             }
             

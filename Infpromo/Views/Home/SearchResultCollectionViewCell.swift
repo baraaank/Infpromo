@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchResultCollectionViewCell: UICollectionViewCell {
     
@@ -151,11 +152,22 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
         
         if let username = viewModel.username {
-            usernameLabel.text = username
+            usernameLabel.text = "@\(username)"
+            
         }
         
+//        guard let engagement = viewModel.engagementRate else {
+//            return
+//        }
+//        let clearEngagementRate = Double(engagement * 100)
+//        let clearEngagement = clearEngagementRate.truncate(places: 2)
+//
+//        numberOfEngagementRateLabel.text = "\(clearEngagement) %"
+        
         if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
-            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(engagementsRate))"
+            let clearEngagementRate = Double(engagementsRate * 100)
+            let clearEngagement = clearEngagementRate.truncate(places: 2)
+            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
         }
        
         if let followers = viewModel.followers {
@@ -164,14 +176,14 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
         if let image = viewModel.picture {
             if let imageURL = URL(string: image) {
-                let imageData = try? Data(contentsOf: imageURL)
-                imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
+                imageView.sd_setImage(with: imageURL, completed: nil)
             }
         }
         
-        
-        if let name = viewModel.fullName {
-            nameLabel.text = name
+        if let fullName = viewModel.fullname {
+            nameLabel.text = fullName
+        } else {
+            nameLabel.text = viewModel.username
         }
     }
 }

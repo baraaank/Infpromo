@@ -28,7 +28,7 @@ struct DirectProfileResponse: Codable {
     let engagementRate: Float?
     let engagements: Float?
     let followers: Float?
-    let fullName: String?
+    let fullname: String?
     let picture: String?
     let url: String?
     let username: String?

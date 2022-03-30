@@ -3,17 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		810AE0BD27D389BD00F23713 /* InstagramSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0BC27D389BD00F23713 /* InstagramSearchTableViewCell.swift */; };
 		810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0BF27D60EDA00F23713 /* LogInViewController.swift */; };
 		810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0C127D60EE900F23713 /* SignUpViewController.swift */; };
 		810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0C427D641B400F23713 /* ProfileInformationsViewController.swift */; };
 		810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0C627D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift */; };
-		810AE0C927D6517D00F23713 /* YoutubeSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0C827D6517D00F23713 /* YoutubeSearchTableViewCell.swift */; };
-		810AE0CB27D6518D00F23713 /* TiktokSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0CA27D6518D00F23713 /* TiktokSearchTableViewCell.swift */; };
 		810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0CC27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift */; };
 		810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */; };
 		810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */; };
@@ -21,9 +18,6 @@
 		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
-		819C5CE027CCF1AE00DAB0FE /* InstagramSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CDF27CCF1AE00DAB0FE /* InstagramSearchViewController.swift */; };
-		819C5CE227CCF1BA00DAB0FE /* YoutubeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CE127CCF1BA00DAB0FE /* YoutubeSearchViewController.swift */; };
-		819C5CE427CCF1C300DAB0FE /* TiktokSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CE327CCF1C300DAB0FE /* TiktokSearchViewController.swift */; };
 		819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD127BCDD940083D3A2 /* Extensions.swift */; };
 		819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */; };
 		819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD727C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift */; };
@@ -47,16 +41,19 @@
 		81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */; };
 		81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF927F0C1F700A91739 /* SearchByUsername.swift */; };
 		81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */; };
+		81F61EFE27F1DA1200A91739 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFD27F1DA1200A91739 /* GetUser.swift */; };
+		81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */; };
+		81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61F0127F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift */; };
+		81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61F0327F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift */; };
+		81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */; };
+		F06025910A5920A7648D5F2D /* Pods_Infpromo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84E101A320936BD85A17940 /* Pods_Infpromo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		810AE0BC27D389BD00F23713 /* InstagramSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramSearchTableViewCell.swift; sourceTree = "<group>"; };
 		810AE0BF27D60EDA00F23713 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		810AE0C127D60EE900F23713 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		810AE0C427D641B400F23713 /* ProfileInformationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationsViewController.swift; sourceTree = "<group>"; };
 		810AE0C627D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePswAndDeleteAccountViewController.swift; sourceTree = "<group>"; };
-		810AE0C827D6517D00F23713 /* YoutubeSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeSearchTableViewCell.swift; sourceTree = "<group>"; };
-		810AE0CA27D6518D00F23713 /* TiktokSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokSearchTableViewCell.swift; sourceTree = "<group>"; };
 		810AE0CC27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionReusableView.swift; sourceTree = "<group>"; };
 		810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -64,9 +61,6 @@
 		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
-		819C5CDF27CCF1AE00DAB0FE /* InstagramSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramSearchViewController.swift; sourceTree = "<group>"; };
-		819C5CE127CCF1BA00DAB0FE /* YoutubeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeSearchViewController.swift; sourceTree = "<group>"; };
-		819C5CE327CCF1C300DAB0FE /* TiktokSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokSearchViewController.swift; sourceTree = "<group>"; };
 		819FFBD127BCDD940083D3A2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyingOptionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		819FFBD727C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostVisitedReportsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -92,6 +86,14 @@
 		81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostViewedProfileDataCellViewModel.swift; sourceTree = "<group>"; };
 		81F61EF927F0C1F700A91739 /* SearchByUsername.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsername.swift; sourceTree = "<group>"; };
 		81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsernameCellViewModel.swift; sourceTree = "<group>"; };
+		81F61EFD27F1DA1200A91739 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
+		81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderReusableViewModel.swift; sourceTree = "<group>"; };
+		81F61F0127F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportsDateCollectionReusableView.swift; sourceTree = "<group>"; };
+		81F61F0327F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportsPlatformCollectionReusableView.swift; sourceTree = "<group>"; };
+		81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportsCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
+		BC734F21705DF100D3A3D68A /* Pods-Infpromo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Infpromo.debug.xcconfig"; path = "Target Support Files/Pods-Infpromo/Pods-Infpromo.debug.xcconfig"; sourceTree = "<group>"; };
+		C84E101A320936BD85A17940 /* Pods_Infpromo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Infpromo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FF43F1F362BFEEEE70A3A1 /* Pods-Infpromo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Infpromo.release.xcconfig"; path = "Target Support Files/Pods-Infpromo/Pods-Infpromo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F06025910A5920A7648D5F2D /* Pods_Infpromo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,9 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				81B943B027C410CB00F4C376 /* SearchViewController.swift */,
-				819C5CDF27CCF1AE00DAB0FE /* InstagramSearchViewController.swift */,
-				819C5CE127CCF1BA00DAB0FE /* YoutubeSearchViewController.swift */,
-				819C5CE327CCF1C300DAB0FE /* TiktokSearchViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -139,6 +139,8 @@
 			children = (
 				81AF0287279E9A960054F4C5 /* Infpromo */,
 				81AF0286279E9A960054F4C5 /* Products */,
+				C4BB032CB057ADE7C7180B74 /* Pods */,
+				DE7C2CE7B03B31575DE6707F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,7 +173,7 @@
 				81AF0288279E9A960054F4C5 /* AppDelegate.swift */,
 				81AF028A279E9A960054F4C5 /* SceneDelegate.swift */,
 				81AF0291279E9A980054F4C5 /* Assets.xcassets */,
-				819FFBD127BCDD940083D3A2 /* Extensions.swift */,
+				81AF0293279E9A980054F4C5 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				81386A5327EA0D450051A886 /* User.swift */,
+				81F61EFD27F1DA1200A91739 /* GetUser.swift */,
 				81F61EF427F068D900A91739 /* MostViews.swift */,
 				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
 				81F61EF927F0C1F700A91739 /* SearchByUsername.swift */,
@@ -199,7 +202,6 @@
 		81AF02A227A27CF70054F4C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				81AF0293279E9A980054F4C5 /* LaunchScreen.storyboard */,
 				81E9EDB627DA2C6000FDA44B /* Home */,
 				81E9EDB727DA2C8900FDA44B /* MyReports */,
 				81E9EDB827DA2C9E00FDA44B /* BuyReports */,
@@ -247,6 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				819FFBDD27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift */,
+				81F61F0127F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift */,
+				81F61F0327F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift */,
 			);
 			path = MyReports;
 			sourceTree = "<group>";
@@ -273,9 +277,6 @@
 		81E9EDBA27DA2CCB00FDA44B /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				810AE0BC27D389BD00F23713 /* InstagramSearchTableViewCell.swift */,
-				810AE0C827D6517D00F23713 /* YoutubeSearchTableViewCell.swift */,
-				810AE0CA27D6518D00F23713 /* TiktokSearchTableViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -284,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */,
+				819FFBD127BCDD940083D3A2 /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -301,8 +303,27 @@
 			children = (
 				81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */,
 				81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */,
+				81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */,
+				81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4BB032CB057ADE7C7180B74 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC734F21705DF100D3A3D68A /* Pods-Infpromo.debug.xcconfig */,
+				F5FF43F1F362BFEEEE70A3A1 /* Pods-Infpromo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DE7C2CE7B03B31575DE6707F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C84E101A320936BD85A17940 /* Pods_Infpromo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,9 +333,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81AF0299279E9A980054F4C5 /* Build configuration list for PBXNativeTarget "Infpromo" */;
 			buildPhases = (
+				210FEA96BB3163E4900AF94C /* [CP] Check Pods Manifest.lock */,
 				81AF0281279E9A960054F4C5 /* Sources */,
 				81AF0282279E9A960054F4C5 /* Frameworks */,
 				81AF0283279E9A960054F4C5 /* Resources */,
+				BAC11D003C13EAEED5FECDF9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -369,12 +392,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		210FEA96BB3163E4900AF94C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Infpromo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BAC11D003C13EAEED5FECDF9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Infpromo/Pods-Infpromo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Infpromo/Pods-Infpromo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Infpromo/Pods-Infpromo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		81AF0281279E9A960054F4C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				819C5CE427CCF1C300DAB0FE /* TiktokSearchViewController.swift in Sources */,
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
@@ -383,26 +447,26 @@
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
 				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
+				81F61EFE27F1DA1200A91739 /* GetUser.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
-				810AE0BD27D389BD00F23713 /* InstagramSearchTableViewCell.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
-				810AE0CB27D6518D00F23713 /* TiktokSearchTableViewCell.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
+				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,
 				819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */,
+				81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */,
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
+				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
 				81AF028B279E9A960054F4C5 /* SceneDelegate.swift in Sources */,
 				81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */,
-				819C5CE027CCF1AE00DAB0FE /* InstagramSearchViewController.swift in Sources */,
+				81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
 				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
-				819C5CE227CCF1BA00DAB0FE /* YoutubeSearchViewController.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
-				810AE0C927D6517D00F23713 /* YoutubeSearchTableViewCell.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
@@ -547,6 +611,7 @@
 		};
 		81AF029A279E9A980054F4C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC734F21705DF100D3A3D68A /* Pods-Infpromo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -566,6 +631,7 @@
 		};
 		81AF029B279E9A980054F4C5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5FF43F1F362BFEEEE70A3A1 /* Pods-Infpromo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
