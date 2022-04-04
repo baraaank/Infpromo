@@ -149,6 +149,35 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func configureCellByFilter(with viewModel: SearchWithFilterCellViewModel) {
+        if let username = viewModel.username {
+            usernameLabel.text = "@\(username)"
+            
+        }
+        
+        if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+            let clearEngagementRate = Double(engagementsRate * 100)
+            let clearEngagement = clearEngagementRate.truncate(places: 2)
+            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
+        }
+       
+        if let followers = viewModel.followers {
+            numberOfFollowersLabel.text = "\(followers)"
+        }
+        
+        if let image = viewModel.picture {
+            if let imageURL = URL(string: image) {
+                imageView.sd_setImage(with: imageURL, completed: nil)
+            }
+        }
+        
+        if let fullName = viewModel.fullname {
+            nameLabel.text = fullName
+        } else {
+            nameLabel.text = viewModel.username
+        }
+    }
+    
     func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
         
         if let username = viewModel.username {

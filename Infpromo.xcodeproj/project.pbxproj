@@ -16,6 +16,10 @@
 		810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */; };
 		811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B0CD727CD13B9004730DA /* SearchHeadings.swift */; };
 		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
+		8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */; };
+		8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */; };
+		8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */; };
+		8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8AB27FA135B0048314B /* SearchWithFilterCellViewModel.swift */; };
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
 		819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD127BCDD940083D3A2 /* Extensions.swift */; };
@@ -59,6 +63,10 @@
 		810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationCollectionReusableView.swift; sourceTree = "<group>"; };
 		811B0CD727CD13B9004730DA /* SearchHeadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadings.swift; sourceTree = "<group>"; };
 		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilter.swift; sourceTree = "<group>"; };
+		8194A8AB27FA135B0048314B /* SearchWithFilterCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterCellViewModel.swift; sourceTree = "<group>"; };
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		819FFBD127BCDD940083D3A2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -195,6 +203,7 @@
 				81F61EF427F068D900A91739 /* MostViews.swift */,
 				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
 				81F61EF927F0C1F700A91739 /* SearchByUsername.swift */,
+				8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +286,8 @@
 		81E9EDBA27DA2CCB00FDA44B /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */,
+				8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -303,6 +314,7 @@
 			children = (
 				81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */,
 				81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */,
+				8194A8AB27FA135B0048314B /* SearchWithFilterCellViewModel.swift */,
 				81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */,
 				81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */,
 			);
@@ -440,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
+				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
@@ -459,17 +472,20 @@
 				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */,
 				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
 				81AF028B279E9A960054F4C5 /* SceneDelegate.swift in Sources */,
 				81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */,
 				81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
+				8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */,
 				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
+				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,

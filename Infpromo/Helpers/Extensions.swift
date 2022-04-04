@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+
+//uncertain json objects
 enum QuantumValue: Decodable {
 
     case float(Float), string(String)
@@ -41,26 +43,7 @@ extension QuantumValue {
     }
 }
 
-public struct UncertainValue<T: Decodable, U: Decodable>: Decodable {
-    public var tValue: T?
-    public var uValue: U?
-
-    public var value: Any? {
-        return tValue ?? uValue
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        tValue = try? container.decode(T.self)
-        uValue = try? container.decode(U.self)
-        if tValue == nil && uValue == nil {
-            //Type mismatch
-            throw DecodingError.typeMismatch(type(of: self), DecodingError.Context(codingPath: [], debugDescription: "The value is not of type \(T.self) and not even \(U.self)"))
-        }
-
-    }
-}
-
+//declare frames easy
 extension UIView {
     
     var width: CGFloat {
@@ -88,6 +71,7 @@ extension UIView {
     }
 }
 
+//infpromo colors
 extension UIColor {
     var infpromo: UIColor {
         return UIColor(red: 75/255, green: 70/255, blue: 189/255, alpha: 1.0)
@@ -97,6 +81,7 @@ extension UIColor {
     }
 }
 
+//truncate exponentials
 extension Double {
     func truncate(places: Int) -> Double {
         return Double(floor(pow(10.0, Double(places)) * self) / pow(10.0, Double(places)))
@@ -116,5 +101,10 @@ extension Numeric {
     var formattedWithSeparator: String { Formatter.dotSeparator.string(for: self) ?? "" }
 }
 
+//custom button for filter
+class CustomFilterButton: UIButton {
+    var section: Int = 0
+    var row : Int = 0
+}
 
 

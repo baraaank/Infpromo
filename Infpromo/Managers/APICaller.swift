@@ -192,6 +192,127 @@ final class APICaller {
         
     }
     
+    public func baseFilterResult(completion: @escaping (Result<SearchWithFilter, Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        createRequest(with: URL(string: Constants.baseAPIURL + "/instagram/search/\(userId)"), type: .POST) { baseRequest in
+            var request = baseRequest
+            
+            let parameters: [String: Any] = [
+                "sort": [
+                    "field": "followers",
+                    "direction": "desc"
+                ],
+                "page": 0, // for pagination we can declera pageNumber as an Integer
+                "filter": [
+                    "influencer": [
+                        "location": [
+                            "174737" // tr instagram code
+                        ]
+                    ]
+                ]
+            ]
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+//                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    let result = try JSONDecoder().decode(SearchWithFilter.self, from: data)
+                    completion(.success(result))
+//                    print(result)
+                } catch {
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
+    // -MARK: Filteerrrrrrrrrrr
+    
+    public func filter(minFollowers: Int?,
+                       maxFollowers: Int?,
+                       gender: String?,
+                       interests: [Int?],
+                       language: String?,
+                       engagementRate: Double?,
+                       hasYoutube: Bool?,
+                       completion: @escaping (Result<String, Error>) -> Void) {
+        
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/instagram/search/\(userId)"), type: .POST) { baseRequest in
+            var request = baseRequest
+            
+            
+
+            
+
+           
+            
+            let parameters: [String: Any] = [
+                "sort": [
+                    "field": "followers",
+                    "direction": "desc"
+                ],
+                "page": 0, // for pagination we can declera pageNumber as an Integer
+                "filter": [
+                    "influencer": [
+                        "followers": [
+                            "min": minFollowers as Any,
+                            "max": maxFollowers as Any
+                        ],
+                        "gender": gender as Any,
+                        "interests": interests as Any,
+                        "language": language as Any,
+                        "engagementRate": engagementRate as Any,
+                        "hasYouTube": hasYoutube as Any,
+                        "location": [
+                            "174737" // tr instagram code
+                        ],
+                    ]
+                ]
+            ]
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+//                    let result = try JSONDecoder().decode(SearchWithFilter.self, from: data)
+//                    completion(.success(result))
+                    print(result)
+                } catch {
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
     
     
 }

@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
     
     let searchResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
-            
+                
             let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3))
 
             let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: SearchResultCollectionReusableView.kind, alignment: .bottom)
@@ -63,6 +63,7 @@ class HomeViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
             section.boundarySupplementaryItems = [footerView]
+            
             return section
         }))
         
@@ -70,7 +71,6 @@ class HomeViewController: UIViewController {
         collectionView.register(SearchResultCollectionReusableView.self, forSupplementaryViewOfKind: SearchResultCollectionReusableView.kind, withReuseIdentifier: SearchResultCollectionReusableView.reuseIdentifier)
 //        collectionView.backgroundColor = .white
         collectionView.backgroundColor = .systemGray6
-        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -129,6 +129,9 @@ class HomeViewController: UIViewController {
     var viewCountArray: [Int] = []
     
     var directProfileResponseArray: [DirectProfileResponse] = []
+    
+    
+    var searchByFilterResultArray: [SearchWithFilterCellViewModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,6 +238,35 @@ class HomeViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+        
+        // base search result
+        APICaller.shared.baseFilterResult { response in
+            switch response {
+            case .success(let model):
+                var filterResultData: [SearchWithFilterCellViewModel] = []
+                
+                filterResultData.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                    .init(engagementRate: $0.profile.engagementRate,
+                          engagements: $0.profile.engagements,
+                          followers: $0.profile.followers,
+                          fullname: $0.profile.fullname,
+                          picture: $0.profile.picture,
+                          url: nil,
+                          username: $0.profile.username,
+                          isPrivate: nil)
+                }))
+                
+                self.searchByFilterResultArray = filterResultData
+                
+                DispatchQueue.main.async {
+                    self.searchResultCollectionView.reloadData()
+                }
+                
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     
@@ -296,8 +328,17 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.searchResultCollectionView {
             
-            if directProfileResponseArray.count == 0 {
-                return 12
+//            if directProfileResponseArray.count == 0 {
+//                return 12
+//            } else {
+//                return 1
+//            }
+            if directProfileResponseArray.isEmpty == false {
+                return 1
+            }
+//
+            if searchByFilterResultArray.isEmpty == false {
+                return searchByFilterResultArray.count
             } else {
                 return 1
             }
@@ -345,10 +386,23 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.reuseIdentifier, for: indexPath) as! SearchResultCollectionViewCell
             cell.backgroundColor = .white
 
+            if searchByFilterResultArray.isEmpty == false {
+                let searchByFilterResult = searchByFilterResultArray[indexPath.row]
+                cell.configureCellByFilter(with: .init(engagementRate: searchByFilterResult.engagementRate,
+                                                       engagements: searchByFilterResult.engagements,
+                                                       followers: searchByFilterResult.followers,
+                                                       fullname: searchByFilterResult.fullname,
+                                                       picture: searchByFilterResult.picture,
+                                                       url: nil,
+                                                       username: searchByFilterResult.username,
+                                                       isPrivate: nil))
+                DispatchQueue.main.async {
+                    self.searchResultCollectionView.frame = CGRect(x: 0, y: self.accountCountLabel.bottom, width: self.view.width, height: self.searchResultCollectionView.contentSize.height + 20)
+                }
+               
+            }
             
-            if directProfileResponseArray.count == 0 {
-//                cell.contentView.backgroundColor = .white
-            } else {
+            if directProfileResponseArray.isEmpty == false {
                 let directProfileResponse = directProfileResponseArray[indexPath.row]
                 cell.configureCellData(with: SearchByUsernameCellViewModel(engagementRate: directProfileResponse.engagementRate,
                                                                            engagements: directProfileResponse.engagements,
@@ -356,10 +410,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                                            fullname: directProfileResponse.fullname,
                                                                            picture: directProfileResponse.picture,
                                                                            username: directProfileResponse.username))
-                
-//                cell.contentView.backgroundColor = .clear
             }
-                
+            
+            
+            
+            
             
                 
             
