@@ -15,7 +15,7 @@ final class APICaller {
     private init() {}
     
     struct Constants {
-        static let baseAPIURL = "http://192.168.1.132:8000"
+        static let baseAPIURL = "http://localhost:8000"
     }
     
     enum APIError: Error {
@@ -67,7 +67,7 @@ final class APICaller {
 //                        $0.viewCount
 //                    })
                    
-
+                    
                     
                     completion(.success(result))
                     
@@ -234,6 +234,28 @@ final class APICaller {
                     completion(.failure(error))
                     
                 }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getPlanList(completion: @escaping (Result<Plan, Error>) -> Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL + "/plan/list"), type: .GET) { baseRequest in
+            var request = baseRequest
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(Plan.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                }
+
             }
             task.resume()
         }

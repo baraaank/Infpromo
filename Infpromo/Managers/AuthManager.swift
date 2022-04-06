@@ -25,7 +25,7 @@ final class AuthManager {
     }
     
     public var signInURL: URL? {
-        let base = "http://192.168.1.132:8000"
+        let base = "http://localhost:8000"
         let finalUrl = "\(base)/users/login"
         return URL(string: finalUrl)
     }

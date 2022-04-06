@@ -1,0 +1,463 @@
+{
+  "interests": [
+    {
+      "name": "Kıyafet, Ayakkabı, Çanta & Aksesuar",
+      "id": 13
+    },
+    {
+      "name": "Arkadaşlar, Aile & İlişkiler",
+      "id": 1708
+    },
+    {
+      "name": "Kamera & Fotoğraf",
+      "id": 11
+    },
+    {
+      "name": "Restoran, Yiyecek & İçecek",
+      "id": 139
+    },
+    {
+      "name": "Gezi, Turizm & Havacılık",
+      "id": 43
+    },
+    {
+      "name": "Oyuncak, Çocuk & Bebek",
+      "id": 190
+    },
+    {
+      "name": "Güzellik & Kozmetik",
+      "id": 80
+    },
+    {
+      "name": "Müzik",
+      "id": 3
+    },
+    {
+      "name": "Televizyon & Sinema",
+      "id": 1
+    },
+    {
+      "name": "Elektronik & Bilgisayar",
+      "id": 25
+    },
+    {
+      "name": "Spor",
+      "id": 21
+    },
+    {
+      "name": "Sanat & Dizayn",
+      "id": 36
+    },
+    {
+      "name": "Araba & Motosiklet",
+      "id": 1826
+    },
+    {
+      "name": "Fitness & Yoga",
+      "id": 196
+    },
+    {
+      "name": "Evcil hayvan",
+      "id": 673
+    },
+    {
+      "name": "Alışveriş & Perakende",
+      "id": 7
+    },
+    {
+      "name": "Kahve, Çay & İçecek",
+      "id": 9
+    },
+    {
+      "name": "Sağlıklı yaşam",
+      "id": 798
+    },
+    {
+      "name": "Spor giyim",
+      "id": 33
+    },
+    {
+      "name": "Lüks Ürünler",
+      "id": 1500
+    }
+  ],
+  "audienceInterests": [
+    {
+      "name": "Kıyafet, Ayakkabı, Çanta & Aksesuar",
+      "id": 13
+    },
+    {
+      "name": "Arkadaşlar, Aile & İlişkiler",
+      "id": 1708
+    },
+    {
+      "name": "Kamera & Fotoğraf",
+      "id": 11
+    },
+    {
+      "name": "Restoran, Yiyecek & İçecek",
+      "id": 139
+    },
+    {
+      "name": "Gezi, Turizm & Havacılık",
+      "id": 43
+    },
+    {
+      "name": "Oyuncak, Çocuk & Bebek",
+      "id": 190
+    },
+    {
+      "name": "Güzellik & Kozmetik",
+      "id": 80
+    },
+    {
+      "name": "Müzik",
+      "id": 3
+    },
+    {
+      "name": "Televizyon & Sinema",
+      "id": 1
+    },
+    {
+      "name": "Elektronik & Bilgisayar",
+      "id": 25
+    },
+    {
+      "name": "Spor",
+      "id": 21
+    },
+    {
+      "name": "Sanat & Dizayn",
+      "id": 36
+    },
+    {
+      "name": "Araba & Motosiklet",
+      "id": 1826
+    },
+    {
+      "name": "Fitness & Yoga",
+      "id": 196
+    },
+    {
+      "name": "Evcil hayvan",
+      "id": 673
+    },
+    {
+      "name": "Alışveriş & Perakende",
+      "id": 7
+    },
+    {
+      "name": "Kahve, Çay & İçecek",
+      "id": 9
+    },
+    {
+      "name": "Sağlıklı yaşam",
+      "id": 798
+    },
+    {
+      "name": "Spor giyim",
+      "id": 33
+    },
+    {
+      "name": "Lüks Ürünler",
+      "id": 1500
+    }
+  ],
+  "languages": [
+    {
+      "code": "tr",
+      "name": "Türkçe",
+      "count": 21741207
+    },
+    {
+      "code": "en",
+      "name": "İngilizce",
+      "count": 79842810
+    },
+    {
+      "code": "es",
+      "name": "İspanyolca",
+      "count": 51443191
+    },
+    {
+      "code": "pt",
+      "name": "Portekizce",
+      "count": 49020894
+    },
+    {
+      "code": "ru",
+      "name": "Rusça",
+      "count": 36616585
+    },
+    {
+      "code": "fr",
+      "name": "Fransızca",
+      "count": 35588239
+    },
+    {
+      "code": "ar",
+      "name": "Arapça",
+      "count": 34145981
+    },
+    {
+      "code": "it",
+      "name": "İtalyanca",
+      "count": 28652776
+    },
+    {
+      "code": "de",
+      "name": "Almanca",
+      "count": 26725294
+    },
+    {
+      "code": "fa",
+      "name": "Farsça",
+      "count": 22743528
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "count": 22220943
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "count": 11002626
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "count": 9875139
+    },
+    {
+      "code": "zh",
+      "name": "Chinese",
+      "count": 6864794
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "count": 6736537
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "count": 5020969
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "count": 4911357
+    },
+    {
+      "code": "ms",
+      "name": "Malay",
+      "count": 4645528
+    },
+    {
+      "code": "nl",
+      "name": "Flemenkçe",
+      "count": 4360988
+    }
+  ],
+  "audienceLanguages": [
+    {
+      "code": "tr",
+      "name": "Türkçe",
+      "count": 21741207
+    },
+    {
+      "code": "en",
+      "name": "İngilizce",
+      "count": 79842810
+    },
+    {
+      "code": "es",
+      "name": "İspanyolca",
+      "count": 51443191
+    },
+    {
+      "code": "pt",
+      "name": "Portekizce",
+      "count": 49020894
+    },
+    {
+      "code": "ru",
+      "name": "Rusça",
+      "count": 36616585
+    },
+    {
+      "code": "fr",
+      "name": "Fransızca",
+      "count": 35588239
+    },
+    {
+      "code": "ar",
+      "name": "Arapça",
+      "count": 34145981
+    },
+    {
+      "code": "it",
+      "name": "İtalyanca",
+      "count": 28652776
+    },
+    {
+      "code": "de",
+      "name": "Almanca",
+      "count": 26725294
+    },
+    {
+      "code": "fa",
+      "name": "Farsça",
+      "count": 22743528
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "count": 22220943
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "count": 11002626
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "count": 9875139
+    },
+    {
+      "code": "zh",
+      "name": "Chinese",
+      "count": 6864794
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "count": 6736537
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "count": 5020969
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "count": 4911357
+    },
+    {
+      "code": "ms",
+      "name": "Malay",
+      "count": 4645528
+    },
+    {
+      "code": "nl",
+      "name": "Flemenkçe",
+      "count": 4360988
+    }
+  ],
+  "locations": [
+    {
+      "id": 174737,
+      "name": "Turkey",
+      "title": "Turkey"
+    },
+    {
+      "id": 2202162,
+      "name": "France",
+      "title": "France"
+    },
+    {
+      "id": 148838,
+      "name": "United States",
+      "title": "United States"
+    },
+    {
+      "id": 59470,
+      "name": "Brazil",
+      "title": "Brazil"
+    },
+    {
+      "id": 365331,
+      "name": "Italy",
+      "title": "Italy"
+    },
+    {
+      "id": 51477,
+      "name": "Germany",
+      "title": "Germany"
+    },
+    {
+      "id": 304716,
+      "name": "India",
+      "title": "India"
+    },
+    {
+      "id": 60189,
+      "name": "Russia",
+      "title": "Russia"
+    },
+    {
+      "id": 1428125,
+      "name": "Canada",
+      "title": "Canada"
+    },
+    {
+      "id": 1376330,
+      "name": "Mexico City",
+      "title": "Mexico City, Mexico"
+    },
+    {
+      "id": 80500,
+      "name": "Australia",
+      "title": "Australia"
+    },
+    {
+      "id": 62149,
+      "name": "United Kingdom",
+      "title": "United Kingdom"
+    },
+    {
+      "id": 304938,
+      "name": "Iran",
+      "title": "Iran"
+    },
+    {
+      "id": 192307,
+      "name": "Greece",
+      "title": "Greece"
+    },
+    {
+      "id": 1311341,
+      "name": "Spain",
+      "title": "Spain"
+    },
+    {
+      "id": 382313,
+      "name": "Japan",
+      "title": "Japan"
+    },
+    {
+      "id": 49715,
+      "name": "Poland",
+      "title": "Poland"
+    },
+    {
+      "id": 286393,
+      "name": "Argentina",
+      "title": "Argentina"
+    },
+    {
+      "id": 175905,
+      "name": "New York City",
+      "title": "New York City, New York, United States"
+    },
+    {
+      "id": 114686,
+      "name": "Mexico",
+      "title": "Mexico"
+    }
+  ],
+  "audienceAge": ["18-24", "25-34", "35-44", "45-64", "65-"]
+}

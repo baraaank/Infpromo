@@ -35,7 +35,7 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     private let percentageOfEarning: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "(%11 Kazanç)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray])
         return label
     }()
     
@@ -104,5 +104,19 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
         actualPriceLabel.text = with.reportPriceBeforeDisc
         reducedPriceLabel.text = with.reportPrice
         percentageOfEarning.text = with.earningPercent
+    }
+    
+    
+    func configureCell(with viewModel: PlanCellViewModel) {
+        numberOfReportsLabel.text = viewModel.name
+        if let oldPrice = viewModel.oldPrice {
+            actualPriceLabel.text = oldPrice
+        }
+        
+        reducedPriceLabel.text = viewModel.newPrice
+        if let profit = viewModel.profit {
+            percentageOfEarning.text = "\(profit) kazanç"
+        }
+        
     }
 }

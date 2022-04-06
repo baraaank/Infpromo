@@ -83,6 +83,8 @@ class BuyReportViewController: UIViewController {
         return label
     }()
     
+    var planResponseArray: [PlanCellViewModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -103,6 +105,30 @@ class BuyReportViewController: UIViewController {
         collectionView.dataSource = self
           
         view.backgroundColor = .systemGray6
+        populateCells()
+        
+    }
+    
+    func populateCells() {
+        APICaller.shared.getPlanList { response in
+            switch response {
+            case .success(let model):
+                var responseArray: [PlanCellViewModel] = []
+                responseArray.append(contentsOf: model.data.map({
+                    .init(name: $0.name,
+                          oldPrice: $0.oldPrice,
+                          newPrice: $0.newPrice,
+                          credit: $0.credit,
+                          profit: $0.profit)
+                }))
+                self.planResponseArray = responseArray
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func addSubviews() {
@@ -132,16 +158,20 @@ class BuyReportViewController: UIViewController {
 //UICollectionView
 extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return planResponseArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BuyingOptionsCollectionViewCell.reuseIdentifier, for: indexPath) as! BuyingOptionsCollectionViewCell
         cell.backgroundColor = .white
-//        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
-//        cell.layer.borderWidth = 1
-//        cell.backgroundColor = .tertiarySystemFill
-        cell.configureCellContent(with: buyingOptionsArray[indexPath.row])
+
+        let planResponse = planResponseArray[indexPath.row]
+
+        cell.configureCell(with: .init(name: planResponse.name,
+                                       oldPrice: planResponse.oldPrice,
+                                       newPrice: planResponse.newPrice,
+                                       credit: planResponse.credit,
+                                       profit: planResponse.profit))
         return cell
     }
 }
