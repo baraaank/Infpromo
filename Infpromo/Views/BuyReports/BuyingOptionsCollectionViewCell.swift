@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     
@@ -14,45 +15,51 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     private let numberOfReportsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "2 Rapor", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 30, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
     private let actualPriceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "80 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue])
+        label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.strikethroughStyle : NSUnderlineStyle.single.rawValue])
         return label
     }()
     
     private let reducedPriceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "70 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 28, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
     private let percentageOfEarning: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         return label
     }()
     
     private let purchaseButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
+        
         button.backgroundColor = UIColor().infpromo
-         button.layer.cornerRadius = 4
-         button.setTitle("Satın Al", for: .normal)
-         return button
+        button.layer.cornerRadius = 4
+        
+        button.setAttributedTitle(NSAttributedString(string: "Satın Al", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        return button
     }()
     
     
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        
+        contentView.isHidden = true
+        contentView.backgroundColor = .white
         addSubviews()
         configureCell()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -60,11 +67,11 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     }
     
     func addSubviews() {
-        addSubview(numberOfReportsLabel)
-        addSubview(actualPriceLabel)
-        addSubview(reducedPriceLabel)
-        addSubview(percentageOfEarning)
-        addSubview(purchaseButton)
+        contentView.addSubview(numberOfReportsLabel)
+        contentView.addSubview(actualPriceLabel)
+        contentView.addSubview(reducedPriceLabel)
+        contentView.addSubview(percentageOfEarning)
+        contentView.addSubview(purchaseButton)
     }
     
     override func layoutSubviews() {

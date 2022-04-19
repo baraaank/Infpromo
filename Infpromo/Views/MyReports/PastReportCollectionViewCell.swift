@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
 
 class PastReportCollectionViewCell: UICollectionViewCell {
     
@@ -83,7 +84,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     }()
     
     private let button: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
@@ -96,6 +97,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         
         addSubviews()
         configureCell()
+        contentView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -103,14 +105,14 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     }
     
     func addSubviews() {
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(usernameLabel)
-        addSubview(numberOfFollowersLabel)
-        addSubview(followersLabel)
-        addSubview(numberOfEngagementsAndRatesLabel)
-        addSubview(engagementsAndRatesLabel)
-        addSubview(button)
+        contentView.addSubview(imageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(usernameLabel)
+        contentView.addSubview(numberOfFollowersLabel)
+        contentView.addSubview(followersLabel)
+        contentView.addSubview(numberOfEngagementsAndRatesLabel)
+        contentView.addSubview(engagementsAndRatesLabel)
+        contentView.addSubview(button)
 //        addSubview(dateLabel)
 //        addSubview(platformLabel)
     }
@@ -166,14 +168,29 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         }
         
         if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+            
+            
+//            if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+//
+//                let intEngagement = Int(engagements)
+//
+//                let clearEngagementRate = Double(engagementsRate * 100)
+//                let clearEngagement = clearEngagementRate.truncate(places: 2)
+//                numberOfEngagementsAndRatesLabel.text = "\(intEngagement.roundedWithAbbreviations) & (\(clearEngagement)%)"
+//            }
+            
+            let intQuantumEngagement = Int(engagements.floatValue ?? 10)
+            
             let quantumRate = engagementsRate.floatValue ?? 10
             let clearEngagementRate = Double(quantumRate * 100)
+            
             let clearEngagement = clearEngagementRate.truncate(places: 2)
-            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
+            numberOfEngagementsAndRatesLabel.text = "\(intQuantumEngagement.roundedWithAbbreviations) (\(clearEngagement)%)"
         }
        
         if let followers = viewModel.followers {
-            numberOfFollowersLabel.text = "\(followers)"
+            let intQuantumFollowers = Int(followers.floatValue ?? 10)
+            numberOfFollowersLabel.text = "\(intQuantumFollowers.roundedWithAbbreviations)"
         }
         
         if let image = viewModel.picture {

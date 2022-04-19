@@ -18,21 +18,29 @@ class MyReportsPlatformCollectionReusableView: UICollectionReusableView {
 //        return label
 //    }()
     
-    private let imageView: UIImageView = {
-        let image = UIImage(named: "logo")
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = UIColor().infpromo
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        
-        return imageView
-        
+//    private let imageView: UIImageView = {
+//        let image = UIImage(named: "logo")
+//        let imageView = UIImageView(image: image)
+//        imageView.tintColor = UIColor().infpromo
+//        imageView.clipsToBounds = true
+//        imageView.contentMode = .scaleAspectFit
+//
+//        return imageView
+//
+//    }()
+    
+    private let platformLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.textAlignment = .right
+        return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(imageView)
-        backgroundColor = .white
+//        addSubview(imageView)
+        addSubview(platformLabel)
+        
         
     }
     
@@ -41,6 +49,11 @@ class MyReportsPlatformCollectionReusableView: UICollectionReusableView {
     }
     
     override func layoutSubviews() {
-        imageView.frame = bounds
+//        imageView.frame = bounds
+        platformLabel.frame = bounds
+    }
+    
+    func configureCell(with string: String) {
+        platformLabel.text = "\(string)"
     }
 }

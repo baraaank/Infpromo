@@ -19,7 +19,7 @@ class ProfileInformationCollectionReusableView: UICollectionReusableView {
     weak var delegate: ProfileInformationCollectionReusableViewDelegate?
     
     private let updateButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         button.setTitle("Güncelle", for: .normal)

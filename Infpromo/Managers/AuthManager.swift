@@ -24,13 +24,20 @@ final class AuthManager {
         return UserDefaults.standard.string(forKey: "token")
     }
     
+    let baseURL = "https://www.api.infpromo.com"
+    
     public var signInURL: URL? {
-        let base = "http://localhost:8000"
-        let finalUrl = "\(base)/users/login"
+        //        let base = "http://localhost:8000"
+        
+        let finalUrl = "\(baseURL)/users/login"
         return URL(string: finalUrl)
     }
     
-    public func logInUser(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+    public var signUpURL: URL? {
+        return URL(string: "\(baseURL)/users/register")
+    }
+    
+    public func logInUser(email: String, password: String, completion: @escaping (Result<User, UserError>) -> Void) {
         guard let logInURL = signInURL else {
             return
         }
@@ -46,21 +53,34 @@ final class AuthManager {
         let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
         request.httpBody = jsonData
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error!))
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error = error {
+                completion(.failure(.init(message: "Uygulama Çalışmıyor.")));
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.init(message: "Veri Bulunamadı.")));
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+                if let resultError = try? JSONDecoder().decode(UserError.self, from: data) {
+                    completion(.failure(.init(message: resultError.message)))
+                }
                 return
             }
             
             do {
-                let result = try JSONDecoder().decode(User.self, from: data)
-                self.cacheToken(result: result)
-                self.cacheUserId(result: result)
-                completion(.success(result))
+                if let result = try? JSONDecoder().decode(User.self, from: data) {
+                    self.cacheToken(result: result)
+                    self.cacheUserId(result: result)
+                    completion(.success(result))
+                }
                 
             } catch {
-                
-                completion(.failure(error))
+                completion(.failure(.init(message: "Response Hatası.")));
             }
             
         }
@@ -93,4 +113,50 @@ final class AuthManager {
         completion(true)
     }
     
+    
+    
+    
+    public func createUser(name: String, surName: String, password: String, email: String, completion: @escaping (Result<JsonResponses, Error>) -> Void) {
+        
+        
+        guard let signUpURL = signUpURL else {
+            return
+        }
+        
+        var request = URLRequest(url: signUpURL)
+        
+        
+        let parameters: [String: Any] = [
+            "name": name,
+            "surName": surName,
+            "email": email,
+            "password": password
+        ]
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.timeoutInterval = Double.infinity
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error as? Error)
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(JsonResponses.self, from: data)
+//                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                completion(.success(result))
+                print(result)
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
 }
+
+

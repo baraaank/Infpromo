@@ -23,16 +23,16 @@ class ProfileViewController: UIViewController {
     private let profileCollectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { section, env in
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
 
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: ProfileHeaderCollectionReusableView.kind, alignment: .top)
             
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.16))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.14))
             let item = NSCollectionLayoutItem(layoutSize: itemSize/*, supplementaryItems: [headerView]*/)
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.32))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.14))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
@@ -46,12 +46,28 @@ class ProfileViewController: UIViewController {
     }()
     
     
+    //loading gifs
+    var gif: LoadingGif!
+    
+    let blurEffectView: UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView()
+        let style = UIBlurEffect.Style.systemMaterialDark
+        let effect = UIBlurEffect(style: style)
+        blurEffectView.effect = effect
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurEffectView
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Profile"
+        title = "Profilim"
 //        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        
+        gif = LoadingGif.init(imageName: "infpromoLoadingGif", frame: CGRect(x: (view.frame.size.width / 2) - 40, y: (view.frame.size.height / 2) - 40, width: 80, height: 80), duration: 0.8, repeatCount: 0)
+        blurEffectView.frame = view.bounds
 //
 //
 //        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
@@ -65,16 +81,36 @@ class ProfileViewController: UIViewController {
         addSubviews()
         
         loadViewElements()
+        
+        self.navigationController?.navigationBar.shouldRemoveShadow(true)
+        navigationController?.navigationBar.barTintColor = .systemGray6
+        startBlur()
+    }
+    
+    
+    func startBlur() {
+        view.addSubview(blurEffectView)
+        view.addSubview(gif)
+        gif.startAnimation()
+
+    }
+    
+    func stopBlur() {
+        gif.stopAnimation()
+        gif.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
+
     }
     
     func loadViewElements() {
         APICaller.shared.getUser { response in
             switch response {
             case .success(let model):
-                self.userResponse = ProfileHeaderReusableViewModel(name: model.name, surName: model.surName)
+                self.userResponse = ProfileHeaderReusableViewModel(name: model.data.userPublic.name, surName: model.data.userPublic.surName)
                 
                 DispatchQueue.main.async {
                     self.profileCollectionView.reloadData()
+                    self.stopBlur()
                 }
             case .failure(let error):
                 print("failure \(error)")
@@ -117,6 +153,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         if kind == ProfileHeaderCollectionReusableView.kind {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileHeaderCollectionReusableView
+            header.isSkeletonable = true
             header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name, surName: userResponse?.surName))
             
             return header

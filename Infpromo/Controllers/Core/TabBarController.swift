@@ -23,16 +23,20 @@ class TabBarController: UITabBarController {
         let nav4 = UINavigationController(rootViewController: vc4)
         
         
-        nav1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
-        nav2.tabBarItem = UITabBarItem(title: "My Reports", image: UIImage(systemName: "book"), tag: 1)
-        nav3.tabBarItem = UITabBarItem(title: "Purchase", image: UIImage(systemName: "plus.rectangle"), tag: 1)
-        nav4.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
+        nav1.tabBarItem = UITabBarItem(title: "Anasayfa", image: UIImage(systemName: "house"), tag: 1)
+        nav2.tabBarItem = UITabBarItem(title: "Raporlarım", image: UIImage(systemName: "book"), tag: 1)
+        nav3.tabBarItem = UITabBarItem(title: "Satın Al", image: UIImage(systemName: "plus.rectangle"), tag: 1)
+        nav4.tabBarItem = UITabBarItem(title: "Profilim", image: UIImage(systemName: "person"), tag: 1)
         
         tabBar.tintColor = UIColor().infpromo
 //        tabBar.tintColor = UIColor.black
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = .systemGray6
+        tabBar.barTintColor = .white
         
         setViewControllers([nav1, nav2, nav3, nav4], animated: false)
+        
+        
+     
     }
     
 

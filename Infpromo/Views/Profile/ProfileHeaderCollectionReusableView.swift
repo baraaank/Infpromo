@@ -12,13 +12,13 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     static let reuseIdentifier = "profileHeaderCollectionReusableViewIdentifier"
     static let kind = "profileHeaderCollectionReusableViewKind"
     
-    private let profilePicture: UIImageView = {
-       let image = UIImage(named: "pp")
-        let imageView = UIImageView(image: image)
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
+//    private let profilePicture: UIImageView = {
+//       let image = UIImage(named: "pp")
+//        let imageView = UIImageView(image: image)
+//        imageView.clipsToBounds = true
+//        return imageView
+//    }()
+//
     private let nameLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
@@ -35,15 +35,16 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     }
     
     func addSubviews() {
-        addSubview(profilePicture)
+//        addSubview(profilePicture)
         addSubview(nameLabel)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        profilePicture.frame = CGRect(x: 20, y: height / 2 - 60, width: 120, height: 120)
-        profilePicture.layer.cornerRadius = profilePicture.width / 2
-        nameLabel.frame = CGRect(x: 140 + 20, y: height / 2 - 20, width: width - profilePicture.width, height: 40)
+//        profilePicture.frame = CGRect(x: 20, y: height / 2 - 60, width: 120, height: 120)
+//        profilePicture.layer.cornerRadius = profilePicture.width / 2
+//        nameLabel.frame = CGRect(x: 140 + 20, y: height / 2 - 20, width: width - profilePicture.width, height: 40)
+        nameLabel.frame = CGRect(x: 20, y: 0, width: width, height: height)
     }
     
     func configureHeader(with viewModel: ProfileHeaderReusableViewModel) {

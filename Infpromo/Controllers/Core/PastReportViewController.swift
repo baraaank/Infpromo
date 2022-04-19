@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class PastReportViewController: UIViewController {
     
@@ -14,19 +15,21 @@ class PastReportViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
  
-            let topLeftAnchor = NSCollectionLayoutAnchor(edges: [.top, .leading], fractionalOffset: CGPoint(x: 0.03, y: -0.6))
-            let topLeftView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsDateCollectionReusableView.kind, containerAnchor: topLeftAnchor)
+            let topLeftAnchor = NSCollectionLayoutAnchor(edges: [.top, .leading], fractionalOffset: CGPoint(x: 0, y: -1))
+            let topLeftView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsDateCollectionReusableView.kind, containerAnchor: topLeftAnchor)
             
-            let topRightAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: -0.04, y: -0.45))
-            let topRightView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.08), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsPlatformCollectionReusableView.kind, containerAnchor: topRightAnchor)
+            let topRightAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: 0, y: -1))
+            let topRightView = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .fractionalWidth(0.08)), elementKind: MyReportsPlatformCollectionReusableView.kind, containerAnchor: topRightAnchor)
 
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
             let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [topLeftView, topRightView])
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.34))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.4))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            group.contentInsets = NSDirectionalEdgeInsets(top: 32, leading: 0, bottom: 0, trailing: 0)
             
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
@@ -38,6 +41,7 @@ class PastReportViewController: UIViewController {
         collectionView.register(PastReportCollectionViewCell.self, forCellWithReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier)
         collectionView.register(MyReportsDateCollectionReusableView.self, forSupplementaryViewOfKind: MyReportsDateCollectionReusableView.kind, withReuseIdentifier: MyReportsDateCollectionReusableView.reuseIdentifier)
         collectionView.register(MyReportsPlatformCollectionReusableView.self, forSupplementaryViewOfKind: MyReportsPlatformCollectionReusableView.kind, withReuseIdentifier: MyReportsPlatformCollectionReusableView.reuseIdentifier)
+        
         collectionView.backgroundColor = .systemGray6
 
 
@@ -47,13 +51,14 @@ class PastReportViewController: UIViewController {
     }()
     
     
+    var logDates: [String] = []
     
-    var profileResponseArray: [ProfResResponse] = []
+    var profileResponseArray: [MyReportsCollectionViewCellViewModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "My Reports"
+        title = "Raporlarım"
         view.backgroundColor = .systemGray6
 //        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
@@ -66,24 +71,31 @@ class PastReportViewController: UIViewController {
         collectionView.dataSource = self
         
         loadViewElements()
-        
+        self.navigationController?.navigationBar.shouldRemoveShadow(true)
+        navigationController?.navigationBar.barTintColor = .systemGray6
     }
 //
     func loadViewElements() {
         APICaller.shared.getUserReports { response in
             switch response {
             case .success(let model):
-                var responseArray: [ProfResResponse] = []
-                
-                responseArray.append(contentsOf: model.map({
-                    .init(fullname: $0.fullname,
-                          username: $0.username,
-                          url: $0.url,
-                          picture: $0.picture,
-                          followers: $0.followers,
-                          engagementRate: $0.engagementRate,
-                          engagements: $0.engagements)
+                var responseArray: [MyReportsCollectionViewCellViewModel] = []
+                responseArray.append(contentsOf: model.data.reports.map({
+                    .init(fullname: $0.data.profile.fullname,
+                          username: $0.data.profile.username,
+                          url: $0.data.profile.url,
+                          picture: $0.data.profile.picture,
+                          followers: $0.data.profile.followers,
+                          engagementRate: $0.data.profile.engagementRate,
+                          engagements: $0.data.profile.engagements,
+                          date: $0.userCreatedDate,
+                          network: $0.network)
                 }))
+                
+               
+                
+                print(self.logDates)
+                
                 
                 self.profileResponseArray = responseArray
                 DispatchQueue.main.async {
@@ -122,11 +134,14 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier, for: indexPath) as! PastReportCollectionViewCell
         cell.backgroundColor = .white
+        
 //        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
 //        cell.layer.borderWidth = 1
         if profileResponseArray.count == 0{
             //do skeleton view
-            cell.contentView.backgroundColor = .white
+//            cell.contentView.backgroundColor = .white
+            cell.isSkeletonable = true
+            cell.showAnimatedGradientSkeleton()
         } else {
             let profileResponse = profileResponseArray[indexPath.row]
             cell.configureCellData(with: MyReportsCollectionViewCellViewModel(fullname: profileResponse.fullname,
@@ -135,10 +150,15 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
                                                                               picture: profileResponse.picture,
                                                                               followers: profileResponse.followers,
                                                                               engagementRate: profileResponse.engagementRate,
-                                                                              engagements: profileResponse.engagements))
+                                                                              engagements: profileResponse.engagements,
+                                                                              date: nil,
+                                                                              network: nil))
             cell.contentView.backgroundColor = .clear
+            cell.contentView.isHidden = false
+            cell.hideSkeleton()
             //configure cell with model
         }
+        
         return cell
     }
     
@@ -151,10 +171,33 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
             let dateLabel = collectionView.dequeueReusableSupplementaryView(ofKind: MyReportsDateCollectionReusableView.kind, withReuseIdentifier: MyReportsDateCollectionReusableView.reuseIdentifier, for: indexPath) as! MyReportsDateCollectionReusableView
             dateLabel.layer.cornerRadius = 2
             
+            
+            
+            if profileResponseArray.isEmpty {
+//                dateLabel.isSkeletonable = true
+//                dateLabel.showAnimatedGradientSkeleton()
+            } else {
+                
+                dateLabel.configureCell(with: profileResponseArray[indexPath.row].date!)
+                
+                dateLabel.hideSkeleton()
+                dateLabel.isHidden = false
+                
+            }
+            
             return dateLabel
         case MyReportsPlatformCollectionReusableView.kind:
             let platformLabel = collectionView.dequeueReusableSupplementaryView(ofKind: MyReportsPlatformCollectionReusableView.kind, withReuseIdentifier: MyReportsPlatformCollectionReusableView.reuseIdentifier, for: indexPath) as! MyReportsPlatformCollectionReusableView
             platformLabel.layer.cornerRadius = 2
+            
+            if profileResponseArray.isEmpty {
+//                platformLabel.isSkeletonable = true
+//                platformLabel.showAnimatedGradientSkeleton()
+            } else {
+                platformLabel.configureCell(with: profileResponseArray[indexPath.row].network!)
+                platformLabel.hideSkeleton()
+            }
+            
             
             return platformLabel
         default:

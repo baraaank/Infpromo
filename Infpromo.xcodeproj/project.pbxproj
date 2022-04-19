@@ -15,7 +15,12 @@
 		810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */; };
 		810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */; };
 		811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B0CD727CD13B9004730DA /* SearchHeadings.swift */; };
+		81237AA92802BC5A00CD3749 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81237AA82802BC5900CD3749 /* UserError.swift */; };
 		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
+		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
+		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
+		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
+		816B1934280EC4D40016BDE6 /* LoadingGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1933280EC4D40016BDE6 /* LoadingGif.swift */; };
 		8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */; };
 		8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */; };
 		8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */; };
@@ -48,7 +53,6 @@
 		81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */; };
 		81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EF927F0C1F700A91739 /* SearchByUsername.swift */; };
 		81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */; };
-		81F61EFE27F1DA1200A91739 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFD27F1DA1200A91739 /* GetUser.swift */; };
 		81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */; };
 		81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61F0127F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift */; };
 		81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F61F0327F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift */; };
@@ -65,7 +69,12 @@
 		810AE0CE27D8E51D00F23713 /* SearchResultCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionReusableView.swift; sourceTree = "<group>"; };
 		810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationCollectionReusableView.swift; sourceTree = "<group>"; };
 		811B0CD727CD13B9004730DA /* SearchHeadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadings.swift; sourceTree = "<group>"; };
+		81237AA82802BC5900CD3749 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
+		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
+		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
+		816B1933280EC4D40016BDE6 /* LoadingGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingGif.swift; sourceTree = "<group>"; };
 		8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilter.swift; sourceTree = "<group>"; };
@@ -100,7 +109,6 @@
 		81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostViewedProfileDataCellViewModel.swift; sourceTree = "<group>"; };
 		81F61EF927F0C1F700A91739 /* SearchByUsername.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsername.swift; sourceTree = "<group>"; };
 		81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByUsernameCellViewModel.swift; sourceTree = "<group>"; };
-		81F61EFD27F1DA1200A91739 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderReusableViewModel.swift; sourceTree = "<group>"; };
 		81F61F0127F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportsDateCollectionReusableView.swift; sourceTree = "<group>"; };
 		81F61F0327F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReportsPlatformCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -169,8 +177,8 @@
 		81AF0287279E9A960054F4C5 /* Infpromo */ = {
 			isa = PBXGroup;
 			children = (
-				81E9EDBB27E2221900FDA44B /* Helpers */,
 				81AF029F27A27CDB0054F4C5 /* Resources */,
+				81E9EDBB27E2221900FDA44B /* Helpers */,
 				81AF02A027A27CE60054F4C5 /* Managers */,
 				81AF02A127A27CF00054F4C5 /* Models */,
 				81F61EF627F088D100A91739 /* ViewModel */,
@@ -206,12 +214,15 @@
 			isa = PBXGroup;
 			children = (
 				81386A5327EA0D450051A886 /* User.swift */,
-				81F61EFD27F1DA1200A91739 /* GetUser.swift */,
 				81F61EF427F068D900A91739 /* MostViews.swift */,
+				816B192B280DED050016BDE6 /* GetUser.swift */,
+				816B1929280DE5CD0016BDE6 /* GetUserLog.swift */,
 				811B0CD727CD13B9004730DA /* SearchHeadings.swift */,
 				81F61EF927F0C1F700A91739 /* SearchByUsername.swift */,
 				8194A8A927FA0F0E0048314B /* SearchWithFilter.swift */,
 				8194A8AF27FDB3010048314B /* Plan.swift */,
+				81237AA82802BC5900CD3749 /* UserError.swift */,
+				816B192D280DF0C20016BDE6 /* JsonResponses.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -305,6 +316,7 @@
 			children = (
 				81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */,
 				819FFBD127BCDD940083D3A2 /* Extensions.swift */,
+				816B1933280EC4D40016BDE6 /* LoadingGif.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -464,14 +476,17 @@
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
 				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
 				8194A8B027FDB3010048314B /* Plan.swift in Sources */,
+				816B192C280DED050016BDE6 /* GetUser.swift in Sources */,
+				816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
 				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
+				81237AA92802BC5A00CD3749 /* UserError.swift in Sources */,
+				816B1934280EC4D40016BDE6 /* LoadingGif.swift in Sources */,
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
-				81F61EFE27F1DA1200A91739 /* GetUser.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
@@ -498,6 +513,7 @@
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,
+				816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,
@@ -646,6 +662,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7TDF5UXA37;
 				INFOPLIST_FILE = Infpromo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -666,6 +683,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7TDF5UXA37;
 				INFOPLIST_FILE = Infpromo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

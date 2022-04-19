@@ -15,4 +15,6 @@ struct MyReportsCollectionViewCellViewModel {
     let followers: QuantumValue?
     let engagementRate: QuantumValue?
     let engagements: QuantumValue?
+    let date: String?
+    let network: String?
 }

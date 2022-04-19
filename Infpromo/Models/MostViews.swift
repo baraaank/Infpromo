@@ -18,8 +18,7 @@ struct Reports: Codable {
 struct ReportsData: Codable {
     let viewCount: Int
     let _id: String
-    let userId: String
-    let network: String
+    let userCreatedDate: String?
     let data: ProfileData
 }
 

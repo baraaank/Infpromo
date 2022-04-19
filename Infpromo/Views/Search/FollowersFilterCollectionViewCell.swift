@@ -22,7 +22,7 @@ class FollowersFilterCollectionViewCell: UICollectionViewCell {
     }()
     
     let button: CustomFilterButton = {
-       let button = CustomFilterButton()
+        let button = CustomFilterButton(type: .system)
 //        button.backgroundColor = .red
         button.layer.cornerRadius = 6
         button.setImage(UIImage(systemName: "xmark.square"), for: .normal)

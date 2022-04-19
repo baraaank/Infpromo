@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 struct BuyingOptions {
     let reportNumber: String
@@ -42,7 +43,7 @@ class BuyReportViewController: UIViewController {
         tableView.isScrollEnabled = false
         
         tableView.backgroundColor = .systemGray6
-        
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -88,7 +89,7 @@ class BuyReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Purchase"
+        title = "Satın Al"
 //        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor().infpromo]
 //        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor().infpromo]
@@ -106,6 +107,11 @@ class BuyReportViewController: UIViewController {
           
         view.backgroundColor = .systemGray6
         populateCells()
+        
+        self.navigationController?.navigationBar.shouldRemoveShadow(true)
+        navigationController?.navigationBar.barTintColor = .systemGray6
+        
+        
         
     }
     
@@ -144,7 +150,7 @@ class BuyReportViewController: UIViewController {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
         mailButton.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
-        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: FAQTableView.contentSize.height + 100)
+        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: 100)
         scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height)
         
     }
@@ -158,20 +164,35 @@ class BuyReportViewController: UIViewController {
 //UICollectionView
 extension BuyReportViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return planResponseArray.count
+        if planResponseArray.isEmpty {
+            return 4
+        } else {
+            return planResponseArray.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BuyingOptionsCollectionViewCell.reuseIdentifier, for: indexPath) as! BuyingOptionsCollectionViewCell
-        cell.backgroundColor = .white
+        
+        
+        if planResponseArray.count == 0 {
+            cell.isSkeletonable = true
+            cell.showAnimatedGradientSkeleton()
+        }
+        
+         else {
+            let planResponse = planResponseArray[indexPath.row]
 
-        let planResponse = planResponseArray[indexPath.row]
-
-        cell.configureCell(with: .init(name: planResponse.name,
-                                       oldPrice: planResponse.oldPrice,
-                                       newPrice: planResponse.newPrice,
-                                       credit: planResponse.credit,
-                                       profit: planResponse.profit))
+            cell.configureCell(with: .init(name: planResponse.name,
+                                           oldPrice: planResponse.oldPrice,
+                                           newPrice: planResponse.newPrice,
+                                           credit: planResponse.credit,
+                                           profit: planResponse.profit))
+            cell.contentView.isHidden = false
+            cell.hideSkeleton()
+        }
+        
+        
         return cell
     }
 }
@@ -183,6 +204,9 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
         1
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)

@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
 
 class SearchResultCollectionViewCell: UICollectionViewCell {
     
@@ -22,23 +23,30 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
     }()
     
-    private  let usernameLabel: UILabel = {
+    private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "@cemalcancansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "@cemalcancansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         label.textAlignment = .center
         
         return label
+    }()
+    
+    let usernameButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
+        button.setAttributedTitle(NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+//        button.backgroundColor = .clear
+        return button
     }()
     
     private let numberOfFollowersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "3,2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "3,2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
@@ -46,7 +54,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let followersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
         label.textAlignment = .center
         
         return label
@@ -54,7 +62,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let numberOfEngagementsAndRatesLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "1,1M (7.34 %)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "1,1M (7.34 %)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
@@ -62,7 +70,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let engagementsAndRatesLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
         // add line break
         label.textAlignment = .center
         
@@ -70,10 +78,10 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     }()
     
     private let button: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
-        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         return button
     }()
     
@@ -83,6 +91,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
         addSubviews()
         configureCell()
+        contentView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -90,14 +99,15 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     }
     
     func addSubviews() {
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(usernameLabel)
-        addSubview(numberOfFollowersLabel)
-        addSubview(followersLabel)
-        addSubview(numberOfEngagementsAndRatesLabel)
-        addSubview(engagementsAndRatesLabel)
-        addSubview(button)
+        contentView.addSubview(imageView)
+        contentView.addSubview(nameLabel)
+//        addSubview(usernameLabel)
+        contentView.addSubview(usernameButton)
+        contentView.addSubview(numberOfFollowersLabel)
+        contentView.addSubview(followersLabel)
+        contentView.addSubview(numberOfEngagementsAndRatesLabel)
+        contentView.addSubview(engagementsAndRatesLabel)
+        contentView.addSubview(button)
     }
     
     override func layoutSubviews() {
@@ -123,7 +133,8 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         followersLabel.frame = CGRect(x: numberOfFollowersLabel.left, y: numberOfFollowersLabel.bottom , width: width / 3.8, height: fiveOfOneHeight)
         
         nameLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.left, y: engagementsAndRatesLabel.bottom + 15, width: width / 2.2, height: fiveOfOneHeight)
-        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
+//        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
+        usernameButton.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
         
         button.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
         
@@ -151,18 +162,33 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     func configureCellByFilter(with viewModel: SearchWithFilterCellViewModel) {
         if let username = viewModel.username {
-            usernameLabel.text = "@\(username)"
+//            usernameLabel.text = "@\(username)"
+//            usernameButton.setTitle("@\(username)", for: .normal)
+            usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             
         }
         
         if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+            
+//            guard let engagement = viewModel.engagementRate else {
+//                return
+//            }
+//            let clearEngagementRate = Double(engagement * 100)
+//            let clearEngagement = clearEngagementRate.truncate(places: 2)
+//
+//            numberOfEngagementRateLabel.text = "\(clearEngagement) %"
+            let intEngagement = Int(engagements)
+            
             let clearEngagementRate = Double(engagementsRate * 100)
             let clearEngagement = clearEngagementRate.truncate(places: 2)
-            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
+            numberOfEngagementsAndRatesLabel.text = "\(intEngagement.roundedWithAbbreviations) & (\(clearEngagement)%)"
         }
        
         if let followers = viewModel.followers {
-            numberOfFollowersLabel.text = "\(followers)"
+                
+            let intFollowers = Int(followers)
+            
+            numberOfFollowersLabel.text = "\(intFollowers.roundedWithAbbreviations)"
         }
         
         if let image = viewModel.picture {
@@ -178,41 +204,47 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
-        
-        if let username = viewModel.username {
-            usernameLabel.text = "@\(username)"
-            
-        }
-        
-//        guard let engagement = viewModel.engagementRate else {
-//            return
+//    func configureCellData(with viewModel: SearchByUsernameCellViewModel) {
+//        
+//        if let username = viewModel.username {
+////            usernameLabel.text = "@\(username)"
+////            usernameButton.setTitle("@\(username)", for: .normal)
+//            usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+//            
 //        }
-//        let clearEngagementRate = Double(engagement * 100)
-//        let clearEngagement = clearEngagementRate.truncate(places: 2)
-//
-//        numberOfEngagementRateLabel.text = "\(clearEngagement) %"
-        
-        if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
-            let clearEngagementRate = Double(engagementsRate * 100)
-            let clearEngagement = clearEngagementRate.truncate(places: 2)
-            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
-        }
-       
-        if let followers = viewModel.followers {
-            numberOfFollowersLabel.text = "\(followers)"
-        }
-        
-        if let image = viewModel.picture {
-            if let imageURL = URL(string: image) {
-                imageView.sd_setImage(with: imageURL, completed: nil)
-            }
-        }
-        
-        if let fullName = viewModel.fullname {
-            nameLabel.text = fullName
-        } else {
-            nameLabel.text = viewModel.username
-        }
-    }
+//        
+////        guard let engagement = viewModel.engagementRate else {
+////            return
+////        }
+////        let clearEngagementRate = Double(engagement * 100)
+////        let clearEngagement = clearEngagementRate.truncate(places: 2)
+////
+////        numberOfEngagementRateLabel.text = "\(clearEngagement) %"
+//        
+//        if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
+//            let clearEngagementRate = Double(engagementsRate * 100)
+//            let clearEngagement = clearEngagementRate.truncate(places: 2)
+//            numberOfEngagementsAndRatesLabel.text = "\(engagements)M (\(clearEngagement))"
+//        }
+//       
+//        if let followers = viewModel.followers {
+//            
+//            
+//            numberOfFollowersLabel.text = "\(followers)"
+//        }
+//        
+//        if let image = viewModel.picture {
+//            if let imageURL = URL(string: image) {
+//                imageView.sd_setImage(with: imageURL, completed: nil)
+//            }
+//        }
+//        
+//        if let fullName = viewModel.fullname {
+//            nameLabel.text = fullName
+//        } else {
+//            nameLabel.text = viewModel.username
+//        }
+//    }
+//}
+
 }

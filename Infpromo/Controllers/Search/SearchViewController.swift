@@ -25,9 +25,12 @@ struct SelectedFilter {
 
 
 
+
+
 class SearchViewController: UIViewController {
     
     
+   
     var models: [String] = [
         "aaaaa",
         "bbbbbbbbbbbb",
@@ -292,7 +295,7 @@ class SearchViewController: UIViewController {
     }()
     
     private let dismissViewButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         let image = UIImage(systemName: "xmark.square")
         button.imageView?.contentMode = .scaleAspectFit
         button.contentVerticalAlignment = .fill
@@ -328,26 +331,45 @@ class SearchViewController: UIViewController {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemGray3.cgColor
         textField.placeholder = "Influencer Ara"
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 60))
-        customView.backgroundColor = .clear
-        let customImageView = UIImageView()
-        customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
-        let customImage = UIImage(systemName: "magnifyingglass")
-        customImageView.tintColor = UIColor().infpromo
-        customImageView.contentMode = .scaleAspectFit
-        customImageView.image = customImage
-        customImageView.backgroundColor = .clear
-        customView.addSubview(customImageView)
-        textField.leftView = customView
-        //        textField.delegate = self
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 40))
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        customView.layer.cornerRadius = 8
+        customView.backgroundColor = UIColor().infpromo
+        customView.clipsToBounds = true
+        paddingView.addSubview(customView)
         
+//        let customImageView = UIImageView()
+//        customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
+//        let customImage = UIImage(systemName: "magnifyingglass")
+//        customImageView.tintColor = UIColor().infpromo
+//        customImageView.contentMode = .scaleAspectFit
+        
+        let customSymbolLabel = UILabel()
+        customSymbolLabel.frame = customView.bounds
+//        customSymbolLabel.text = "a"
+        customSymbolLabel.textAlignment = .center
+        customSymbolLabel.attributedText = NSAttributedString(string: "@", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold)])
+        customView.addSubview(customSymbolLabel)
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+//        customImageView.image = customImage
+//        customImageView.backgroundColor = .clear
+//        customView.addSubview(customImageView)
+        
+        textField.leftView = paddingView
+//        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 60, height: 40))
+        //        textField.delegate = self
+//        textField.textRect(forBounds: CGRect(x: 80, y: 0, width: 50, height: 40))
         textField.leftViewMode = .always
+        
+        textField.returnKeyType = .go
         return textField
     }()
     
     private let influencerHeadingsTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "influencerHeadingsTableView")
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -372,7 +394,7 @@ class SearchViewController: UIViewController {
     
     
     private let searchButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.layer.cornerRadius = 8
         button.backgroundColor = UIColor().infpromo
         button.setAttributedTitle(NSAttributedString(string: "Arama", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .bold)]), for: .normal)
@@ -410,6 +432,7 @@ class SearchViewController: UIViewController {
         
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "influencerFilterCollectionViewKind", withReuseIdentifier: "influencerFilterCollectionViewReuseIdentifier")
         collectionView.register(InfluencerFilterCollectionViewCell.self, forCellWithReuseIdentifier: InfluencerFilterCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
@@ -439,7 +462,7 @@ class SearchViewController: UIViewController {
         return collectionView
     }()
     
-    
+    var selectedIndex = IndexPath(row: -1, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -476,7 +499,9 @@ class SearchViewController: UIViewController {
         view.backgroundColor = .white
         
         
-        searchBar.isHidden = true
+        
+        influencerFilterCollectionView.isHidden = true
+        followersFilterCollectionView.isHidden = true
         
         influencerFilterCollectionView.delegate = self
         influencerFilterCollectionView.dataSource = self
@@ -488,9 +513,25 @@ class SearchViewController: UIViewController {
         //second one is an empty array
 //        createFilterArray(array: <#T##[OptionsSelected]#>, array2: <#T##[OptionsSelected]#>)
         didLayOut()
+//
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        view.addGestureRecognizer(tap)
+//
         
+        
+        
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGestureReconizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGestureReconizer)
+        
+        searchBar.delegate = self
+//
     }
     
+    @objc func hideKeyboard() {
+        searchBar.endEditing(true)
+    }
+
     func addSubviews() {
         
         view.addSubview(topLabel)
@@ -647,67 +688,151 @@ class SearchViewController: UIViewController {
         print("interestsssss: \(interests)")
         
         
+        hideSearchBar()
+        
+        
+    }
+    
+    func hideSearchBar() {
+        if selectedFilterArray.count == 0 {
+            searchBar.isHidden = false
+            influencerFilterCollectionView.isHidden = true
+            followersFilterCollectionView.isHidden = true
+        } else {
+            searchBar.isHidden = true
+            influencerFilterCollectionView.isHidden = false
+            followersFilterCollectionView.isHidden = false
+        }
+    }
+    
+    func searchButtonClicked() {
+        
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let deleteComponents: [String: Any] = ["maxPage": -1,
+                                               "initialPage": 0]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteComponents"), object: nil, userInfo: deleteComponents)
+        
+        var searchBarText = ""
+        if searchBar.text?.contains("@") == true {
+            searchBarText = searchBar.text!
+        } else {
+            searchBarText = "@\(searchBar.text!)"
+        }
+        
+        if !searchBar.isHidden {
+            APICaller.shared.searchByUsername(username: searchBarText) { response in
+                switch response {
+                case .success(let model):
+                    var directProfileResponse: [DirectProfileResponse] = []
+                    directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
+                        .init(engagementRate: $0.profile.engagementRate,
+                              engagements: $0.profile.engagements,
+                              followers: $0.profile.followers,
+                              fullname: $0.profile.fullname,
+                              picture: $0.profile.picture,
+                              url: $0.profile.url,
+                              username: $0.profile.username,
+                              isPrivate: $0.profile.isPrivate)
+                    })
+                )
+
+
+                    let dataDict: [String: [DirectProfileResponse]] = ["dataDict": directProfileResponse]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
+
+                    
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    let errorString = "Aradığınız öğe bulunamadı."
+                    let usernameErrorDict: [String: String] = ["searcByUsernameUnsuccessful": errorString]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "usernameErrorDict"), object: nil, userInfo: usernameErrorDict)
+                    
+                }
+
+
+            }
+        } else {
+//            print("minFollowers \(minFollowers)")
+//            print("maxFollowers \(maxFollowers)")
+//            print("gender \(gender)")
+//            print("interests \(interests)")
+//            print("language \(language)")
+//            print("engagementRate \(engagementRate)")
+//            print("hasYoutube \(hasYoutube)" )
+            
+            APICaller.shared.filter(page: 0,minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube) { response in
+                
+                
+                switch response {
+                case .success(let model):
+                    var filterResultArray: [SearchWithFilterCellViewModel] = []
+                    filterResultArray.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                        .init(engagementRate: $0.profile.engagementRate,
+                              engagements: $0.profile.engagements,
+                              followers: $0.profile.followers,
+                              fullname: $0.profile.fullname,
+                              picture: $0.profile.picture,
+                              url: nil,
+                              username: $0.profile.username,
+                              isPrivate: nil)
+                    }))
+                    
+                    
+                    
+                    let filterBasedDict: [String: Any] = ["total": model.data.bodyNew.total,
+                                                    "minFollowers": self.minFollowers as Any,
+                                                    "maxFollowers": self.maxFollowers as Any,
+                                                    "gender": self.gender as Any,
+                                                    "interests": self.interests,
+                                                    "engagementRate": self.engagementRate as Any,
+                                                    "hasYoutube": self.hasYoutube as Any]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDict"), object: nil, userInfo: filterBasedDict)
+                    
+                    print(model.data.bodyNew.total)
+                    
+                    let filterResultDict: [String: [SearchWithFilterCellViewModel]] = ["filterResultDict": filterResultArray]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newFilterResultDict"), object: nil, userInfo: filterResultDict)
+                    
+                    
+                    
+                    
+                case .failure(let error):
+                    print(error)
+                    
+                    let filterString = "Aradığınız öğe bulunamadı."
+                    let filterErrorDict: [String: String] = ["searcByFilterUnsuccessful": filterString]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
+                }
+            }
+            
+            
+            
+        }
+       
+
+        
+        
+       
+        
+        
+        // we should delete maxPage and initial page number
+        //delete all arraay elements
+        
+        
+//        let deleteComponents: [String: Any] = ["deleted": ]
+        
+        
+        
+        
     }
     
     @objc func searchButtonTapped() {
-       
-//        APICaller.shared.searchByUsername(username: searchBar.text!) { response in
-//            switch response {
-//            case .success(let model):
-//                var directProfileResponse: [DirectProfileResponse] = []
-//                directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
-//                    .init(engagementRate: $0.profile.engagementRate,
-//                          engagements: $0.profile.engagements,
-//                          followers: $0.profile.followers,
-//                          fullname: $0.profile.fullname,
-//                          picture: $0.profile.picture,
-//                          url: $0.profile.url,
-//                          username: $0.profile.username,
-//                          isPrivate: $0.profile.isPrivate)
-//                })
-//                )
-//
-//
-//                let dataDict: [String: [DirectProfileResponse]] = ["dataDict": directProfileResponse]
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
-//
-//                DispatchQueue.main.async {
-//                    self.dismiss(animated: true, completion: nil)
-//                }
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//
-//
-//        }
-        
-        
-        print("minFollowers \(minFollowers)")
-        print("maxFollowers \(maxFollowers)")
-        print("gender \(gender)")
-        print("interests \(interests)")
-        print("language \(language)")
-        print("engagementRate \(engagementRate)")
-        print("hasYoutube \(hasYoutube)" )
-        
-        APICaller.shared.filter(minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube) { response in
-            
-            
-            switch response {
-            case .success(let model):
-                print("successsssfulllllyyyyyyy")
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
+        searchButtonClicked()
+      
     }
     
     @objc func dismissViewButtonTapped() {
@@ -846,7 +971,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.attributedText = NSAttributedString(string: cellText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
         cell.textLabel?.numberOfLines = 0
         
-        
+       
         
         if optionArray[indexPath.row].isSelected == false {
             cell.backgroundColor = .white
@@ -854,9 +979,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             
         } else {
-            
-            
-            
             
 //            let button = UIButton()
 //            button.backgroundColor = .red
@@ -883,6 +1005,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 let cellText = influencerPropertiesHeadingsInstagram[indexPath.row]
                 cell.textLabel?.attributedText = NSAttributedString(string: cellText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
                 cell.textLabel?.numberOfLines = 0
+                cell.selectionStyle = .none
+                
+                if selectedIndex == indexPath {
+                    cell.textLabel?.textColor = UIColor().infpromo
+                } else {
+                    cell.textLabel?.textColor = .black
+                }
                 
                 return cell
             case influencerOptionsTableView:
@@ -1043,7 +1172,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //
 //    }
     
+    
+  
+    
+    func handleIsSelected(optionsArray: [OptionsSelected], filteredArray: inout [SelectedFilter], indexPath: IndexPath) {
+        let selectedRow = optionsArray[indexPath.row]
+        optionsArray.map({ $0.isSelected = false })
+        
+        let ids = optionsArray.map({ $0.id })
+        
+        for x in ids {
+            if let first = filteredArray.firstIndex(where: { $0.id == x}) {
+                filteredArray.remove(at: first)
+            }
+        }
 
+        filteredArray.insert(.init(filterName: selectedRow.option, id: selectedRow.id), at: 0)
+        selectedRow.isSelected = true
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch segmentedControl.selectedSegmentIndex {
@@ -1051,33 +1197,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             switch tableView {
             case influencerHeadingsTableView:
                 
-            
-            influencerOptionsTableView.isHidden = false
+                selectedIndex = indexPath
+                influencerOptionsTableView.isHidden = false
     
             case influencerOptionsTableView:
                 print("inside baby")
 
                 filterIndexCount += 1
                 
-                
                 switch influencerHeadingsTableView.indexPathForSelectedRow {
                 case [0,0]:
-                    
-//                    selectedRowComputations(optionArray: arrayOneInfluencerInstagram, baseOption: minFollowers, baseFilterArray: selectedFilterArray, indexPath: indexPath)
+                   
                     let selectedRowOne = arrayOneInfluencerInstagram[indexPath.row]
+                    
                     selectedRowOne.isSelected = !selectedRowOne.isSelected
                     
                     if selectedRowOne.isSelected {
+                        handleIsSelected(optionsArray: arrayOneInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         minFollowers = selectedRowOne.code as? Int
-                        selectedFilterArray.insert(.init(filterName: selectedRowOne.option, id: selectedRowOne.id), at: 0)
-
-                        
-                        //other one will be false
-                        
-                        
-                        
-                       
-                        
                     } else {
                         minFollowers = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowOne.id}) {
@@ -1085,14 +1222,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                     
-                    
                 case [0,1]:
                     let selectedRowTwo = arrayTwoInfluencerInstagram[indexPath.row]
                     selectedRowTwo.isSelected = !selectedRowTwo.isSelected
                     if selectedRowTwo.isSelected {
+                        handleIsSelected(optionsArray: arrayTwoInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         maxFollowers = selectedRowTwo.code as? Int
-//                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
-                        selectedFilterArray.insert(.init(filterName: selectedRowTwo.option, id: selectedRowTwo.id), at: 0)
                     } else {
                         maxFollowers = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowTwo.id}) {
@@ -1103,9 +1238,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     let selectedRowThree = arrayThreeInfluencerInstagram[indexPath.row]
                     selectedRowThree.isSelected = !selectedRowThree.isSelected
                     if selectedRowThree.isSelected {
+                        handleIsSelected(optionsArray: arrayThreeInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         gender = selectedRowThree.code as? String
-//                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
-                        selectedFilterArray.insert(.init(filterName: selectedRowThree.option, id: selectedRowThree.id), at: 0)
                     } else {
                         gender = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowThree.id}) {
@@ -1131,9 +1265,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     let selectedRowFive = arrayFiveInfluencerInstagram[indexPath.row]
                     selectedRowFive.isSelected = !selectedRowFive.isSelected
                     if selectedRowFive.isSelected {
+                        handleIsSelected(optionsArray: arrayFiveInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         language = selectedRowFive.code as? String
-//                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
-                        selectedFilterArray.insert(.init(filterName: selectedRowFive.option, id: selectedRowFive.id), at: 0)
+
                     } else {
                         language = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowFive.id}) {
@@ -1144,9 +1278,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     let selectedRowSix = arraySixInfluencerInstagram[indexPath.row]
                     selectedRowSix.isSelected = !selectedRowSix.isSelected
                     if selectedRowSix.isSelected {
+                        handleIsSelected(optionsArray: arraySixInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         engagementRate = selectedRowSix.code as? Double
-//                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
-                        selectedFilterArray.insert(.init(filterName: selectedRowSix.option, id: selectedRowSix.id), at: 0)
                     } else {
                         engagementRate = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowSix.id}) {
@@ -1157,9 +1290,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     let selectedRowSeven = arraySevenInfluencerInstagram[indexPath.row]
                     selectedRowSeven.isSelected = !selectedRowSeven.isSelected
                     if selectedRowSeven.isSelected {
+                        handleIsSelected(optionsArray: arraySevenInfluencerInstagram, filteredArray: &selectedFilterArray, indexPath: indexPath)
                         hasYoutube = selectedRowSeven.code as? Bool
-//                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
-                        selectedFilterArray.insert(.init(filterName: selectedRowSeven.option, id: selectedRowSeven.id), at: 0)
                     } else {
                         hasYoutube = nil
                         if let first = selectedFilterArray.firstIndex(where: { $0.id == selectedRowSeven.id}) {
@@ -1234,10 +1366,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         self.influencerFilterCollectionView.scrollToItem(at: IndexPath(row: filterIndexCount, section: 0), at: .right, animated: true)
         
+        
+        hideSearchBar()
+        
     }
     
-
     
+
+//    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+//        let cell  = influencerHeadingsTableView.cellForRow(at: indexPath)
+//        cell!.contentView.backgroundColor = .green
+//    }
+//
+    
+
+//    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+//        let cell  = influencerHeadingsTableView.cellForRow(at: indexPath)
+//        cell!.contentView.backgroundColor = .clear
+//    }
     
 
 }
@@ -1268,7 +1414,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.button.section = indexPath.section
             
             cell.button.addTarget(self, action: #selector(filterDismissButtonTapped), for: .touchUpInside)
-            
+            cell.backgroundColor = .white
+            print(selectedFilterArray)
 //            cell.ce = collectionView.center
             return cell
         case followersFilterCollectionView:
@@ -1348,5 +1495,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
 
 
-
-
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()  //if desired
+        searchButtonClicked()
+        return true
+    }
+}

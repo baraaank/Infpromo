@@ -20,32 +20,40 @@ class LogInViewController: UIViewController {
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 2
+        textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor().infpromoBorder.cgColor
         textField.placeholder = "Email"
         textField.leftView = customLeftView(systemName: "envelope")
         textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
+//        textField.backgroundColor = .systemGray6
         return textField
     }()
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 2
+        textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor().infpromoBorder.cgColor
         textField.placeholder = "Password"
         textField.leftView = customLeftView(systemName: "lock")
         textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.isSecureTextEntry = true
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
+        textField.enablePasswordToggle()
         return textField
     }()
     
     private let forgotPasswordButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Parolanı mı Unuttun?", for: .normal)
+        
+        button.setAttributedTitle(NSAttributedString(string: "Parolanı mı unuttun?", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)]), for: .normal)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(UIColor().infpromo, for: .normal)
         button.contentHorizontalAlignment = .right
@@ -53,7 +61,7 @@ class LogInViewController: UIViewController {
     }()
     
     private let logInButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.layer.cornerRadius = 8
         button.backgroundColor = UIColor().infpromo
         button.setAttributedTitle(NSAttributedString(string: "Giriş", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20, weight: .bold)]), for: .normal)
@@ -63,13 +71,14 @@ class LogInViewController: UIViewController {
     
     private let dontYouHaveAnAccountLabel: UILabel = {
        let label = UILabel()
-        label.text = "Hesabın Yok Mu?"
+        
+        label.attributedText = NSAttributedString(string: "Hesabın yok mu?", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         return label
     }()
     
     private let createAnAccountButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Ücretsiz Dene!", for: .normal)
+        let button = UIButton(type: .system)
+        button.setAttributedTitle(NSAttributedString(string: "Ücretsiz hesap oluştur!", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)]), for: .normal)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(UIColor().infpromo, for: .normal)
         button.contentHorizontalAlignment = .right
@@ -77,6 +86,17 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    //loading gif and blur
+    var gif: LoadingGif!
+
+    let blurEffectView: UIVisualEffectView = {
+       let blurEffectView = UIVisualEffectView()
+        let style = UIBlurEffect.Style.dark
+        let effect = UIBlurEffect(style: style)
+        blurEffectView.effect = effect
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurEffectView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +105,11 @@ class LogInViewController: UIViewController {
         arrangeLayouts()
         
         view.backgroundColor = .white
+        
+        
+        
+        gif = LoadingGif.init(imageName: "infpromoLoadingGif", frame: CGRect(x: (view.frame.size.width / 2) - 40, y: (view.frame.size.height / 2) - 40, width: 80, height: 80), duration: 0.8, repeatCount: 0)
+        blurEffectView.frame = view.bounds
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -119,8 +144,9 @@ class LogInViewController: UIViewController {
         customView.backgroundColor = .clear
         let customImageView = UIImageView()
         customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
-        let customImage = UIImage(systemName: systemName)
+        let customImage = UIImage(systemName: systemName, withConfiguration: UIImage.SymbolConfiguration.init(weight: .light))
         customImageView.tintColor = .black
+        
         customImageView.contentMode = .scaleAspectFit
         customImageView.image = customImage
         customImageView.backgroundColor = .clear
@@ -132,29 +158,74 @@ class LogInViewController: UIViewController {
     @objc func createAnAccountButtonTapped() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        present(vc, animated: false)
     }
     
     @objc func logInButtonTapped() {
         
-        guard let email = usernameTextField.text, let password = passwordTextField.text else {
-            print("username and password is not exist")
+        view.endEditing(true)
+        
+        guard let email = usernameTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Hata!", message: "Lütfen tüm boşlukları doldurunuz.")
+            }
             return
         }
+        
+        guard isValidEmail(email) == true else {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Hata", message: "Lütfen geçerli bir email adresi giriniz.")
+            }
+            return
+        }
+        
+        guard password.count > 5 else {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Hata!", message: "Parola en az 6 karakter olmalıdır.")
+            }
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.startBlur()
+        }
+        
         
         AuthManager.shared.logInUser(email: email, password: password) { response in
             switch response {
             case .success(_):
+                
                 DispatchQueue.main.async {
                     let vc = TabBarController()
                     vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
+                    self.present(vc, animated: false)
                 }
                
+                
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Hata!", message: "\(error.message), lütfen tekrar deneyiniz.")
+                }
+                
                 print("log in unsuccessful \(error)")
+                
+            }
+            DispatchQueue.main.async {
+                self.stopBlur()
             }
         }
+    }
+    
+    func startBlur() {
+        view.addSubview(blurEffectView)
+        view.addSubview(gif)
+        gif.startAnimation()
+    }
+    
+    func stopBlur() {
+        gif.stopAnimation()
+        gif.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
     }
 
 }
@@ -221,5 +292,27 @@ extension LogInViewController {
 //                self.view.frame.origin.y = 0
 //            }
         
+    }
+}
+
+//alerts
+extension LogInViewController {
+  func showAlert(title: String, message: String) {
+    let alertController = UIAlertController(title: title, message:
+      message, preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(title: "Tamam", style: .default, handler: {action in
+    }))
+    self.present(alertController, animated: true, completion: nil)
+  }
+    
+    
+}
+
+extension LogInViewController {
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
     }
 }

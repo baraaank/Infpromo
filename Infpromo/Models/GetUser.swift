@@ -2,16 +2,15 @@
 //  GetUser.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 28.03.2022.
+//  Created by BaranK Kutlu on 18.04.2022.
 //
 
 import Foundation
 
 struct GetUser: Decodable {
-    let data: GetUserDataResponse
+    let data: GetUserData
 }
 
-struct GetUserDataResponse: Decodable {
-    let userPublic: UserResponse
+struct GetUserData: Decodable {
+    let userPublic: UserResponse //in user
 }
-

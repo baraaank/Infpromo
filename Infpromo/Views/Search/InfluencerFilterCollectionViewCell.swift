@@ -21,11 +21,12 @@ class InfluencerFilterCollectionViewCell: UICollectionViewCell {
     }()
     
     let button: CustomFilterButton = {
-       let button = CustomFilterButton()
+        let button = CustomFilterButton(type: .system)
 //        button.backgroundColor = .red
         button.layer.cornerRadius = 6
         button.setImage(UIImage(systemName: "xmark.square"), for: .normal)
-        button.imageView?.tintColor = UIColor().infpromo
+//        button.imageView?.tintColor = UIColor().infpromo
+        button.tintColor = UIColor().infpromo
 //        button.setTitleColor(UIColor().infpromo, for: .normal)
         return button
     }()

@@ -12,14 +12,15 @@ class SearchResultCollectionReusableView: UICollectionReusableView {
     static let reuseIdentifier = "searchResultCollectionReusableViewIdentifier"
     static let kind = "searchResultCollectionReusableViewKind"
     
-    private let button: UIButton = {
-       let button = UIButton()
-        button.setTitle("next", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+    let button: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("ileri", for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "İleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 4
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor().infpromo.cgColor
-        button.backgroundColor = .white
+//        button.layer.borderWidth = 1
+//        button.layer.borderColor = UIColor().infpromo.cgColor
+        button.backgroundColor = UIColor().infpromo
         return button
     }()
     
@@ -38,7 +39,7 @@ class SearchResultCollectionReusableView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        button.frame = CGRect(x: 70, y: 40, width: width - 140, height: height - 80)
+        button.frame = CGRect(x: 120, y: 40, width: width - 240, height: height - 80)
     }
     
 }

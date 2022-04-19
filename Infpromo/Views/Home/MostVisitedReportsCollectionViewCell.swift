@@ -7,6 +7,8 @@
 
 import UIKit
 import SDWebImage
+import SkeletonView
+
 
 class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
@@ -30,7 +32,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         label.textAlignment = .center
         
         return label
@@ -38,7 +40,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let numberOfFollowersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "3.2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "3.2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         
         return label
@@ -46,19 +48,19 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     
     private let numberOfEngagementRateLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "4.62 %", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "4.62 %", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
         label.textAlignment = .center
         
         return label
     }()
     
     private let button: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         
-        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         return button
     }()
     
@@ -68,6 +70,9 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         addSubviews()
         configureCell()
         
+//        isSkeletonable = true
+//        contentView.isSkeletonable = true
+        contentView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -75,12 +80,12 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     }
     
     func addSubviews() {
-        addSubview(numberOfViewsLabel)
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(numberOfFollowersLabel)
-        addSubview(numberOfEngagementRateLabel)
-        addSubview(button)
+        contentView.addSubview(numberOfViewsLabel)
+        contentView.addSubview(imageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(numberOfFollowersLabel)
+        contentView.addSubview(numberOfEngagementRateLabel)
+        contentView.addSubview(button)
     }
     
     override func layoutSubviews() {
@@ -126,16 +131,20 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         guard let followers = viewModel.followers else {
             return
         }
-        let formattedFollowers = followers.formattedWithSeparator
-        let clearFollowers = formattedFollowers.prefix(4)
-        numberOfFollowersLabel.text = "\(clearFollowers) M"
+        
+        let intFollowers = followers
+        numberOfFollowersLabel.text = "\(intFollowers.roundedWithAbbreviations)"
+        
+//        let formattedFollowers = followers.formattedWithSeparator
+//        let clearFollowers = formattedFollowers.prefix(4)
+//        numberOfFollowersLabel.text = "\(clearFollowers) M"
         guard let engagement = viewModel.engagementRate else {
             return
         }
         let clearEngagementRate = Double(engagement * 100)
         let clearEngagement = clearEngagementRate.truncate(places: 2)
         
-        numberOfEngagementRateLabel.text = "\(clearEngagement) %"
+        numberOfEngagementRateLabel.text = "\(clearEngagement)%"
         
         guard let image = viewModel.picture else {
             return
@@ -154,12 +163,12 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        nameLabel.text = ""
-        numberOfFollowersLabel.text = ""
-        numberOfEngagementRateLabel.text = ""
-        imageView.image = nil
-        numberOfViewsLabel.text = ""
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        nameLabel.text = ""
+//        numberOfFollowersLabel.text = ""
+//        numberOfEngagementRateLabel.text = ""
+//        imageView.image = nil
+//        numberOfViewsLabel.text = ""
+//    }
 }
