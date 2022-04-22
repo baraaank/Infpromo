@@ -7,52 +7,53 @@
 
 import UIKit
 
-class ProfileInformationsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate, ProfileInformationCollectionReusableViewDelegate {
-    func didTappedButton(textField: UITextField) {
-        profileReusable.delegate = self
-        textField.backgroundColor = .red
-        print("here")
-    }
-    
-    
-
-    
-    
+class ProfileInformationsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
+ 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("aaaasssss")
     }
     
-    var profileReusable = ProfileInformationCollectionReusableView()
+    
     
     static let reuseIdentifier = "profileInformationsCollectionViewCellIdentifier"
     
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
+        let image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration.init(weight: .medium))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .black
+        imageView.tintColor = UIColor().infpromo
+        imageView.clipsToBounds = true
+        imageView.image = image
         return imageView
     }()
     
     private let headerLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "aaa", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "aaa", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
         return label
     }()
     
-    let editingTextField: UITextField = {
-       let textField = UITextField()
-        
-        
-//        textField.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
-        textField.textColor = UIColor.lightGray
+//    let editingTextField: UITextField = {
+//       let textField = UITextField()
+//
+//
+//        textField.attributedText = NSAttributedString(string: "-", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+//
+////        textField.textColor = UIColor.lightGray
+//
+//        return textField
+//    }()
     
-        return textField
+    let informationsLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "henüz girilmemiş..", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        return label
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        editingTextField.delegate = self
+        
         addSubviews()
         configureCell()
         
@@ -68,15 +69,15 @@ class ProfileInformationsCollectionViewCell: UICollectionViewCell, UITextFieldDe
     func addSubviews() {
         addSubview(iconImageView)
         addSubview(headerLabel)
-        contentView.addSubview(editingTextField)
+        contentView.addSubview(informationsLabel)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         iconImageView.frame = CGRect(x: 10, y: 10, width: height - 20, height: height - 20)
 //        iconImageView.layer.cornerRadius = (height - 20) / 2
-        headerLabel.frame = CGRect(x: iconImageView.right + 10, y: 5, width: width / 2, height: (height / 2) - 10)
-        editingTextField.frame = CGRect(x: iconImageView.right + 10, y: headerLabel.bottom + 10, width: width / 2, height: (height / 2) - 10)
+        headerLabel.frame = CGRect(x: iconImageView.right + 10, y: 8, width: width / 2, height: (height / 2) - 10)
+        informationsLabel.frame = CGRect(x: iconImageView.right + 10, y: headerLabel.bottom + 6, width: width / 2, height: (height / 2) - 10)
     }
     
     func configureCell() {
@@ -103,9 +104,17 @@ class ProfileInformationsCollectionViewCell: UICollectionViewCell, UITextFieldDe
     }
     
     func fillInfos(with: ProfileInformationOptions) {
-        iconImageView.image = UIImage(systemName: with.icon)
+        iconImageView.image = UIImage(systemName: with.icon, withConfiguration: UIImage.SymbolConfiguration.init(weight: .medium))
         headerLabel.text = with.header
-        editingTextField.text = with.infos
+        
+    }
+    
+    
+    func fillWithInfos(with viewModel: String) {
+        if viewModel != "" {
+            informationsLabel.text = viewModel
+        }
+        
     }
     
     //with the update button text field going to be editing state

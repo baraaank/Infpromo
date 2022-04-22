@@ -76,11 +76,14 @@ class BuyingOptionsCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        numberOfReportsLabel.frame = CGRect(x: 0, y: 10, width: width, height: 30)
-        actualPriceLabel.frame = CGRect(x: 0, y: numberOfReportsLabel.bottom + 20, width: width, height: 20)
-        reducedPriceLabel.frame = CGRect(x: 0, y: actualPriceLabel.bottom + 20, width: width, height: 30)
-        percentageOfEarning.frame = CGRect(x: 0, y: height - 80, width: width, height: 20)
-        purchaseButton.frame = CGRect(x: 20, y: height - 40, width: width - 40, height: 30)
+        
+        let tenOfHeight = height / 12
+        
+        numberOfReportsLabel.frame = CGRect(x: 0, y: 10, width: width, height: tenOfHeight * 2)
+        actualPriceLabel.frame = CGRect(x: 0, y: numberOfReportsLabel.bottom + tenOfHeight, width: width, height: tenOfHeight)
+        reducedPriceLabel.frame = CGRect(x: 0, y: actualPriceLabel.bottom + tenOfHeight, width: width, height: tenOfHeight * 2)
+        percentageOfEarning.frame = CGRect(x: 0, y: reducedPriceLabel.bottom + (tenOfHeight) / 2, width: width, height: tenOfHeight)
+        purchaseButton.frame = CGRect(x: 20, y: height - tenOfHeight * 2.5, width: width - 40, height: tenOfHeight * 2)
     }
     
     func configureCell() {

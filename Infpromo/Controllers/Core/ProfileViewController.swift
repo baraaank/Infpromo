@@ -19,11 +19,13 @@ class ProfileViewController: UIViewController {
     
     var userResponse: ProfileHeaderReusableViewModel?
 
+    var profileInfos: ProfileInformationsCellViewModel?
+    
     
     private let profileCollectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { section, env in
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
 
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: ProfileHeaderCollectionReusableView.kind, alignment: .top)
             
@@ -51,7 +53,7 @@ class ProfileViewController: UIViewController {
     
     let blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView()
-        let style = UIBlurEffect.Style.systemMaterialDark
+        let style = UIBlurEffect.Style.light
         let effect = UIBlurEffect(style: style)
         blurEffectView.effect = effect
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -85,6 +87,16 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.shouldRemoveShadow(true)
         navigationController?.navigationBar.barTintColor = .systemGray6
         startBlur()
+        
+        APIisNotWorking()
+    }
+    
+    func APIisNotWorking() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.stopBlur()
+                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
+                }
+        
     }
     
     
@@ -106,7 +118,23 @@ class ProfileViewController: UIViewController {
         APICaller.shared.getUser { response in
             switch response {
             case .success(let model):
-                self.userResponse = ProfileHeaderReusableViewModel(name: model.data.userPublic.name, surName: model.data.userPublic.surName)
+                self.userResponse = ProfileHeaderReusableViewModel(name: model.data.userPublic.name,
+                                                                   surName: model.data.userPublic.surName,
+                                                                   socialMedia: model.data.userPublic.socialMedia,
+                                                                   title: model.data.userPublic.title)
+
+                let infos = model.data.userPublic
+                self.profileInfos = ProfileInformationsCellViewModel(name: infos.name,
+                                                                     surName: infos.surName,
+                                                                     email: infos.email,
+                                                                     birthday: infos.birthday,
+                                                                     city: infos.city,
+                                                                     language: infos.language,
+                                                                     phone: infos.phone,
+                                                                     socialMedia: infos.socialMedia,
+                                                                     title: infos.title,
+                                                                     website: infos.website)
+                print(infos)
                 
                 DispatchQueue.main.async {
                     self.profileCollectionView.reloadData()
@@ -114,6 +142,7 @@ class ProfileViewController: UIViewController {
                 }
             case .failure(let error):
                 print("failure \(error)")
+                print("profile informations are not loading")
             }
         }
     }
@@ -154,7 +183,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         if kind == ProfileHeaderCollectionReusableView.kind {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileHeaderCollectionReusableView
             header.isSkeletonable = true
-            header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name, surName: userResponse?.surName))
+            header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name,
+                                                                        surName: userResponse?.surName,
+                                                                        socialMedia: userResponse?.socialMedia,
+                                                                        title: userResponse?.title))
             
             return header
         } else {
@@ -171,6 +203,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         switch indexPath.item {
         case 0:
             let vc = ProfileInformationsViewController()
+            vc.profileInfos = profileInfos
             navigationController?.pushViewController(vc, animated: true)
         case 1:
             let vc = ChangePswAndDeleteAccountViewController()
@@ -180,25 +213,72 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             navigationController?.pushViewController(vc, animated: true)
         case 3:
             print(indexPath.item)
-            let vc = ChangePswAndDeleteAccountViewController()
-            vc.explainlabel.text = "Hesabınızı silmeniz durumunda satın aldığını tüm raporlar da silinecektir."
-            vc.sendButton.setTitle("Hesabımı Sil", for: .normal)
-            vc.sendButton.backgroundColor = .systemRed
-            navigationController?.pushViewController(vc, animated: true)
+//            let vc = ChangePswAndDeleteAccountViewController()
+//            vc.explainlabel.text = "Hesabınızı silmeniz durumunda satın aldığını tüm raporlar da silinecektir."
+//            vc.sendButton.setTitle("Hesabımı Sil", for: .normal)
+//            vc.sendButton.backgroundColor = .systemRed
+//            navigationController?.pushViewController(vc, animated: true)
+            
+            let alert = UIAlertController(title: "Hesabını silmek üzeresin!", message: "Eğer hesabını silersen tüm raporların da silinecektir.", preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Hesabımı Sil", style: .destructive , handler:{ (_) in
+                AuthManager.shared.deleteUser {  result in
+                    if result != true {
+                        print("user can not delete himself")
+                    } else {
+                        print("user deleted succesfully")
+                        
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Tebrikler", message: "Hesabın başarı ile silindi.", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "Tamam", style: .default) { _ in
+                                DispatchQueue.main.async {
+                                    let vc = LogInViewController()
+                                    vc.modalPresentationStyle = .fullScreen
+                                    self.present(vc, animated: true)
+                                }
+                            }
+                            alert.addAction(action)
+                            self.present(alert, animated: true)
+                        }
+                    }
+                        
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Vazgeç", style: .cancel, handler:{ (_) in
+                print("User click Dismiss button")
+            }))
+            present(alert, animated: true) {
+                print("completion")
+            }
         case 4:
             
-            AuthManager.shared.signOut { [weak self] signedOut in
-                if signedOut {
-                    DispatchQueue.main.async {
-                        let vc = LogInViewController()
-                        vc.modalPresentationStyle = .fullScreen
-                        self?.present(vc, animated: true)
+            let alert = UIAlertController(title: "Çıkış yapmak üzeresin!", message: "Çıkış yapmak istediğindeen emin misin?", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Çıkış", style: .destructive, handler: { _ in
+                //handlee log out func
+                
+                AuthManager.shared.signOut { [weak self] signedOut in
+                    if signedOut {
+                        DispatchQueue.main.async {
+                            let vc = LogInViewController()
+                            vc.modalPresentationStyle = .fullScreen
+                            self?.present(vc, animated: true)
+                        }
+                    }
+                    else {
+                        print("signed out error")
                     }
                 }
-                else {
-                    print("signed out error")
-                }
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Vazgeç", style: .cancel, handler: { _ in
+                print("user dismiss from logout")
+            }))
+            present(alert, animated: true) {
+                print("log out completion")
             }
+            
+            
             
             
         default:
@@ -206,6 +286,20 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
+    
+    
+}
+
+
+//alerts
+extension ProfileViewController {
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message:
+                                                    message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Tamam", style: .default, handler: {action in
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     
 }

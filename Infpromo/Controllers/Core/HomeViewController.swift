@@ -115,9 +115,9 @@ class HomeViewController: UIViewController {
         let deviceWidth = UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: deviceWidth - 110, y: 10, width: 80, height: 24))
         //        let label = UILabel(frame: CGRect(x: 260, y: 8, width: 120, height: 30))
-        label.attributedText = NSAttributedString(string: "Rapor: 10", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "Rapor: ?", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor :  UIColor().infpromo])
         label.numberOfLines = 0
-        label.textColor = UIColor().infpromo
+        
         return label
     }()
     
@@ -144,7 +144,7 @@ class HomeViewController: UIViewController {
     var mostViewedArray: [MostViewedProfileData] = []
     var viewCountArray: [Int] = []
     
-    var directProfileResponseArray: [DirectProfileResponse] = []
+    var directProfileResponseArray: [SearchWithFilterCellViewModel] = []
     var searchByFilterResultArray: [SearchWithFilterCellViewModel] = []
     
     var initialPage: Int = 0
@@ -159,14 +159,14 @@ class HomeViewController: UIViewController {
     var engagementRate: Double?
     var hasYoutube: Bool?
     
-    
+    var influencerIds: [String] = []
     
     //loading gifs
     var gif: LoadingGif!
     
     let blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView()
-        let style = UIBlurEffect.Style.systemMaterialDark
+        let style = UIBlurEffect.Style.light
         let effect = UIBlurEffect(style: style)
         blurEffectView.effect = effect
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -253,7 +253,7 @@ class HomeViewController: UIViewController {
         
         startBlur()
         APIisNotWorking()
-        tabBarController?.tabBar.barTintColor = .darkGray
+        
         tabBarController?.tabBar.isUserInteractionEnabled = false
     }
     
@@ -322,7 +322,7 @@ class HomeViewController: UIViewController {
             maxPage = deleted
             searchByFilterResultArray.removeAll()
             directProfileResponseArray.removeAll()
-            
+            influencerIds.removeAll()
             
             
             print("eeeyyyyooooo")
@@ -399,7 +399,7 @@ class HomeViewController: UIViewController {
     //username by filter
     @objc func refreshUIByUsername(_ notification: NSNotification) {
         
-        if let byUsernameDict = notification.userInfo?["dataDict"] as? [DirectProfileResponse] {
+        if let byUsernameDict = notification.userInfo?["dataDict"] as? [SearchWithFilterCellViewModel] {
             directProfileResponseArray = byUsernameDict
             total = 1
             DispatchQueue.main.async {
@@ -415,6 +415,25 @@ class HomeViewController: UIViewController {
     
     
     func loadViewElements() {
+        
+        //get user reports count--------
+        
+        APICaller.shared.getUser { result in
+            switch result {
+            case .success(let result):
+                if let reportsCount = result.data.userPublic.credit {
+                    DispatchQueue.main.async {
+                        self.customLabel.text = "Rapor: \(reportsCount)"
+                    }
+                }
+                
+                
+            case .failure(let error):
+                print("getting user from home vc is broken \(error.localizedDescription)")
+            }
+        }
+        
+        
         APICaller.shared.getMostViews { response in
             switch response {
             case .success(let response):
@@ -439,6 +458,7 @@ class HomeViewController: UIViewController {
                     self.mostVisitedReportsCollectionView.reloadData()
                     self.mostVisitedReportsLabel.text = "Bu ay en çok ziyaret edilen raporlar"
                     self.mostVisitedReportsLabel.hideSkeleton()
+                    self.mostVisitedReportsLabel.stopSkeletonAnimation()
                     self.stopBlur()
                 }
                 
@@ -463,8 +483,18 @@ class HomeViewController: UIViewController {
                           picture: $0.profile.picture,
                           url: nil,
                           username: $0.profile.username,
-                          isPrivate: nil)
+                          isPrivate: nil,
+                          influencerId: $0.userId)
                 }))
+                
+//                var influencerId: [String] = []
+//                influencerId.append(contentsOf:model.data.bodyNew.lookalikes.map({
+//                    $0.userId
+//                }))
+                
+               
+                
+//                self.influencerIds = influencerId
                 
                 self.total = model.data.bodyNew.total
                 print("total: \(self.total)")
@@ -476,6 +506,7 @@ class HomeViewController: UIViewController {
                     self.accountCountLabel.text =  "\"\(self.total)\" hesap bulundu."
                     self.searchResultCollectionView.reloadData()
                     self.accountCountLabel.hideSkeleton()
+                    self.accountCountLabel.stopSkeletonAnimation()
                     self.stopBlur()
                 }
                 
@@ -589,7 +620,8 @@ class HomeViewController: UIViewController {
                               picture: $0.profile.picture,
                               url: nil,
                               username: $0.profile.username,
-                              isPrivate: nil)
+                              isPrivate: nil,
+                              influencerId: $0.userId)
                     }))
                     
                     self.total = model.data.bodyNew.total
@@ -597,6 +629,10 @@ class HomeViewController: UIViewController {
                     self.searchByFilterResultArray.append(contentsOf: filterResultData)
                     //                self.searchByFilterResultArray = filterResultData
                     
+//                    self.influencerIds.append(contentsOf: model.data.bodyNew.lookalikes.map({
+//                        $0.userId
+//                    }))
+//
                     DispatchQueue.main.async {
                         self.searchResultCollectionView.reloadData()
                     }
@@ -627,6 +663,26 @@ class HomeViewController: UIViewController {
                 UIApplication.shared.open(url)
             }
         }
+        
+        
+    }
+    
+    @objc func goToDetailButtonTapped(sender: CustomFilterButton) {
+        
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        
+        
+        if !directProfileResponseArray.isEmpty {
+            let influencerId = directProfileResponseArray[indexPath.row].influencerId
+            print("influencer id: \(influencerId)")
+        } else {
+            let influencerId = searchByFilterResultArray[indexPath.row].influencerId
+            print("influencer id: \(influencerId)")
+        }
+            
+        HapticsManager.shared.vibrate(for: .success)
+        
+        
         
         
     }
@@ -689,6 +745,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.contentView.isHidden = false
                 //                cell.backgroundColor = .clear
                 cell.hideSkeleton()
+                cell.stopSkeletonAnimation()
             }
             
             
@@ -704,6 +761,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.usernameButton.section = indexPath.section
             cell.usernameButton.addTarget(self, action: #selector(usernameButtonTapped), for: .touchUpInside)
             
+            
+            cell.goToDetailButton.row = indexPath.row
+            cell.goToDetailButton.section = indexPath.section
+            cell.goToDetailButton.addTarget(self, action: #selector(goToDetailButtonTapped), for: .touchUpInside)
             
             if searchByFilterResultArray.isEmpty && directProfileResponseArray.isEmpty {
                 cell.isSkeletonable = true
@@ -721,7 +782,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        picture: searchByFilterResult.picture,
                                                        url: nil,
                                                        username: searchByFilterResult.username,
-                                                       isPrivate: nil))
+                                                       isPrivate: nil,
+                                                       influencerId: searchByFilterResult.influencerId))
                 
                 //                cell.usernameButton.row = indexPath.row
                 //                cell.usernameButton.section = indexPath.section
@@ -735,6 +797,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.contentView.isHidden = false
                 //                cell.backgroundColor = .clear
                 cell.hideSkeleton()
+                cell.stopSkeletonAnimation()
             }
             
             if directProfileResponseArray.isEmpty == false {
@@ -746,11 +809,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        picture: directProfileResponse.picture,
                                                        url: nil,
                                                        username: directProfileResponse.username,
-                                                       isPrivate: nil))
+                                                       isPrivate: nil,
+                                                       influencerId: directProfileResponse.influencerId))
                 
                 //                cell.backgroundColor = .clear
                 cell.contentView.isHidden = false
                 cell.hideSkeleton()
+                cell.stopSkeletonAnimation()
             }
             
             

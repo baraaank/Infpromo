@@ -37,6 +37,8 @@ final class AuthManager {
         return URL(string: "\(baseURL)/users/register")
     }
     
+    
+    
     public func logInUser(email: String, password: String, completion: @escaping (Result<User, UserError>) -> Void) {
         guard let logInURL = signInURL else {
             return
@@ -154,6 +156,50 @@ final class AuthManager {
             } catch {
                 completion(.failure(error))
             }
+        }
+        task.resume()
+    }
+    
+    public func deleteUser(completion: @escaping (Bool) -> Void) {
+        
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        
+        guard let accessToken = accessToken else {
+            return
+        }
+
+        
+        
+        var request = URLRequest(url: URL(string: "\(baseURL)/users/\(userId)")!)
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "DELETE"
+        request.timeoutInterval = Double.infinity
+        
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(false)
+                return
+            }
+            
+            do {
+//                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+//                print(result)
+//
+                let result = try JSONDecoder().decode(JsonResponses.self, from: data)
+                completion(result.success)
+                UserDefaults.standard.setValue(nil, forKey: "token")
+            } catch {
+                completion(false)
+                print("catching log out user")
+            }
+            
+            
+            
         }
         task.resume()
     }

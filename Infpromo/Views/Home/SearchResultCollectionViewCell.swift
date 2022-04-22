@@ -77,8 +77,8 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let button: UIButton = {
-        let button = UIButton(type: .system)
+    let goToDetailButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
@@ -107,7 +107,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(followersLabel)
         contentView.addSubview(numberOfEngagementsAndRatesLabel)
         contentView.addSubview(engagementsAndRatesLabel)
-        contentView.addSubview(button)
+        contentView.addSubview(goToDetailButton)
     }
     
     override func layoutSubviews() {
@@ -136,7 +136,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 //        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
         usernameButton.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
         
-        button.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
+        goToDetailButton.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
         
     }
     

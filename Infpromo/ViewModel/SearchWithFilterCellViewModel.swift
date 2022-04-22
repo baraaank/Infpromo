@@ -16,4 +16,5 @@ struct SearchWithFilterCellViewModel {
     let url: String?
     let username: String?
     let isPrivate: Bool?
+    let influencerId: String?
 }

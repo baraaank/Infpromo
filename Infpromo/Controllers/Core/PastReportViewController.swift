@@ -89,7 +89,8 @@ class PastReportViewController: UIViewController {
                           engagementRate: $0.data.profile.engagementRate,
                           engagements: $0.data.profile.engagements,
                           date: $0.userCreatedDate,
-                          network: $0.network)
+                          network: $0.network,
+                          influencerId: $0.data.userId)
                 }))
                 
                
@@ -118,6 +119,35 @@ class PastReportViewController: UIViewController {
         collectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
     }
     
+    
+    @objc func usernameButtonTapped(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        
+        
+        if let id = profileResponseArray[indexPath.row].username {
+            if let url = URL(string: "http://www.instagram.com/\(id)/") {
+                UIApplication.shared.open(url)
+            }
+        }
+        
+    }
+    
+    @objc func goToDetailButtonTapped(sender: CustomFilterButton) {
+        
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+
+        
+        if let influencerId = profileResponseArray[indexPath.row].influencerId {
+            let vc = ReportDetailViewController()
+            vc.influencerId = influencerId
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        
+        
+        
+    }
+    
 }
 
 //UICollectionView
@@ -135,6 +165,14 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PastReportCollectionViewCell.reuseIdentifier, for: indexPath) as! PastReportCollectionViewCell
         cell.backgroundColor = .white
         
+        cell.usernameButton.row = indexPath.row
+        cell.usernameButton.section = indexPath.section
+        cell.usernameButton.addTarget(self, action: #selector(usernameButtonTapped), for: .touchUpInside)
+        
+        cell.goToDetailButton.row = indexPath.row
+        cell.goToDetailButton.section = indexPath.section
+        cell.goToDetailButton.addTarget(self, action: #selector(goToDetailButtonTapped), for: .touchUpInside)
+        
 //        cell.layer.borderColor = UIColor.tertiaryLabel.cgColor
 //        cell.layer.borderWidth = 1
         if profileResponseArray.count == 0{
@@ -151,8 +189,9 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
                                                                               followers: profileResponse.followers,
                                                                               engagementRate: profileResponse.engagementRate,
                                                                               engagements: profileResponse.engagements,
-                                                                              date: nil,
-                                                                              network: nil))
+                                                                              date: profileResponse.date,
+                                                                              network: nil,
+                                                                              influencerId: profileResponse.influencerId))
             cell.contentView.backgroundColor = .clear
             cell.contentView.isHidden = false
             cell.hideSkeleton()

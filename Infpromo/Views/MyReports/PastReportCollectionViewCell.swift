@@ -36,23 +36,22 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "Cemal Can Cansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
     }()
     
-    private  let usernameLabel: UILabel = {
-        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "@cemalcancansever", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
-        label.textAlignment = .center
-        
-        return label
+    let usernameButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
+        button.setAttributedTitle(NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+//        button.backgroundColor = .clear
+        return button
     }()
     
     private let numberOfFollowersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "3,2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "3,2M", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
@@ -60,7 +59,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let followersLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "Takipçi", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
         label.textAlignment = .center
         
         return label
@@ -68,7 +67,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let numberOfEngagementsAndRatesLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "1,1M (7.34 %)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
+        label.attributedText = NSAttributedString(string: "1,1M (7.34 %)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         label.textAlignment = .center
         
         return label
@@ -76,18 +75,18 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     
     private let engagementsAndRatesLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
+        label.attributedText = NSAttributedString(string: "Etkileşimler ve Oranı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.gray])
         // add line break
         label.textAlignment = .center
         
         return label
     }()
     
-    private let button: UIButton = {
-        let button = UIButton(type: .system)
+    let goToDetailButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
-        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         return button
     }()
     
@@ -107,12 +106,12 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     func addSubviews() {
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(usernameLabel)
+        contentView.addSubview(usernameButton)
         contentView.addSubview(numberOfFollowersLabel)
         contentView.addSubview(followersLabel)
         contentView.addSubview(numberOfEngagementsAndRatesLabel)
         contentView.addSubview(engagementsAndRatesLabel)
-        contentView.addSubview(button)
+        contentView.addSubview(goToDetailButton)
 //        addSubview(dateLabel)
 //        addSubview(platformLabel)
     }
@@ -136,9 +135,9 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         followersLabel.frame = CGRect(x: numberOfFollowersLabel.left, y: numberOfFollowersLabel.bottom , width: width / 3.8, height: fiveOfOneHeight)
         
         nameLabel.frame = CGRect(x: numberOfEngagementsAndRatesLabel.left, y: engagementsAndRatesLabel.bottom + 15, width: width / 2.2, height: fiveOfOneHeight)
-        usernameLabel.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
+        usernameButton.frame = CGRect(x: nameLabel.left, y: nameLabel.bottom, width: width / 2.2, height: fiveOfOneHeight)
         
-        button.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
+        goToDetailButton.frame = CGRect(x: nameLabel.right + 5, y: followersLabel.bottom + 15, width: width / 3.8, height: fiveOfOneHeight * 2)
         
     }
     
@@ -163,7 +162,7 @@ class PastReportCollectionViewCell: UICollectionViewCell {
     }
     func configureCellData(with viewModel: MyReportsCollectionViewCellViewModel) {
         if let username = viewModel.username {
-            usernameLabel.text = "@\(username)"
+            usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             
         }
         

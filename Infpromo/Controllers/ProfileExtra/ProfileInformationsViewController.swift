@@ -10,28 +10,29 @@ import UIKit
 struct ProfileInformationOptions {
     let icon: String
     let header: String
-    let infos: String
+    
 }
 
 class ProfileInformationsViewController: UIViewController {
     
-    
+    var profileInfos: ProfileInformationsCellViewModel?
+    var profileInfosArray: [String] = []
 
     var editingState = ProfileInformationCollectionReusableView()
     
     let optionsArray = [
-        ProfileInformationOptions(icon: "envelope", header: "E-mail", infos: "brnktl@gmail.com"),
-        ProfileInformationOptions(icon: "textformat.alt", header: "Dil", infos: "Türkçe"),
-        ProfileInformationOptions(icon: "globe", header: "Web Sitesi", infos: "henüz girilmemiş.."),
-        ProfileInformationOptions(icon: "gift", header: "Doğum Günü", infos: "henüz girilmemiş.."),
-        ProfileInformationOptions(icon: "location", header: "Lokasyon", infos: "henüz girilmemiş.."),
-        ProfileInformationOptions(icon: "phone", header: "Telefon", infos: "henüz girilmemiş..")
+        ProfileInformationOptions(icon: "envelope", header: "E-mail"),
+        ProfileInformationOptions(icon: "textformat.alt", header: "Dil"),
+        ProfileInformationOptions(icon: "globe", header: "Web Sitesi"),
+        ProfileInformationOptions(icon: "gift", header: "Doğum Günü"),
+        ProfileInformationOptions(icon: "location", header: "Lokasyon"),
+        ProfileInformationOptions(icon: "phone", header: "Telefon")
     ]
     
     private let profileInformationsCollectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { section, env in
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
 
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: ProfileHeaderCollectionReusableView.kind, alignment: .top)
             
@@ -40,11 +41,11 @@ class ProfileInformationsViewController: UIViewController {
             let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: ProfileInformationCollectionReusableView.kind, alignment: .bottom)
             
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.16))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.14))
             let item = NSCollectionLayoutItem(layoutSize: itemSize/*, supplementaryItems: [headerView]*/)
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.32))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.14))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
@@ -61,7 +62,9 @@ class ProfileInformationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        print(profileInfos)
+        
+        view.backgroundColor = .systemGray6
         addSubviews()
         
         profileInformationsCollectionView.delegate = self
@@ -95,11 +98,24 @@ extension ProfileInformationsViewController: UICollectionViewDelegate, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileInformationsCollectionViewCell.reuseIdentifier, for: indexPath) as! ProfileInformationsCollectionViewCell
         
         cell.backgroundColor = .white
-        cell.layer.borderColor = UIColor().infpromoBorder.cgColor
-        cell.layer.borderWidth = 1
         
         
         cell.fillInfos(with: optionsArray[indexPath.row])
+        
+        guard let profileInfo = profileInfos else {
+            print("profile infos are empty")
+            return UICollectionViewCell()
+        }
+        
+        profileInfosArray.append(profileInfo.email ?? "")
+        profileInfosArray.append(profileInfo.language ?? "")
+        profileInfosArray.append(profileInfo.website ?? "")
+        profileInfosArray.append(profileInfo.birthday ?? "")
+        profileInfosArray.append(profileInfo.city ?? "")
+        profileInfosArray.append(profileInfo.phone ?? "")
+        
+        
+        cell.fillWithInfos(with: profileInfosArray[indexPath.row])
         
         return cell
     }
@@ -107,7 +123,11 @@ extension ProfileInformationsViewController: UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == ProfileHeaderCollectionReusableView.kind {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileHeaderCollectionReusableView
+            header.configureHeader(with: .init(name: profileInfos?.name,
+                                               surName: profileInfos?.surName,
+                                               socialMedia: profileInfos?.socialMedia,
+                                               title: profileInfos?.title))
             return header
         } else if kind == ProfileInformationCollectionReusableView.kind {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileInformationCollectionReusableView.kind, withReuseIdentifier: ProfileInformationCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileInformationCollectionReusableView

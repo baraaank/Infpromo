@@ -17,6 +17,8 @@
 		811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B0CD727CD13B9004730DA /* SearchHeadings.swift */; };
 		81237AA92802BC5A00CD3749 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81237AA82802BC5900CD3749 /* UserError.swift */; };
 		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
+		813C27F32810155B0009616D /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C27F22810155B0009616D /* HapticsManager.swift */; };
+		813C27F52810863E0009616D /* ProfileInformationsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -45,6 +47,15 @@
 		81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF02AF27A284070054F4C5 /* PastReportViewController.swift */; };
 		81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF02B227A284140054F4C5 /* ProfileViewController.swift */; };
 		81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B943B027C410CB00F4C376 /* SearchViewController.swift */; };
+		81BAF0E528128902009E865D /* ReportDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0E428128902009E865D /* ReportDetailViewController.swift */; };
+		81BAF0E928128C99009E865D /* FirstDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0E828128C99009E865D /* FirstDetailsCollectionViewCell.swift */; };
+		81BAF0EB28128CBB009E865D /* PopularPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0EA28128CBB009E865D /* PopularPostsCollectionViewCell.swift */; };
+		81BAF0EF28128D2B009E865D /* FirstDetailsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0EE28128D2B009E865D /* FirstDetailsCollectionReusableView.swift */; };
+		81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F028128D44009E865D /* PopularPostsCollectionReusableView.swift */; };
+		81BAF0F328128E7F009E865D /* ChartsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */; };
+		81BAF0F528128E8D009E865D /* ChartsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */; };
+		81BAF0F728129389009E865D /* ReportDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F628129389009E865D /* ReportDetail.swift */; };
+		81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */; };
 		81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */; };
 		81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */; };
 		81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EE0127E9475400FDA44B /* APICaller.swift */; };
@@ -71,6 +82,8 @@
 		811B0CD727CD13B9004730DA /* SearchHeadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadings.swift; sourceTree = "<group>"; };
 		81237AA82802BC5900CD3749 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		813C27F22810155B0009616D /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationsCellViewModel.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -101,6 +114,15 @@
 		81AF02AF27A284070054F4C5 /* PastReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastReportViewController.swift; sourceTree = "<group>"; };
 		81AF02B227A284140054F4C5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		81B943B027C410CB00F4C376 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		81BAF0E428128902009E865D /* ReportDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailViewController.swift; sourceTree = "<group>"; };
+		81BAF0E828128C99009E865D /* FirstDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		81BAF0EA28128CBB009E865D /* PopularPostsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		81BAF0EE28128D2B009E865D /* FirstDetailsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDetailsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81BAF0F028128D44009E865D /* PopularPostsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPostsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCollectionViewCell.swift; sourceTree = "<group>"; };
+		81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81BAF0F628129389009E865D /* ReportDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetail.swift; sourceTree = "<group>"; };
+		81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailViewModel.swift; sourceTree = "<group>"; };
 		81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsInReportsViewController.swift; sourceTree = "<group>"; };
 		81E9EE0127E9475400FDA44B /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
@@ -206,6 +228,7 @@
 			children = (
 				81F61EF227F04E9600A91739 /* AuthManager.swift */,
 				81E9EE0127E9475400FDA44B /* APICaller.swift */,
+				813C27F22810155B0009616D /* HapticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -223,6 +246,7 @@
 				8194A8AF27FDB3010048314B /* Plan.swift */,
 				81237AA82802BC5900CD3749 /* UserError.swift */,
 				816B192D280DF0C20016BDE6 /* JsonResponses.swift */,
+				81BAF0F628129389009E865D /* ReportDetail.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +254,7 @@
 		81AF02A227A27CF70054F4C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				81BAF0E728128C65009E865D /* ReportDetail */,
 				81E9EDB627DA2C6000FDA44B /* Home */,
 				81E9EDB727DA2C8900FDA44B /* MyReports */,
 				81E9EDB827DA2C9E00FDA44B /* BuyReports */,
@@ -242,6 +267,7 @@
 		81AF02A327A27CFD0054F4C5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				81BAF0E628128907009E865D /* ReportDetail */,
 				810AE0BE27D60EB500F23713 /* LogIn-SignUp */,
 				819C5CDE27CCF18500DAB0FE /* Search */,
 				81AF02A427A27E430054F4C5 /* Core */,
@@ -261,6 +287,43 @@
 				81AF02B227A284140054F4C5 /* ProfileViewController.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		81BAF0E628128907009E865D /* ReportDetail */ = {
+			isa = PBXGroup;
+			children = (
+				81BAF0E428128902009E865D /* ReportDetailViewController.swift */,
+			);
+			path = ReportDetail;
+			sourceTree = "<group>";
+		};
+		81BAF0E728128C65009E865D /* ReportDetail */ = {
+			isa = PBXGroup;
+			children = (
+				81BAF0EC28128CF8009E865D /* Cells */,
+				81BAF0ED28128D07009E865D /* SupplemantaryViews */,
+			);
+			path = ReportDetail;
+			sourceTree = "<group>";
+		};
+		81BAF0EC28128CF8009E865D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				81BAF0E828128C99009E865D /* FirstDetailsCollectionViewCell.swift */,
+				81BAF0EA28128CBB009E865D /* PopularPostsCollectionViewCell.swift */,
+				81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		81BAF0ED28128D07009E865D /* SupplemantaryViews */ = {
+			isa = PBXGroup;
+			children = (
+				81BAF0EE28128D2B009E865D /* FirstDetailsCollectionReusableView.swift */,
+				81BAF0F028128D44009E865D /* PopularPostsCollectionReusableView.swift */,
+				81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */,
+			);
+			path = SupplemantaryViews;
 			sourceTree = "<group>";
 		};
 		81E9EDB627DA2C6000FDA44B /* Home */ = {
@@ -338,6 +401,8 @@
 				81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */,
 				81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */,
 				8194A8B127FDB3940048314B /* PlanCellViewModel.swift */,
+				813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */,
+				81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -477,8 +542,10 @@
 				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
 				8194A8B027FDB3010048314B /* Plan.swift in Sources */,
 				816B192C280DED050016BDE6 /* GetUser.swift in Sources */,
+				81BAF0F528128E8D009E865D /* ChartsCollectionReusableView.swift in Sources */,
 				816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
+				813C27F32810155B0009616D /* HapticsManager.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
@@ -489,24 +556,33 @@
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
+				81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,
 				819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */,
 				81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */,
+				81BAF0EF28128D2B009E865D /* FirstDetailsCollectionReusableView.swift in Sources */,
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
 				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				81BAF0E928128C99009E865D /* FirstDetailsCollectionViewCell.swift in Sources */,
 				8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */,
+				81BAF0F328128E7F009E865D /* ChartsCollectionViewCell.swift in Sources */,
 				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
 				81AF028B279E9A960054F4C5 /* SceneDelegate.swift in Sources */,
+				81BAF0EB28128CBB009E865D /* PopularPostsCollectionViewCell.swift in Sources */,
 				81B943B127C410CB00F4C376 /* SearchViewController.swift in Sources */,
+				813C27F52810863E0009616D /* ProfileInformationsCellViewModel.swift in Sources */,
 				81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
+				81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */,
 				8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */,
 				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
+				81BAF0F728129389009E865D /* ReportDetail.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
+				81BAF0E528128902009E865D /* ReportDetailViewController.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				8194A8B227FDB3940048314B /* PlanCellViewModel.swift in Sources */,

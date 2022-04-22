@@ -69,7 +69,8 @@ class CustomSegmentedControl: UIView {
         subviews.forEach({$0.removeFromSuperview()})
         for buttonTitle in buttonTitles {
             let button = UIButton(type: .system)
-            button.setTitle(buttonTitle, for: .normal)
+//            button.setTitle(buttonTitle, for: .normal)
+            button.setAttributedTitle(NSAttributedString(string: buttonTitle, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)]), for: .normal)
             button.addTarget(self, action: #selector(buttonAction(sender:)), for: .touchUpInside)
             button.setTitleColor(textColor, for: .normal)
             button.titleLabel?.numberOfLines = 0

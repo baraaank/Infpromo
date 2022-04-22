@@ -151,7 +151,7 @@ class SignUpViewController: UIViewController {
 
     let blurEffectView: UIVisualEffectView = {
        let blurEffectView = UIVisualEffectView()
-        let style = UIBlurEffect.Style.dark
+        let style = UIBlurEffect.Style.light
         let effect = UIBlurEffect(style: style)
         blurEffectView.effect = effect
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

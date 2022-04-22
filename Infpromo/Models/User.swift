@@ -27,6 +27,13 @@ struct UserResponse: Decodable {
     let name: String?
     let surName: String?
     let email: String?
+    let birthday: String?
+    let city: String?
+    let language: String?
+    let phone: String?
+    let socialMedia: String?
+    let title: String?
+    let website: String?
     
 }
 

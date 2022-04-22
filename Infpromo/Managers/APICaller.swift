@@ -72,7 +72,7 @@ final class APICaller {
 //                        $0.viewCount
 //                    })
                    
-                    print("datas are here: \(result)")
+                    
                     completion(.success(result))
                     
                 } catch {
@@ -339,5 +339,49 @@ final class APICaller {
     }
     
     
+    
+    
+    
+    func getInfluencerReport(influencerId: String, completion: @escaping (Result<ReportDetail, Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/instagram/profile/\(influencerId)/report/\(userId)"), type: .GET) { baseRequest in
+            var request = baseRequest
+            
+            let parameters: [String: Any] = [
+                "influencerId": influencerId
+            ]
+            
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+//            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, reponse, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    
+                    let result = try JSONDecoder().decode(ReportDetail.self, from: data)
+                    completion(.success(result))
+                    
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                    
+                }
+                
+            }
+            task.resume()
+            
+        }
+        
+    }
     
 }

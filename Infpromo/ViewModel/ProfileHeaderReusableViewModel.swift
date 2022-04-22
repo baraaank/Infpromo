@@ -10,4 +10,6 @@ import Foundation
 struct ProfileHeaderReusableViewModel {
     let name: String?
     let surName: String?
+    let socialMedia: String?
+    let title: String?
 }

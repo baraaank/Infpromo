@@ -17,4 +17,5 @@ struct MyReportsCollectionViewCellViewModel {
     let engagements: QuantumValue?
     let date: String?
     let network: String?
+    let influencerId: String?
 }
