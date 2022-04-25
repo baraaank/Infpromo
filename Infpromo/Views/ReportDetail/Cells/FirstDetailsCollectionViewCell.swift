@@ -14,25 +14,30 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .black
+        
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    private let numberLabel: UILabel = {
+    let numberLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .black
+//        label.backgroundColor = .black
+        label.textAlignment = .center
         return label
     }()
     
     private let firstInfoLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.01
         return label
     }()
     
-    private let secondInfoLabel: UILabel = {
+    let secondInfoLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .black
+        label.textAlignment = .center
         return label
     }()
     
@@ -68,4 +73,22 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
         firstInfoLabel.frame = CGRect(x: 10, y: numberLabel.bottom + oneTwenty, width: width - 20, height: oneTwenty * 2)
         secondInfoLabel.frame = CGRect(x: 10, y: firstInfoLabel.bottom + oneTwenty, width: width - 20, height: oneTwenty * 4)
     }
+    
+    
+    func configureCell(with model: SFImagesForReport) {
+        imageView.image = UIImage(systemName: model.image)
+        
+        firstInfoLabel.text = model.explanation
+        
+    }
+    
+    
+    func changeColorLabel(number: Double) {
+        if number > 0 {
+            secondInfoLabel.textColor = .green
+        } else if number < 0 {
+            secondInfoLabel.textColor = .red
+        }
+    }
+   
 }

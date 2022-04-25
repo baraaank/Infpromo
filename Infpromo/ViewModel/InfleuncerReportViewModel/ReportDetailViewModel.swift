@@ -12,3 +12,7 @@ struct ReportDetailViewModel {
     let username: String?
     let picture: String?
 }
+
+
+
+

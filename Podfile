@@ -6,6 +6,7 @@ target 'Infpromo' do
   use_frameworks!
 
   pod 'SDWebImage'
-pod 'SkeletonView'
+  pod 'SkeletonView'
+  pod 'Charts'
 
 end

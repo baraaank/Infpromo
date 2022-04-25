@@ -42,15 +42,6 @@ class MyReportsDateCollectionReusableView: UICollectionReusableView {
 
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "E, d MMM yyyy HH:mm"
-
-//        if let date: Date = dateFormatterGet.date(from: string) {
-//            dateLabel.text = "Alındığı tarih: \(date)"
-//            print(date)
-//        }
-//
-//
-        
-        
         
         guard let date: Date = dateFormatterGet.date(from: string) else {
             dateLabel.text = "Alındığı tarih: ----"

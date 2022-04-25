@@ -1,22 +1,28 @@
 PODS:
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
   - SDWebImage (5.12.5):
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
   - SkeletonView (1.29.2)
 
 DEPENDENCIES:
+  - Charts
   - SDWebImage
   - SkeletonView
 
 SPEC REPOS:
   trunk:
+    - Charts
     - SDWebImage
     - SkeletonView
 
 SPEC CHECKSUMS:
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SkeletonView: 915a80ecc2b6421ab7ac0f0212321c0cc1406472
 
-PODFILE CHECKSUM: 89072069a2a3ab8816f8af019178e687a895e675
+PODFILE CHECKSUM: 17c900f902116f7c1aa0c409d9539d7c9dd38524
 
 COCOAPODS: 1.11.3

@@ -19,6 +19,9 @@
 		81386A5427EA0D450051A886 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81386A5327EA0D450051A886 /* User.swift */; };
 		813C27F32810155B0009616D /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C27F22810155B0009616D /* HapticsManager.swift */; };
 		813C27F52810863E0009616D /* ProfileInformationsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */; };
+		8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A35A281686CF002CD861 /* ChartsViewModel.swift */; };
+		8141A37D28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */; };
+		8141A37F28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -56,6 +59,9 @@
 		81BAF0F528128E8D009E865D /* ChartsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */; };
 		81BAF0F728129389009E865D /* ReportDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F628129389009E865D /* ReportDetail.swift */; };
 		81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */; };
+		81BAF0FC2812AB8D009E865D /* FirstDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0FB2812AB8D009E865D /* FirstDetailViewModel.swift */; };
+		81BAF0FE2812EE4A009E865D /* PopularPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0FD2812EE4A009E865D /* PopularPostViewModel.swift */; };
+		81BAF1002812EFCA009E865D /* AbbreviationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BAF0FF2812EFCA009E865D /* AbbreviationsHelper.swift */; };
 		81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */; };
 		81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */; };
 		81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E9EE0127E9475400FDA44B /* APICaller.swift */; };
@@ -84,6 +90,9 @@
 		81386A5327EA0D450051A886 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		813C27F22810155B0009616D /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationsCellViewModel.swift; sourceTree = "<group>"; };
+		8141A35A281686CF002CD861 /* ChartsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewModel.swift; sourceTree = "<group>"; };
+		8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagsMentionsCollectionReusableView.swift; sourceTree = "<group>"; };
+		8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagsMentionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -123,6 +132,9 @@
 		81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCollectionReusableView.swift; sourceTree = "<group>"; };
 		81BAF0F628129389009E865D /* ReportDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetail.swift; sourceTree = "<group>"; };
 		81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailViewModel.swift; sourceTree = "<group>"; };
+		81BAF0FB2812AB8D009E865D /* FirstDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDetailViewModel.swift; sourceTree = "<group>"; };
+		81BAF0FD2812EE4A009E865D /* PopularPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPostViewModel.swift; sourceTree = "<group>"; };
+		81BAF0FF2812EFCA009E865D /* AbbreviationsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbbreviationsHelper.swift; sourceTree = "<group>"; };
 		81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		81E9EDFF27E8E70800FDA44B /* WhatsInReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsInReportsViewController.swift; sourceTree = "<group>"; };
 		81E9EE0127E9475400FDA44B /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
@@ -312,6 +324,7 @@
 				81BAF0E828128C99009E865D /* FirstDetailsCollectionViewCell.swift */,
 				81BAF0EA28128CBB009E865D /* PopularPostsCollectionViewCell.swift */,
 				81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */,
+				8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -322,8 +335,34 @@
 				81BAF0EE28128D2B009E865D /* FirstDetailsCollectionReusableView.swift */,
 				81BAF0F028128D44009E865D /* PopularPostsCollectionReusableView.swift */,
 				81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */,
+				8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */,
 			);
 			path = SupplemantaryViews;
+			sourceTree = "<group>";
+		};
+		81BAF0FA2812AB5C009E865D /* InfleuncerReportViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */,
+				81BAF0FB2812AB8D009E865D /* FirstDetailViewModel.swift */,
+				81BAF0FD2812EE4A009E865D /* PopularPostViewModel.swift */,
+				8141A35A281686CF002CD861 /* ChartsViewModel.swift */,
+			);
+			path = InfleuncerReportViewModel;
+			sourceTree = "<group>";
+		};
+		81BAF1012813F32D009E865D /* OtherViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */,
+				81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */,
+				8194A8AB27FA135B0048314B /* SearchWithFilterCellViewModel.swift */,
+				81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */,
+				81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */,
+				8194A8B127FDB3940048314B /* PlanCellViewModel.swift */,
+				813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */,
+			);
+			path = OtherViewModels;
 			sourceTree = "<group>";
 		};
 		81E9EDB627DA2C6000FDA44B /* Home */ = {
@@ -380,6 +419,7 @@
 				81E9EDBC27E2225700FDA44B /* CustomSegmentedControl.swift */,
 				819FFBD127BCDD940083D3A2 /* Extensions.swift */,
 				816B1933280EC4D40016BDE6 /* LoadingGif.swift */,
+				81BAF0FF2812EFCA009E865D /* AbbreviationsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -395,14 +435,8 @@
 		81F61EF627F088D100A91739 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				81F61EF727F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift */,
-				81F61EFB27F0D67700A91739 /* SearchByUsernameCellViewModel.swift */,
-				8194A8AB27FA135B0048314B /* SearchWithFilterCellViewModel.swift */,
-				81F61EFF27F1E05900A91739 /* ProfileHeaderReusableViewModel.swift */,
-				81F61F0527F2671500A91739 /* MyReportsCollectionViewCellViewModel.swift */,
-				8194A8B127FDB3940048314B /* PlanCellViewModel.swift */,
-				813C27F42810863E0009616D /* ProfileInformationsCellViewModel.swift */,
-				81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */,
+				81BAF1012813F32D009E865D /* OtherViewModels */,
+				81BAF0FA2812AB5C009E865D /* InfleuncerReportViewModel */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -549,6 +583,7 @@
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
+				81BAF1002812EFCA009E865D /* AbbreviationsHelper.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
 				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
 				81237AA92802BC5A00CD3749 /* UserError.swift in Sources */,
@@ -556,6 +591,7 @@
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
+				8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */,
 				81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,
@@ -568,6 +604,7 @@
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				81BAF0E928128C99009E865D /* FirstDetailsCollectionViewCell.swift in Sources */,
+				81BAF0FE2812EE4A009E865D /* PopularPostViewModel.swift in Sources */,
 				8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */,
 				81BAF0F328128E7F009E865D /* ChartsCollectionViewCell.swift in Sources */,
 				81E9EDBD27E2225800FDA44B /* CustomSegmentedControl.swift in Sources */,
@@ -577,6 +614,7 @@
 				813C27F52810863E0009616D /* ProfileInformationsCellViewModel.swift in Sources */,
 				81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
+				8141A37F28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift in Sources */,
 				81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */,
 				8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */,
 				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
@@ -592,9 +630,11 @@
 				816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
+				8141A37D28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,
 				819FFBDB27C2B8030083D3A2 /* SearchResultCollectionViewCell.swift in Sources */,
 				81F61EF527F068D900A91739 /* MostViews.swift in Sources */,
+				81BAF0FC2812AB8D009E865D /* FirstDetailViewModel.swift in Sources */,
 				81386A5427EA0D450051A886 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

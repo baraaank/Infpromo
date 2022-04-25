@@ -254,7 +254,7 @@ class HomeViewController: UIViewController {
         startBlur()
         APIisNotWorking()
         
-        tabBarController?.tabBar.isUserInteractionEnabled = false
+//        tabBarController?.tabBar.isUserInteractionEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -263,33 +263,29 @@ class HomeViewController: UIViewController {
     }
     
     func APIisNotWorking() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.stopBlur()
-                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                    self.stopBlur()
+//                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
+//                }
         
     }
     
     //loading gif blur functionality
     func startBlur() {
-        view.addSubview(blurEffectView)
-        view.addSubview(gif)
-        
-        gif.startAnimation()
-        //        tabBarController?.tabBar.isHidden = true
-        //        navigationController?.navigationBar.isHidden = true
+//        view.addSubview(blurEffectView)
+//        view.addSubview(gif)
+//
+//        gif.startAnimation()
+
     }
     
     func stopBlur() {
-        gif.stopAnimation()
-        gif.removeFromSuperview()
-        blurEffectView.removeFromSuperview()
-        tabBarController?.tabBar.barTintColor = .white
-        tabBarController?.tabBar.isUserInteractionEnabled = true
-        //        navigationController?.navigationBar.tintColor = .systemGray6
-        
-        //        tabBarController?.tabBar.isHidden = false
-        //        navigationController?.navigationBar.isHidden = false
+//        gif.stopAnimation()
+//        gif.removeFromSuperview()
+//        blurEffectView.removeFromSuperview()
+//        tabBarController?.tabBar.barTintColor = .white
+//        tabBarController?.tabBar.isUserInteractionEnabled = true
+    
     }
     
     @objc func usernameSearchError(_ notification: NSNotification) {
