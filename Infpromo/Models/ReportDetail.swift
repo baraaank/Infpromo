@@ -32,6 +32,8 @@ struct PDFProfile: Codable {
     let avgComments: Int
     let popularPosts: [PopularPostResponse]
     let statHistory: [StatHistoryResponse] // data for charts
+    let hashtags: [HashtagsResponse]
+    let mentions: [MentionsResponse]
 }
 
 
@@ -74,4 +76,14 @@ struct StatHistoryResponse: Codable {
     let followers: Int
     let avgLikes: Int
     let following: Int
+}
+
+struct HashtagsResponse: Codable {
+    let tag: String
+    let weight: Double
+}
+
+struct MentionsResponse: Codable {
+    let tag: String
+    let weight: Double
 }

@@ -22,6 +22,7 @@
 		8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A35A281686CF002CD861 /* ChartsViewModel.swift */; };
 		8141A37D28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */; };
 		8141A37F28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */; };
+		8141A38128173E2D002CD861 /* TagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A38028173E2D002CD861 /* TagsViewModel.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -93,6 +94,7 @@
 		8141A35A281686CF002CD861 /* ChartsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewModel.swift; sourceTree = "<group>"; };
 		8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagsMentionsCollectionReusableView.swift; sourceTree = "<group>"; };
 		8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagsMentionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8141A38028173E2D002CD861 /* TagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewModel.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				81BAF0FB2812AB8D009E865D /* FirstDetailViewModel.swift */,
 				81BAF0FD2812EE4A009E865D /* PopularPostViewModel.swift */,
 				8141A35A281686CF002CD861 /* ChartsViewModel.swift */,
+				8141A38028173E2D002CD861 /* TagsViewModel.swift */,
 			);
 			path = InfleuncerReportViewModel;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
 				8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */,
+				8141A38128173E2D002CD861 /* TagsViewModel.swift in Sources */,
 				81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,

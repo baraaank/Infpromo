@@ -8,5 +8,6 @@ target 'Infpromo' do
   pod 'SDWebImage'
   pod 'SkeletonView'
   pod 'Charts'
+  pod 'TagListView'
 
 end

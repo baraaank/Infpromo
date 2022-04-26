@@ -24,6 +24,12 @@ class ReportDetailViewController: UIViewController {
     var firstDetail: FirstDetailViewModel?
     var popularPosts: [PopularPostViewModel] = []
     var chartStatHistory: [ChartsViewModel] = []
+    var hashtags: [HashtagsViewModel] = []
+    var mentions: [MentionsViewModel] = []
+    
+    var hashtagString: [String] = []
+    var mentionString: [String] = []
+    
     
     private let reportCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
@@ -193,7 +199,6 @@ class ReportDetailViewController: UIViewController {
                 
                 
                 let chartHistory = model.data.pdfBody.data.profile.statHistory
-                
                 self.chartStatHistory.append(contentsOf: chartHistory.map({
                     .init(month: $0.month,
                           followers: $0.followers,
@@ -201,7 +206,19 @@ class ReportDetailViewController: UIViewController {
                           following: $0.following)
                 }))
                 
-                print(self.chartStatHistory)
+                let tagModel = model.data.pdfBody.data.profile
+                
+                self.hashtags.append(contentsOf: tagModel.hashtags.map({
+                    .init(hashtag: $0.tag)
+                }))
+                
+                self.mentions.append(contentsOf: tagModel.mentions.map({
+                    .init(mention: $0.tag)
+                }))
+                
+                
+                
+                
                 
                 DispatchQueue.main.async {
                     self.reportCollectionView.reloadData()
@@ -318,7 +335,7 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
             let indexFollowers = chartStatHistory.map({Double($0.followers)})
             let indexFollowing = chartStatHistory.map({Double($0.following)})
             let indexLikes = chartStatHistory.map({Double($0.avgLikes)})
-            print(indexLikes)
+            
             
             DispatchQueue.main.async {
                 if let selectedCell = collectionView.cellForItem(at: .init(item: 0, section: 2)) as? ChartsCollectionViewCell {
@@ -334,18 +351,43 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                     selectedCell.prepareChartsWithData(yValues: indexLikes, labels: indexMonth)
                 }
             }
-            
-
-            
+             
             
             return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HashtagsMentionsCollectionViewCell.reuseIdentifier, for: indexPath)
+        } else if indexPath.section == 3 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HashtagsMentionsCollectionViewCell.reuseIdentifier, for: indexPath) as! HashtagsMentionsCollectionViewCell
+            
+            
+                if let selectedCell = collectionView.cellForItem(at: .init(item: 0, section: 3)) as? HashtagsMentionsCollectionViewCell {
+//                    let hashtags = self.hashtags.map({ $0.clearHashtag })
+                    selectedCell.configureHashtags(with: hashtags)
+                    
+                }
+                
+                if let selectedCell = collectionView.cellForItem(at: .init(item: 1, section: 3)) as? HashtagsMentionsCollectionViewCell {
+//                    let mentions = self.mentions.map({ $0.clearMention })
+                    selectedCell.configureMentions(with: mentions)
+//                    print(mentions)
+                }
+            
+            
+            if let selectedCell = collectionView.cellForItem(at: .init(item: 2, section: 3)) as? HashtagsMentionsCollectionViewCell {
+//                    let mentions = self.mentions.map({ $0.clearMention })
+                selectedCell.configureMentions(with: mentions)
+//                    print(mentions)
+            }
+           
+            print(hashtags)
+            print(mentions)
+            
             
             return cell
         }
         
-//        return UICollectionViewCell()
+        return UICollectionViewCell()
+        
+        
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -361,7 +403,7 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
         } else if section == 2 {
             return 4
         } else {
-            return 2
+            return 3
         }
         
     }
