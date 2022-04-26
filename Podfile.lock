@@ -6,23 +6,27 @@ PODS:
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
   - SkeletonView (1.29.2)
+  - TagListView (1.4.1)
 
 DEPENDENCIES:
   - Charts
   - SDWebImage
   - SkeletonView
+  - TagListView
 
 SPEC REPOS:
   trunk:
     - Charts
     - SDWebImage
     - SkeletonView
+    - TagListView
 
 SPEC CHECKSUMS:
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SkeletonView: 915a80ecc2b6421ab7ac0f0212321c0cc1406472
+  TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: 17c900f902116f7c1aa0c409d9539d7c9dd38524
+PODFILE CHECKSUM: 12228c2f53281ace9e28fb78c53d44382026c586
 
 COCOAPODS: 1.11.3

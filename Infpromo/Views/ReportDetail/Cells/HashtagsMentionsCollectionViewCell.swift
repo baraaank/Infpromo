@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class HashtagsMentionsCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "hashtagsMentionsCollectionViewCellIdentifier"
     

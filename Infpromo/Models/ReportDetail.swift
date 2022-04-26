@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ReportDetail: Codable {
     let data: PDFBody
@@ -32,6 +33,9 @@ struct PDFProfile: Codable {
     let avgComments: Int
     let popularPosts: [PopularPostResponse]
     let statHistory: [StatHistoryResponse] // data for charts
+    let hashtags: [HashtagsResponse]
+    let mentions: [MentionsResponse]
+    let audience: AudienceResponse //followers datas
 }
 
 
@@ -74,4 +78,39 @@ struct StatHistoryResponse: Codable {
     let followers: Int
     let avgLikes: Int
     let following: Int
+}
+
+
+struct HashtagsResponse: Codable {
+    let tag: String
+    let weight: Double
+}
+
+struct MentionsResponse: Codable {
+    let tag: String
+    let weight: Double
+}
+
+struct AudienceResponse: Codable {
+    
+    let credibility: Double
+    let genders: [GendersResponse]
+    let geoCities: [GeoCitiesResponse]
+    let geoCountries: [GeoCountriesResponse]
+}
+
+
+struct GendersResponse: Codable {
+    let code: String
+    let weight: Double
+}
+
+struct GeoCitiesResponse: Codable {
+    let name: String
+    let weight: Double
+}
+
+struct GeoCountriesResponse: Codable {
+    let name: String
+    let weight: Double
 }

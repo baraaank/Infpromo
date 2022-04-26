@@ -24,6 +24,19 @@ class ReportDetailViewController: UIViewController {
     var firstDetail: FirstDetailViewModel?
     var popularPosts: [PopularPostViewModel] = []
     var chartStatHistory: [ChartsViewModel] = []
+    var hashtags: [HashtagsViewModel] = []
+    var mentions: [MentionsViewModel] = []
+    var credibility: CredibilityViewModel?
+    var gendersDistribution: [GendersViewModel] = []
+    var followersCountryLocation: [FollowersLocationViewModel] = []
+    var followersCityLocation: [FollowersGeoCities] = []
+    
+    
+    private let scrollView: UIScrollView = {
+      let scrollView = UIScrollView()
+        scrollView.backgroundColor = .white
+        return scrollView
+    }()
     
     private let reportCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
@@ -31,10 +44,10 @@ class ReportDetailViewController: UIViewController {
             
             if sectionNumber == 0 {
                 //first informations
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalHeight(1.0))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalWidth(0.5))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.24))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.boundarySupplementaryItems = [
@@ -42,7 +55,7 @@ class ReportDetailViewController: UIViewController {
                 ]
                 section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
                 return section
-            } else if sectionNumber == 1 {
+            } else {
                 
                 
                 //populer posts
@@ -57,58 +70,7 @@ class ReportDetailViewController: UIViewController {
                     .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: PopularPostsCollectionReusableView.kind, alignment: .topLeading)
                 ]
                 return section
-            } else if sectionNumber == 2 {
-                
-                
-                
-                // charts
-                let headerAnchor = NSCollectionLayoutAnchor(edges: .top, fractionalOffset: CGPoint(x: 0, y: -1.2))
-                let header = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: ChartsCollectionReusableView.kind, containerAnchor: headerAnchor)
-                
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-                
-                
-                
-                let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [
-                    header
-                ])
-                
-                
-                
-                item.contentInsets = NSDirectionalEdgeInsets(top: 48, leading: 8, bottom: 8, trailing: 8)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.28))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.top = 16
-                
-                return section
-            } else {
-                
-                //hashtags and mentions
-                let headerAnchor = NSCollectionLayoutAnchor(edges: .top, fractionalOffset: CGPoint(x: 0, y: -1.2))
-                let header = NSCollectionLayoutSupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: HashtagsMentionsCollectionReusableView.kind, containerAnchor: headerAnchor)
-                
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-                
-                
-                
-                let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [
-                    header
-                ])
-                
-                
-                
-                item.contentInsets = NSDirectionalEdgeInsets(top: 48, leading: 8, bottom: 8, trailing: 8)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.28))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.top = 16
-                
-                return section
             }
-            
     })
         
         
@@ -119,42 +81,76 @@ class ReportDetailViewController: UIViewController {
         collectionView.register(PopularPostsCollectionViewCell.self, forCellWithReuseIdentifier: PopularPostsCollectionViewCell.reuseIdentifier)
         collectionView.register(PopularPostsCollectionReusableView.self, forSupplementaryViewOfKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier)
         
-        
-        collectionView.register(ChartsCollectionViewCell.self, forCellWithReuseIdentifier: ChartsCollectionViewCell.reuseIdentifier)
-        collectionView.register(ChartsCollectionReusableView.self, forSupplementaryViewOfKind: ChartsCollectionReusableView.kind, withReuseIdentifier: ChartsCollectionReusableView.reuseIdentifier)
-        
-        collectionView.register(HashtagsMentionsCollectionViewCell.self, forCellWithReuseIdentifier: HashtagsMentionsCollectionViewCell.reuseIdentifier)
-        collectionView.register(HashtagsMentionsCollectionReusableView.self, forSupplementaryViewOfKind: HashtagsMentionsCollectionReusableView.kind, withReuseIdentifier: HashtagsMentionsCollectionReusableView.reuseIdentifier)
-        
+      
+        collectionView.isScrollEnabled = false
         
         
         return collectionView
     }()
     
     
+    //create charts views
+    let followersChart = ChartsView()
+    let followingChart = ChartsView()
+    let avgLikesChart = ChartsView()
+    
+    
+    //create hashtags and mentions
+    let hashtagsView = HashtagsMentionsView()
+    let mentionsView = HashtagsMentionsView()
+    
+    
+    
+    //followers datas
+    let fakeFollowersView = PercentsFollowersView()
+    let followersGenderDistributionView = FollowersGenderDistributionView()
+    let followersLocationView = FollowersLocationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(reportCollectionView)
+        addSubviews()
         reportCollectionView.delegate = self
         reportCollectionView.dataSource = self
         
         
         print(influencerId)
-        
+        view.backgroundColor = .white
         
     }
     
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        reportCollectionView.frame = view.bounds
+        
+        scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+        reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 100)
+        followersChart.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        followingChart.frame = CGRect(x: 10, y: followersChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        avgLikesChart.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        hashtagsView.frame = CGRect(x: 10, y: avgLikesChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        mentionsView.frame = CGRect(x: 10, y: hashtagsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        fakeFollowersView.frame = CGRect(x: 10, y: mentionsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        followersGenderDistributionView.frame = CGRect(x: 10, y: fakeFollowersView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
+        followersLocationView.frame = CGRect(x: 10, y: followersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.2)
+        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + 200)
+       
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        loadViewElements()
-//    }
+    func addSubviews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(reportCollectionView)
+        scrollView.addSubview(followersChart)
+        scrollView.addSubview(followingChart)
+        scrollView.addSubview(avgLikesChart)
+        scrollView.addSubview(hashtagsView)
+        scrollView.addSubview(mentionsView)
+        scrollView.addSubview(fakeFollowersView)
+        scrollView.addSubview(followersGenderDistributionView)
+        scrollView.addSubview(followersLocationView)
+    }
+    
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -201,10 +197,39 @@ class ReportDetailViewController: UIViewController {
                           following: $0.following)
                 }))
                 
-                print(self.chartStatHistory)
+                let tagModel = model.data.pdfBody.data.profile
+                
+                self.hashtags.append(contentsOf: tagModel.hashtags.map({
+                    .init(hashtag: $0.tag)
+                }))
+                
+                self.mentions.append(contentsOf: tagModel.mentions.map({
+                    .init(mention: $0.tag)
+                }))
+                
+                let credibilityModel = model.data.pdfBody.data.profile.audience
+                
+                self.credibility = .init(credibility: credibilityModel.credibility)
+                
+                let genderDistributionModel = model.data.pdfBody.data.profile.audience.genders
+                
+                self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
+                
+                let audienceLocations = model.data.pdfBody.data.profile.audience.geoCountries
+                
+                self.followersCountryLocation = audienceLocations.map({.init(code: $0.name, weight: $0.weight)})
+                
+                let audienceCityLocations = model.data.pdfBody.data.profile.audience.geoCities
+                
+                self.followersCityLocation = audienceCityLocations.map({.init(name: $0.name)})
                 
                 DispatchQueue.main.async {
                     self.reportCollectionView.reloadData()
+                    self.handleCharts()
+                    self.handleHashtagsMentions()
+                    self.handleCredibility()
+                    self.handleGenderDistribution()
+                    self.handleFollowersLocation()
                 }
                 
                 print("getting influnecer report is successful")
@@ -213,11 +238,52 @@ class ReportDetailViewController: UIViewController {
     }
     
     
+    func handleCharts() {
+        let indexMonth = chartStatHistory.map({$0.month})
+        let indexFollowers = chartStatHistory.map({Double($0.followers)})
+        let indexFollowing = chartStatHistory.map({Double($0.following)})
+        let indexLikes = chartStatHistory.map({Double($0.avgLikes)})
+        followersChart.prepareChartsWithData(yValues: indexFollowers, labels: indexMonth)
+        followingChart.prepareChartsWithData(yValues: indexFollowing, labels: indexMonth)
+        avgLikesChart.prepareChartsWithData(yValues: indexLikes, labels: indexMonth)
+    }
+    
+    
+    func handleHashtagsMentions() {
+        hashtagsView.configureHashtags(with: hashtags)
+        mentionsView.configureMentions(with: mentions)
+    }
+    
+    func handleCredibility() {
+        if let credibility = credibility {
+            fakeFollowersView.configurePercentage(with: credibility)
+        }
+        
+    }
+    
+    func handleGenderDistribution() {
+        followersGenderDistributionView.configureWight(with: gendersDistribution)
+    }
+    
+    func handleFollowersLocation() {
+        followersLocationView.configureFollowersLocations(with: followersCountryLocation, city: followersCityLocation)
+    }
+    
 }
 
 
+
+
+
+//Collection view
+
 extension ReportDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        DispatchQueue.main.async {
+            let consHeight = self.reportCollectionView.collectionViewLayout.collectionViewContentSize.height
+            self.reportCollectionView.frame = CGRect(x: 0, y: 0, width: self.scrollView.width, height: consHeight)
+        }
         
         if indexPath.section == 0 {
             // First Details !!!!
@@ -294,7 +360,7 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
             return cell
             
             
-        } else if indexPath.section == 1 {
+        } else {
             
             
             // Popular Posts !!!!
@@ -307,61 +373,25 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                                            comments: popularPostIndex.comments,
                                            image: popularPostIndex.image))
             return cell
-        } else if indexPath.section == 2 {
-            
-            
-            //charts !!!!!!
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsCollectionViewCell.reuseIdentifier, for: indexPath) as! ChartsCollectionViewCell
-            
-            let indexMonth = chartStatHistory.map({$0.month})
-            let indexFollowers = chartStatHistory.map({Double($0.followers)})
-            let indexFollowing = chartStatHistory.map({Double($0.following)})
-            let indexLikes = chartStatHistory.map({Double($0.avgLikes)})
-            print(indexLikes)
-            
-            DispatchQueue.main.async {
-                if let selectedCell = collectionView.cellForItem(at: .init(item: 0, section: 2)) as? ChartsCollectionViewCell {
-                    selectedCell.prepareChartsWithData(yValues: indexFollowers, labels: indexMonth)
-                }
-                
-                if let selectedCell = collectionView.cellForItem(at: .init(item: 1, section: 2)) as? ChartsCollectionViewCell {
-                    selectedCell.prepareChartsWithData(yValues: indexFollowing, labels: indexMonth)
-                }
-
-                
-                if let selectedCell = collectionView.cellForItem(at: .init(item: 3, section: 2)) as? ChartsCollectionViewCell {
-                    selectedCell.prepareChartsWithData(yValues: indexLikes, labels: indexMonth)
-                }
-            }
-            
-
-            
-            
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HashtagsMentionsCollectionViewCell.reuseIdentifier, for: indexPath)
-            
-            return cell
         }
         
 //        return UICollectionViewCell()
+        
+        
+      
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
+        2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if section == 0 {
             return 5
-        } else if section == 1 {
-            return popularPosts.count
-        } else if section == 2 {
-            return 4
         } else {
-            return 2
+            return popularPosts.count
         }
         
     }
@@ -376,13 +406,6 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
             return reuseView
         } else if indexPath.section == 1 {
             let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier, for: indexPath)
-            return reuseView
-        } else if indexPath.section == 2 {
-            let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: ChartsCollectionReusableView.kind, withReuseIdentifier: ChartsCollectionReusableView.reuseIdentifier, for: indexPath)
-            return reuseView
-        } else if indexPath.section == 3 {
-            let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: HashtagsMentionsCollectionReusableView.kind, withReuseIdentifier: HashtagsMentionsCollectionReusableView.reuseIdentifier, for: indexPath)
-            
             return reuseView
         }
         
