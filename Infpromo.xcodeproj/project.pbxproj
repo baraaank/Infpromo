@@ -33,6 +33,8 @@
 		8141A39328180162002CD861 /* GendersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39228180162002CD861 /* GendersViewModel.swift */; };
 		8141A39528180A90002CD861 /* FollowersLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39428180A90002CD861 /* FollowersLocationViewModel.swift */; };
 		8141A39728182100002CD861 /* GendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */; };
+		8141A399281949D7002CD861 /* GendersPerAgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */; };
+		8141A39D2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -115,6 +117,8 @@
 		8141A39228180162002CD861 /* GendersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GendersViewModel.swift; sourceTree = "<group>"; };
 		8141A39428180A90002CD861 /* FollowersLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersLocationViewModel.swift; sourceTree = "<group>"; };
 		8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GendersPerAgeViewModel.swift; sourceTree = "<group>"; };
+		8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikersGendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -353,6 +357,7 @@
 				81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */,
 				8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */,
 				8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */,
+				8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 				8141A3902817FD54002CD861 /* CredibilityViewModel.swift */,
 				8141A39228180162002CD861 /* GendersViewModel.swift */,
 				8141A39428180A90002CD861 /* FollowersLocationViewModel.swift */,
+				8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */,
 			);
 			path = InfleuncerReportViewModel;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 				8141A39728182100002CD861 /* GendersPerAgeCollectionViewCell.swift in Sources */,
 				816B1934280EC4D40016BDE6 /* LoadingGif.swift in Sources */,
 				810AE0C727D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift in Sources */,
+				8141A399281949D7002CD861 /* GendersPerAgeViewModel.swift in Sources */,
 				810AE0D127D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift in Sources */,
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
 				8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */,
@@ -675,6 +682,7 @@
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,
 				8141A37D28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift in Sources */,
+				8141A39D2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift in Sources */,
 				81AF02AD27A283D10054F4C5 /* BuyReportViewController.swift in Sources */,
 				819FFBDB27C2B8030083D3A2 /* SearchResultCollectionViewCell.swift in Sources */,
 				81F61EF527F068D900A91739 /* MostViews.swift in Sources */,

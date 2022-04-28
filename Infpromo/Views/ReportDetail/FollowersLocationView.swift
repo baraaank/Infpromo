@@ -116,22 +116,28 @@ class FollowersLocationView: UIView {
         var percentageClear: [Double] = []
         percentageClear.append(contentsOf: viewModel.map({ $0.clearWeight}))
         
+        if codes.count != 0 && progress.count != 0 {
+            firstCountry.configureLabels(label: codes[0], progress: Float(progress[0]), progressPercentageLabel: "\(percentageClear[0])%")
+            secondCountry.configureLabels(label: codes[1], progress: Float(progress[1]), progressPercentageLabel: "\(percentageClear[1])%")
+            thirdCountry.configureLabels(label: codes[2], progress: Float(progress[2]), progressPercentageLabel: "\(percentageClear[2])%")
+            forthCountry.configureLabels(label: codes[3], progress: Float(progress[3]), progressPercentageLabel: "\(percentageClear[3])%")
+        }
         
-        firstCountry.configureLabels(label: codes[0], progress: Float(progress[0]), progressPercentageLabel: "\(percentageClear[0])%")
-        secondCountry.configureLabels(label: codes[1], progress: Float(progress[1]), progressPercentageLabel: "\(percentageClear[1])%")
-        thirdCountry.configureLabels(label: codes[2], progress: Float(progress[2]), progressPercentageLabel: "\(percentageClear[2])%")
-        forthCountry.configureLabels(label: codes[3], progress: Float(progress[3]), progressPercentageLabel: "\(percentageClear[3])%")
+        
         
         
         var cityCodes: [String] = []
         cityCodes.append(contentsOf: city.map({ $0.name }))
         
+        if cityCodes.count != 0 {
+            firstCityLabel.text = "1. \(cityCodes[0])"
+            secondCityLabel.text = "2. \(cityCodes[1])"
+            thirdCityLabel.text = "3. \(cityCodes[2])"
+            forthCityLabel.text = "4. \(cityCodes[3])"
+            fifthCityLabel.text = "5. \(cityCodes[4])"
+        }
         
-        firstCityLabel.text = "1. \(cityCodes[0])"
-        secondCityLabel.text = "2. \(cityCodes[1])"
-        thirdCityLabel.text = "3. \(cityCodes[2])"
-        forthCityLabel.text = "4. \(cityCodes[3])"
-        fifthCityLabel.text = "5. \(cityCodes[4])"
+        
         
         
         

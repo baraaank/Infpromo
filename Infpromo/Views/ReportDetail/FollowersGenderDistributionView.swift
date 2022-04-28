@@ -54,8 +54,15 @@ class FollowersGenderDistributionView: UIView {
         let progressWomenLabel = viewModel.first?.clearWeight ?? 0.0
         let progressManLabel = viewModel.last?.clearWeight ?? 0.0
         
+        
+        
         womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "\(progressWomenLabel)%")
         manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "\(progressManLabel)%")
+        
+        if progressManLabel == 0.0 {
+            womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "NaN%")
+            manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "NaN%")
+        }
 //        var genderLabel = viewModel.code
 //        if viewModel.code == "FEMALE" {
 //            genderLabel = "Kadın:"

@@ -36,6 +36,7 @@ struct PDFProfile: Codable {
     let hashtags: [HashtagsResponse]
     let mentions: [MentionsResponse]
     let audience: AudienceResponse //followers datas
+    let audienceLikers: AudienceLikersResponse
 }
 
 
@@ -97,6 +98,7 @@ struct AudienceResponse: Codable {
     let genders: [GendersResponse]
     let geoCities: [GeoCitiesResponse]
     let geoCountries: [GeoCountriesResponse]
+    let gendersPerAge: [GendersPerAgeResponse]
 }
 
 
@@ -113,4 +115,42 @@ struct GeoCitiesResponse: Codable {
 struct GeoCountriesResponse: Codable {
     let name: String
     let weight: Double
+}
+
+struct GendersPerAgeResponse: Codable {
+    let code: String
+    let male: Double
+    let female: Double
+}
+
+
+struct AudienceLikersResponse: Codable {
+    let credibility: Double?
+    let nonFollowerLikes: Double?
+    let genders: [LikersGendersResponse]?
+    let geoCities: [LikersGeoCitiesResponse]?
+    let geoCountries: [LikersGeoCountriesResponse]?
+    let gendersPerAge: [LikersGendersPerAgeResponse]?
+}
+
+
+struct LikersGendersResponse: Codable {
+    let code: String
+    let weight: Double
+}
+
+struct LikersGeoCitiesResponse: Codable {
+    let name: String
+    let weight: Double
+}
+
+struct LikersGeoCountriesResponse: Codable {
+    let name: String
+    let weight: Double
+}
+
+struct LikersGendersPerAgeResponse: Codable {
+    let code: String
+    let male: Double
+    let female: Double
 }

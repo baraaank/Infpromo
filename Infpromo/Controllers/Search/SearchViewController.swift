@@ -39,14 +39,14 @@ class HeadingsSelected {
 class SearchViewController: UIViewController {
     
     var models = [
-    "aaaa",
-    "aaaa",
-    "aaaa",
-    "aaaa",
-    "aaaa",
-    "aaaa",
+        "aaaa",
+        "aaaa",
+        "aaaa",
+        "aaaa",
+        "aaaa",
+        "aaaa",
     ]
-
+    
     
     var minFollowers: Int?
     var maxFollowers: Int?
@@ -318,6 +318,13 @@ class SearchViewController: UIViewController {
         return button
     }()
     
+    private let clearButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Temizle", for: .normal)
+        button.setTitleColor(UIColor().infpromo, for: .normal)
+        return button
+    }()
+    
     
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Instagram", "Youtube", "Tiktok"])
@@ -350,32 +357,16 @@ class SearchViewController: UIViewController {
         customView.backgroundColor = UIColor().infpromo
         customView.clipsToBounds = true
         paddingView.addSubview(customView)
-        
-        //        let customImageView = UIImageView()
-        //        customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
-        //        let customImage = UIImage(systemName: "magnifyingglass")
-        //        customImageView.tintColor = UIColor().infpromo
-        //        customImageView.contentMode = .scaleAspectFit
-        
         let customSymbolLabel = UILabel()
         customSymbolLabel.frame = customView.bounds
-        //        customSymbolLabel.text = "a"
         customSymbolLabel.textAlignment = .center
         customSymbolLabel.attributedText = NSAttributedString(string: "@", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold)])
         customView.addSubview(customSymbolLabel)
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
-        //        customImageView.image = customImage
-        //        customImageView.backgroundColor = .clear
-        //        customView.addSubview(customImageView)
-        
         textField.leftView = paddingView
-        //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 60, height: 40))
-        //        textField.delegate = self
-        //        textField.textRect(forBounds: CGRect(x: 80, y: 0, width: 50, height: 40))
         textField.leftViewMode = .always
-        
-        textField.returnKeyType = .go
+        textField.returnKeyType = .search
         return textField
     }()
     
@@ -426,15 +417,9 @@ class SearchViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
-            
-            
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "influencerFilterCollectionViewKind", alignment: .leading)
-            //            headerView.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 200)
-            //            headerView.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .fixed(0), top: .fixed(0), trailing: .fixed(140), bottom: .fixed(0))
             let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(23))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            //            item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .fixed(1), trailing: .fixed(1), bottom: .fixed(1))
             let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(23))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             group.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .none, trailing: .fixed(2), bottom: .none)
@@ -456,10 +441,7 @@ class SearchViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
-            
-            
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "followersFilterCollectionViewKind", alignment: .leading)
-            
             let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(23))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
@@ -478,19 +460,15 @@ class SearchViewController: UIViewController {
         return collectionView
     }()
     
-   
+    
     var selectedIndex = IndexPath(row: -1, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         customSegmented = CustomSegmentedControl(frame: CGRect(x: 20, y: 178, width: view.width - 40, height: 30), buttonTitle: ["Influencer Özellikleri", "Takipçi Özellikleri"])
         customSegmented.delegate = self
         view.addSubview(customSegmented)
-        
-        //        searchButton.addTarget(self, action: searchButtonTapped, for: .touchUpInside)
         
         addSubviews()
         
@@ -511,6 +489,7 @@ class SearchViewController: UIViewController {
         
         searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         dismissViewButton.addTarget(self, action: #selector(dismissViewButtonTapped), for: .touchUpInside)
+        clearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         
         
         view.backgroundColor = .white
@@ -526,23 +505,12 @@ class SearchViewController: UIViewController {
         followersFilterCollectionView.delegate = self
         followersFilterCollectionView.dataSource = self
         
-        //parse json from local
-        //second one is an empty array
-        //        createFilterArray(array: <#T##[OptionsSelected]#>, array2: <#T##[OptionsSelected]#>)
-        didLayOut()
-        //
-        //        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        //        view.addGestureRecognizer(tap)
-        //
-        
-        
         
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGestureReconizer.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGestureReconizer)
         
         searchBar.delegate = self
-        //
     }
     
     @objc func hideKeyboard() {
@@ -562,44 +530,24 @@ class SearchViewController: UIViewController {
         view.addSubview(searchButton)
         view.addSubview(influencerFilterCollectionView)
         view.addSubview(followersFilterCollectionView)
-        
-        
-        
+        view.addSubview(clearButton)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-
-    }
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         segmentedControl.selectedSegmentIndex = 0
-        
-        
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: 0, section: 0)
             self.influencerHeadingsTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             self.influencerHeadingsTableView.delegate?.tableView?(self.influencerHeadingsTableView, didSelectRowAt: indexPath)
         }
-          
-        
-        
     }
     
-    
-    func didLayOut() {
-        
-        
-    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        topLabel.frame = CGRect(x: 20, y: 20, width: view.width - 40, height: 30)
+        topLabel.frame = CGRect(x: 80, y: 20, width: view.width - 160, height: 30)
         dismissViewButton.frame = CGRect(x: view.width - 45, y: 22, width: 26, height: 26)
+        clearButton.frame = CGRect(x: 10, y: topLabel.top, width: 60, height: 30)
         segmentedControl.frame = CGRect(x: 40, y: topLabel.bottom + 20, width: view.width - 80, height: 28)
         searchBar.frame = CGRect(x: 10, y: segmentedControl.bottom + 20, width: view.width - 20, height: 40) //158
         searchButton.frame = CGRect(x: 20, y: view.height - 120 , width: view.width - 40, height: 50)
@@ -608,53 +556,19 @@ class SearchViewController: UIViewController {
         influencerHeadingsTableView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width / 3, height: view.height - 240 - 130)
         influencerOptionsTableView.frame = CGRect(x: influencerHeadingsTableView.right, y: customSegmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: view.height - 240 - 130)
         
-
-        
-        //        if influencerHeadingsTableView.contentSize.height > view.height - 270 {
-        //            influencerHeadingsTableView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width / 3, height: view.height - 240 - 130)
-        //        } else {
-        //            influencerHeadingsTableView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width / 3, height: influencerHeadingsTableView.contentSize.height)
-        //        }
-        //
-        //        if influencerOptionsTableView.contentSize.height > view.height - 270 {
-        //            influencerOptionsTableView.frame = CGRect(x: influencerHeadingsTableView.right, y: customSegmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: view.height - 240 - 130)
-        //        } else {
-        //            influencerOptionsTableView.frame = CGRect(x: influencerHeadingsTableView.right, y: customSegmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: influencerOptionsTableView.contentSize.height)
-        //        }
-        
-        
         followersHeadingsTableView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width / 3, height: view.height - searchButton.height - 70 - 130)
         followersOptionsTableView.frame = CGRect(x: influencerHeadingsTableView.right, y: customSegmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: view.height - 240 - 130)
         
         
     }
     
-    //    func contrarySelected(optionArray: [OptionsSelected], indexPath: IndexPath, filter: Any) {
-    //        var filteredOne filter
-    //
-    //            let filterId = selectedFilterArray[indexPath.row].id
-    //            if let deSelectOne = optionArray.firstIndex(where: {$0.id == filterId}) {
-    //                optionArray[deSelectOne].isSelected = !optionArray[deSelectOne].isSelected
-    //                filteredOne = nil
-    //
-    //            }
-    //
-    //
-    //
-    //    }
-    
-    @objc func filterDismissButtonTapped(sender: CustomFilterButton) {
-        let indexPath = IndexPath(row: sender.row, section: sender.section)
-        guard let cell = influencerFilterCollectionView.cellForItem(at: indexPath) as? InfluencerFilterCollectionViewCell else { return }
-        
-        
+    func clearFilters(row: Int, section: Int) {
+        let indexPath = IndexPath(row: row, section: section)
         let filterId = selectedFilterArray[indexPath.row].id
-
         
         if let deSelectOne = arrayOneInfluencerInstagram.firstIndex(where: { $0.id == filterId }) {
             arrayOneInfluencerInstagram[deSelectOne].isSelected = !arrayOneInfluencerInstagram[deSelectOne].isSelected
             minFollowers = nil
-            
         }
         
         if let deSelectTwo = arrayTwoInfluencerInstagram.firstIndex(where: { $0.id == filterId }) {
@@ -692,32 +606,29 @@ class SearchViewController: UIViewController {
             hasYoutube = nil
         }
         
-        //        print("deleted \(deletedOne)")
-        //
-        //        if let deSelectedItem = selectedFilterArray.firstIndex(where: {arrayOneInfluencerInstagram.forEach(self.$0.id == $0.id)}) {
-        //
-        //        }
-        
-        
-        
-        selectedFilterArray.remove(at: indexPath.row)
-        
-        
         DispatchQueue.main.async {
             self.influencerFilterCollectionView.reloadData()
-            
         }
         
         DispatchQueue.main.async {
             self.influencerOptionsTableView.reloadData()
         }
+    }
+    
+    @objc func clearButtonTapped() {
+        let countFilter = selectedFilterArray.count
         
-        print("interestsssss: \(interests)")
-        
-        
+        for i in 0..<countFilter {
+            clearFilters(row: i, section: 0)
+        }
+        selectedFilterArray.removeAll()
         hideSearchBar()
-        
-        
+    }
+    
+    @objc func filterDismissButtonTapped(sender: CustomFilterButton) {
+        clearFilters(row: sender.row, section: sender.section)
+        selectedFilterArray.remove(at: sender.row)
+        hideSearchBar()
     }
     
     func hideSearchBar() {
@@ -733,7 +644,6 @@ class SearchViewController: UIViewController {
     }
     
     func searchButtonClicked() {
-        
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
         }
@@ -765,7 +675,7 @@ class SearchViewController: UIViewController {
                               isPrivate: $0.profile.isPrivate,
                               influencerId: $0.userId)
                     })
-                )
+                    )
                     
                     
                     let dataDict: [String: [SearchWithFilterCellViewModel]] = ["dataDict": directProfileResponse]
@@ -838,26 +748,7 @@ class SearchViewController: UIViewController {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
                 }
             }
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
-        // we should delete maxPage and initial page number
-        //delete all arraay elements
-        
-        
-        //        let deleteComponents: [String: Any] = ["deleted": ]
-        
-        
-        
-        
     }
     
     @objc func searchButtonTapped() {
@@ -896,8 +787,6 @@ extension SearchViewController: CustomSegmentedControlDelegate {
             followersHeadingsTableView.isHidden = true
             followersOptionsTableView.isHidden = true
             
-            
-            
             reloadTableViews()
             
         case 1:
@@ -906,18 +795,13 @@ extension SearchViewController: CustomSegmentedControlDelegate {
             followersHeadingsTableView.isHidden = false
             followersOptionsTableView.isHidden = false
             
-            
             reloadTableViews()
             
         default:
             print("custom segmented switch default")
         }
-        
     }
-    
-    
 }
-
 
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
@@ -959,7 +843,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 //                return populateFollowersInstagram.count
             default:
                 print("first numberOfRowsInSection switch error")
-//                influencerOptionsTableView.isHidden = true
+                //                influencerOptionsTableView.isHidden = true
             }
             //        case 1:
             //            switch tableView {
@@ -1013,8 +897,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor().infpromo
             cell.textLabel?.textColor = .white
             
-            
-            
         }
         
         
@@ -1034,7 +916,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.backgroundColor = .systemGray6
                 
                 cell.selectionStyle = .none
-
+                
                 return cell
             case influencerOptionsTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
@@ -1188,11 +1070,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             switch tableView {
             case influencerHeadingsTableView:
                 
-                
-                
                 selectedIndex = indexPath
                 
-                var selectedRow = influencerPropertiesHeadingsInstagram[indexPath.row]
+                let selectedRow = influencerPropertiesHeadingsInstagram[indexPath.row]
                 selectedRow.isSelected = !selectedRow.isSelected
                 
                 let deSelectedCellsCount = (influencerHeadingsTableView.numberOfRows(inSection: 0))
@@ -1207,11 +1087,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 if selectedRow.isSelected {
                     
                     let _ = influencerPropertiesHeadingsInstagram.map({ $0.isSelected = false })
-                    
-                    
                     print(selectedRow)
                     let selectedCell = influencerHeadingsTableView.cellForRow(at: indexPath)
-//                    selectedCell?.textLabel?.textColor = UIColor().infpromo
+                    //                    selectedCell?.textLabel?.textColor = UIColor().infpromo
                     selectedCell?.textLabel?.attributedText = NSAttributedString(string: selectedRow.title, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
                     selectedCell?.backgroundColor = .systemGray5
                 }
@@ -1225,7 +1103,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 case [0,0]:
                     
                     let selectedRowOne = arrayOneInfluencerInstagram[indexPath.row]
-                    
                     selectedRowOne.isSelected = !selectedRowOne.isSelected
                     
                     if selectedRowOne.isSelected {
@@ -1267,7 +1144,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     selectedRowFour.isSelected = !selectedRowFour.isSelected
                     if selectedRowFour.isSelected {
                         interests.append(selectedRowFour.code as? Int)
-                        //                        filterArray.insert(arrayOneInfluencerInstagram[indexPath.row].option, at: 0)
                         selectedFilterArray.insert(.init(filterName: selectedRowFour.option, id: selectedRowFour.id), at: 0)
                     }  else {
                         if let interest = interests.firstIndex(where: { $0 == arrayFourInfluencerInstagram[indexPath.row].code as? Int }) {
@@ -1316,12 +1192,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 default:
-                    
                     print("default is collapse")
                 }
-                
-                
-                
                 //                influencerOptionsTableView.reloadData()
                 
                 //                influencerOptionsTableView.reloadData()
@@ -1367,26 +1239,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         
-        
-        
         DispatchQueue.main.async {
             self.influencerFilterCollectionView.reloadData()
         }
         
-        
         influencerOptionsTableView.reloadData()
         
-        
-        
-        
-        
         self.influencerFilterCollectionView.scrollToItem(at: IndexPath(row: filterIndexCount, section: 0), at: .right, animated: true)
-        
-        
         hideSearchBar()
         
     }
-
 }
 
 // CollectionView Delegate and DataSource
@@ -1410,21 +1272,16 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfluencerFilterCollectionViewCell.reuseIdentifier, for: indexPath) as! InfluencerFilterCollectionViewCell
             cell.configureCellLabel(with: selectedFilterArray[indexPath.row].filterName)
             cell.label.preferredMaxLayoutWidth = influencerFilterCollectionView.frame.width
-            
             cell.button.row = indexPath.row
             cell.button.section = indexPath.section
-            
             cell.button.addTarget(self, action: #selector(filterDismissButtonTapped), for: .touchUpInside)
             cell.backgroundColor = .white
             print(selectedFilterArray)
-            //            cell.ce = collectionView.center
             return cell
         case followersFilterCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowersFilterCollectionViewCell.reuseIdentifier, for: indexPath) as! FollowersFilterCollectionViewCell
             cell.configureCellLabel(with: models[indexPath.item])
             cell.label.preferredMaxLayoutWidth = influencerFilterCollectionView.frame.width
-            
-            //            cell.ce = collectionView.center
             return cell
             
         default:
@@ -1438,13 +1295,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch kind {
         case "influencerFilterCollectionViewKind":
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: "influencerFilterCollectionViewKind", withReuseIdentifier: "influencerFilterCollectionViewReuseIdentifier", for: indexPath)
-            //            header.backgroundColor = .gray
             header.frame = CGRect(x: 0, y: 0, width: collectionView.width / 5, height: 25)
             header.backgroundColor = .white
             let title = UILabel()
             title.font = UIFont.systemFont(ofSize: 12)
-            
-            //            title.adjustsFontSizeToFitWidth = true
             title.sizeToFit()
             title.textColor = UIColor().infpromo
             title.text = "influencer: "
@@ -1452,9 +1306,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             title.frame = header.frame
             
             header.addSubview(title)
-            
-            //            title.backgroundColor = .gray
-            
             return header
         case "followersFilterCollectionViewKind":
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: "followersFilterCollectionViewKind", withReuseIdentifier: "followersFilterCollectionViewReuseIdentifier", for: indexPath)
@@ -1462,8 +1313,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             header.backgroundColor = .white
             let title = UILabel()
             title.font = UIFont.systemFont(ofSize: 12)
-            
-            //            title.adjustsFontSizeToFitWidth = true
             title.sizeToFit()
             title.textColor = UIColor().infpromo
             title.text = "takipçi: "
@@ -1472,8 +1321,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             
             header.addSubview(title)
             
-            //            title.backgroundColor = .gray
-            
             return header
         default:
             print("collection view header error")
@@ -1481,20 +1328,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return UICollectionReusableView()
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         CGSize(width: influencerFilterCollectionView.width / 5, height: 20)
     }
-    
-    
-    
-    
-    
 }
-
-
-
-
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

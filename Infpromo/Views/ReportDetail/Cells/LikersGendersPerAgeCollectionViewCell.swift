@@ -1,17 +1,15 @@
 //
-//  GendersPerAgeCollectionViewCell.swift
+//  LikersGendersPerAgeCollectionViewCell.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 26.04.2022.
+//  Created by BaranK Kutlu on 28.04.2022.
 //
 
 import UIKit
-import Charts
 
-
-class GendersPerAgeCollectionViewCell: UICollectionViewCell {
+class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "gendersPerAgeCollectionViewCellIdentifier"
+    static let reuseIdentifier = "likersGendersPerAgeCollectionViewCellIdentifier"
     
     private let agesLabel: UILabel = {
        let label = UILabel()

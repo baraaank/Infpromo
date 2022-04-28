@@ -69,7 +69,19 @@ class PercentsFollowersView: UIView {
         infoLabel.frame = CGRect(x: 10, y: titleLabel.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
     }
     
-    func configurePercentage(with: CredibilityViewModel) {
+    func configurePercentage(with: CredibilityViewModel, title: String, info: String?) {
+        
+        
         percentLabel.text = "% \(with.clearCredibility)"
+        titleLabel.text = title
+        
+        if with.clearCredibility == 0.0 {
+            percentLabel.text = "% NaN"
+        }
+        
+        if let info = info {
+            infoLabel.text = info
+        }
     }
+    
 }
