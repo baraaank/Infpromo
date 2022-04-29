@@ -277,6 +277,10 @@ final class APICaller {
                        language: String?,
                        engagementRate: Double?,
                        hasYoutube: Bool?,
+                       audienceGender: String?,
+                       audienceAges: [String?],
+                       audienceInterests: [Int?],
+                       audienceLanguage: String?,
                        completion: @escaping (Result<SearchWithFilter, Error>) -> Void) {
         
         guard let userId = AuthManager.shared.userId else {
@@ -309,6 +313,12 @@ final class APICaller {
                         "location": [
                             "174737" // tr instagram code
                         ],
+                    ],
+                    "audience": [
+                        "language": audienceLanguage as Any,
+                        "gender": audienceGender as Any,
+                        "age": audienceAges as Any,
+                        "interests": audienceInterests as Any
                     ]
                 ]
             ]
@@ -324,9 +334,6 @@ final class APICaller {
                 }
                 
                 do {
-//                    let result = try JSONSerialization.jsonObject(with: SearchWithFilter.self, options: .fragmentsAllowed)
-//                    let result = try JSONDecoder().decode(SearchWithFilter.self, from: data)
-//                    completion(.success(result))
                     let result = try JSONDecoder().decode(SearchWithFilter.self, from: data)
                     completion(.success(result))
                 } catch {

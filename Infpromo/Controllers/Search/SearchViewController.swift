@@ -56,10 +56,17 @@ class SearchViewController: UIViewController {
     var engagementRate: Double?
     var hasYoutube: Bool?
     
+    var audienceGender: String?
+    var audienceAge: [String?] = []
+    var audienceInterests: [Int?] = []
+    var audienceLanguage: String?
+    
     
     var selectedFilterArray: [SelectedFilter] = []
+    var audienceSelectedFilterArray: [SelectedFilter] = []
     
     var filterIndexCount: Int = 0
+    var audienceFilterIndexCount: Int = 0
     
     // MARK: InstagramArrays
     //InfluencersProperties
@@ -72,24 +79,6 @@ class SearchViewController: UIViewController {
         HeadingsSelected(title: "Etkileşim Oranı", isSelected: false),
         HeadingsSelected(title: "Youtube Hesabı", isSelected: false),
     ]
-    
-    
-    
-    
-    //    var arrayInfluencerMinFollowers: [OptionsSelected] = []
-    //    var arrayInfluencerMaxFollowers: [OptionsSelected] = []
-    //
-    //    func createFilterWithId(array: [OptionsSelected], array2: [OptionsSelected]) {
-    //        var random = Int.random(in: 0..<100)
-    //        for i in 0..<array.count {
-    //
-    //            if array[i].id == nil {
-    //                array2.insert(.init(option: "as", isSelected: true, code: 2000, id: random), at: i)
-    //            } else {
-    //                array2.insert(.init(option: "as", isSelected: true, code: 2000, id: array[i].id), at: i)
-    //            }
-    //        }
-    //    }
     
     
     
@@ -210,30 +199,76 @@ class SearchViewController: UIViewController {
     
     
     //FollowersProperties
-    let followersPropertiesHeadingsInstagram = [
-        "Takipçi Cinsiyet Yoğunluğu", "Takipçi Yaş Aralığı", "Takipçi İlgi Alanları", "Takipçi Dili"
+    let followersPropertiesHeadingsInstagram: [HeadingsSelected] = [
+        .init(title: "Takipçi Cinsiyet Yoğunluğu", isSelected: false),
+        .init(title: "Takipçi Yaş Aralığı", isSelected: false),
+        .init(title: "Takipçi İlgi Alanları", isSelected: false),
+        .init(title: "Takipçi Dili", isSelected: false)
     ]
     
-    let arrayOneFollowersInstagram = [
-        "Kadın", "Erkek"
+    
+    let arrayOneFollowersInstagram: [OptionsSelected] = [
+        .init(option: "Kadın", isSelected: false, code: "FEMALE", id: 1),
+        .init(option: "Erkek", isSelected: false, code: "MALE", id: 2)
     ]
     
-    let arrayTwoFollowersInstagram = [
-        "18 - 24", "25 - 34", "35 - 44", "45 - 65", "65+"
+    let arrayTwoFollowersInstagram: [OptionsSelected] = [
+        .init(option: "18 - 24", isSelected: false, code: "18-24", id: 3),
+        .init(option: "25 - 34", isSelected: false, code: "25-34", id: 4),
+        .init(option: "35 - 44", isSelected: false, code: "35-44", id: 5),
+        .init(option: "45 - 65", isSelected: false, code: "45-64", id: 6),
+        .init(option: "65+", isSelected: false, code: "65-", id: 7)
     ]
     
-    let arrayThreeFollowersInstagram = [
-        "Kıyafet, Ayakkabı, Çanta & Aksesuar", "Arkadaşlar, Aile & İlişkiler", "Kamera & Fotoğraf", "Restoran, Yiyecek & İçecek", "Gezi, Turizm & Havacılık", "Oyuncak, Çocuk & Bebek", "Güzellik & Kozmetik", "Müzik", "Televizyon & Sinema", "Elektronik & Bilgisayar", "Spor", "Sanat & Dizayn", "Araba & Motosiklet", "Fitness & Yoga", "Evcil hayvan", "Alışveriş & Parakende", "Kahve, Çay & İçecek", "Sağlıklı yaşam", "Spor giyim", "Lüks ürünler"
+    
+    let arrayThreeFollowersInstagram: [OptionsSelected] = [
+        .init(option: "Kıyafet, Ayakkabı, Çanta & Aksesuar", isSelected: false, code: 13, id: 8),
+        .init(option: "Arkadaşlar, Aile & İlişkiler", isSelected: false, code: 1708, id: 9),
+        .init(option: "Kamera & Fotoğraf", isSelected: false, code: 11, id: 10),
+        .init(option: "Restoran, Yiyecek & İçecek", isSelected: false, code: 139, id: 11),
+        .init(option: "Gezi, Turizm & Havacılık", isSelected: false, code: 43, id: 12),
+        .init(option: "Oyuncak, Çocuk & Bebek", isSelected: false, code: 190, id: 13),
+        .init(option: "Güzellik & Kozmetik", isSelected: false, code: 80, id: 14),
+        .init(option: "Müzik", isSelected: false, code: 3, id: 15),
+        .init(option: "Televizyon & Sinema", isSelected: false, code: 1, id: 16),
+        .init(option: "Elektronik & Bilgisayar", isSelected: false, code: 25, id: 17),
+        .init(option: "Spor", isSelected: false, code: 21, id: 18),
+        .init(option: "Sanat & Dizayn", isSelected: false, code: 36, id: 19),
+        .init(option: "Araba & Motosiklet", isSelected: false, code: 1826, id: 20),
+        .init(option: "Fitness & Yoga", isSelected: false, code: 196, id: 21),
+        .init(option: "Evcil hayvan", isSelected: false, code: 673, id: 22),
+        .init(option: "Alışveriş & Parakende", isSelected: false, code: 7, id: 23),
+        .init(option: "Kahve, Çay & İçecek", isSelected: false, code: 9, id: 24),
+        .init(option:  "Sağlıklı yaşam", isSelected: false, code: 798, id: 25),
+        .init(option: "Spor giyim", isSelected: false, code: 33, id: 26),
+        .init(option: "Lüks ürünler", isSelected: false, code: 1500, id: 27)
     ]
     
-    let arrayFourFollowersInstagram = [
-        "Türkçe", "İngilizce", "İspanyolca", "Portekizce", "Rusça", "Fransızca", "Arapça", "İtalyanca", "Almanca", "Farsça", "Indonesian", "Japonca", "Polakça", "Çince", "Thai", "Hindi", "Korece", "Malay", "Flemenkçe"
+    
+    let arrayFourFollowersInstagram: [OptionsSelected] = [
+        .init(option: "Türkçe", isSelected: false, code: "tr", id: 28),
+        .init(option: "İngilizce", isSelected: false, code: "en", id: 29),
+        .init(option: "İspanyolca", isSelected: false, code: "es", id: 30),
+        .init(option: "Portekizce", isSelected: false, code: "pt", id: 31),
+        .init(option: "Rusça", isSelected: false, code: "ru", id: 32),
+        .init(option: "Fransızca", isSelected: false, code: "fr", id: 33),
+        .init(option: "Arapça", isSelected: false, code: "ar", id: 34),
+        .init(option: "İtalyanca", isSelected: false, code: "it", id: 35),
+        .init(option: "Almanca", isSelected: false, code: "de", id: 36),
+        .init(option: "Farsça", isSelected: false, code: "fa", id: 37),
+        .init(option: "Indonesian", isSelected: false, code: "id", id: 38),
+        .init(option: "Japonca", isSelected: false, code: "ja", id: 39),
+        .init(option: "Polakça", isSelected: false, code: "pl", id: 40),
+        .init(option: "Çince", isSelected: false, code: "zh", id: 41),
+        .init(option: "Thai", isSelected: false, code: "th", id: 42),
+        .init(option: "Hindi", isSelected: false, code: "hi", id: 43),
+        .init(option: "Korece", isSelected: false, code: "ko", id: 44),
+        .init(option: "Malay", isSelected: false, code: "ms", id: 45),
+        .init(option: "Flemenkçe", isSelected: false, code: "nl", id: 46),
+        
     ]
     
-    var populateFollowersInstagram = [
-        "Kadın", "Erkek"
-    ]
-    
+
     
     // MARK: YoutubeTiktokArrays
     // influencerProperties
@@ -457,11 +492,17 @@ class SearchViewController: UIViewController {
         }))
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "followersFilterCollectionViewKind", withReuseIdentifier: "followersFilterCollectionViewReuseIdentifier")
         collectionView.register(FollowersFilterCollectionViewCell.self, forCellWithReuseIdentifier: FollowersFilterCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveState()
+    }
     
     var selectedIndex = IndexPath(row: -1, section: 0)
+    var audienceSelectedIndex = IndexPath(row: -1, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -511,6 +552,8 @@ class SearchViewController: UIViewController {
         view.addGestureRecognizer(tapGestureReconizer)
         
         searchBar.delegate = self
+        loadSelectedOnes()
+        loadAudienceSelectedOnes()
     }
     
     @objc func hideKeyboard() {
@@ -540,6 +583,10 @@ class SearchViewController: UIViewController {
             let indexPath = IndexPath(row: 0, section: 0)
             self.influencerHeadingsTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             self.influencerHeadingsTableView.delegate?.tableView?(self.influencerHeadingsTableView, didSelectRowAt: indexPath)
+            
+            self.followersHeadingsTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            self.followersHeadingsTableView.delegate?.tableView?(self.followersHeadingsTableView, didSelectRowAt: indexPath)
+            
         }
     }
     
@@ -559,7 +606,44 @@ class SearchViewController: UIViewController {
         followersHeadingsTableView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width / 3, height: view.height - searchButton.height - 70 - 130)
         followersOptionsTableView.frame = CGRect(x: influencerHeadingsTableView.right, y: customSegmented.bottom + 20, width: 2 * (view.width) / 3 - 20, height: view.height - 240 - 130)
         
+    }
+    
+    func audienceClearFilters(row: Int, section: Int) {
+        let indexPath = IndexPath(row: row, section: section)
+        let filterId = audienceSelectedFilterArray[indexPath.row].id
         
+        if let deSelectOne = arrayOneFollowersInstagram.firstIndex(where: { $0.id == filterId }) {
+            arrayOneFollowersInstagram[deSelectOne].isSelected = !arrayOneFollowersInstagram[deSelectOne].isSelected
+            audienceGender = nil
+        }
+        
+        if let deSelectTwo = arrayTwoFollowersInstagram.firstIndex(where: { $0.id == filterId }) {
+            arrayTwoFollowersInstagram[deSelectTwo].isSelected = !arrayTwoFollowersInstagram[deSelectTwo].isSelected
+            if let audienceAges = audienceAge.firstIndex(where: { $0 == arrayTwoFollowersInstagram[deSelectTwo].code as? String }) {
+                audienceAge.remove(at: audienceAges)
+            }
+        }
+        
+        if let deSelectThree = arrayThreeFollowersInstagram.firstIndex(where: { $0.id == filterId }) {
+            arrayThreeFollowersInstagram[deSelectThree].isSelected = !arrayThreeFollowersInstagram[deSelectThree].isSelected
+            if let audienceInterest = audienceInterests.firstIndex(where: { $0 == arrayThreeFollowersInstagram[deSelectThree].code as? Int }) {
+                audienceInterests.remove(at: audienceInterest)
+            }
+        }
+        
+        if let deSelectFour = arrayFourFollowersInstagram.firstIndex(where: { $0.id == filterId }) {
+            arrayFourFollowersInstagram[deSelectFour].isSelected = !arrayFourFollowersInstagram[deSelectFour].isSelected
+            audienceLanguage = nil
+        }
+        
+        
+        DispatchQueue.main.async {
+            self.followersFilterCollectionView.reloadData()
+        }
+        
+        DispatchQueue.main.async {
+            self.followersOptionsTableView.reloadData()
+        }
     }
     
     func clearFilters(row: Int, section: Int) {
@@ -622,6 +706,16 @@ class SearchViewController: UIViewController {
             clearFilters(row: i, section: 0)
         }
         selectedFilterArray.removeAll()
+        
+        
+        let countAudienceFilter = audienceSelectedFilterArray.count
+        
+        for i in 0..<countAudienceFilter {
+            audienceClearFilters(row: i, section: 0)
+        }
+        
+        audienceSelectedFilterArray.removeAll()
+        
         hideSearchBar()
     }
     
@@ -631,8 +725,14 @@ class SearchViewController: UIViewController {
         hideSearchBar()
     }
     
+    @objc func audienceFilterDismissButtonTapped(sender: CustomFilterButton) {
+        audienceClearFilters(row: sender.row, section: sender.section)
+        audienceSelectedFilterArray.remove(at: sender.row)
+        hideSearchBar()
+    }
+    
     func hideSearchBar() {
-        if selectedFilterArray.count == 0 {
+        if selectedFilterArray.count == 0 && audienceSelectedFilterArray.count == 0 {
             searchBar.isHidden = false
             influencerFilterCollectionView.isHidden = true
             followersFilterCollectionView.isHidden = true
@@ -694,16 +794,19 @@ class SearchViewController: UIViewController {
                 
             }
         } else {
-            //            print("minFollowers \(minFollowers)")
-            //            print("maxFollowers \(maxFollowers)")
-            //            print("gender \(gender)")
-            //            print("interests \(interests)")
-            //            print("language \(language)")
-            //            print("engagementRate \(engagementRate)")
-            //            print("hasYoutube \(hasYoutube)" )
-            
-            APICaller.shared.filter(page: 0,minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube) { response in
-                
+//                        print("minFollowers \(minFollowers)")
+//                        print("maxFollowers \(maxFollowers)")
+//                        print("gender \(gender)")
+//                        print("interests \(interests)")
+//                        print("language \(language)")
+//                        print("engagementRate \(engagementRate)")
+//                        print("hasYoutube \(hasYoutube)" )
+//            print(audienceAge)
+//            print(audienceLanguage)
+//            print(audienceGender)
+//            print(audienceInterests)
+//            
+            APICaller.shared.filter(page: 0, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audienceGender, audienceAges: audienceAge, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage) { response in
                 
                 switch response {
                 case .success(let model):
@@ -728,7 +831,11 @@ class SearchViewController: UIViewController {
                                                           "gender": self.gender as Any,
                                                           "interests": self.interests,
                                                           "engagementRate": self.engagementRate as Any,
-                                                          "hasYoutube": self.hasYoutube as Any
+                                                          "hasYoutube": self.hasYoutube as Any,
+                                                          "audienceGender": self.audienceGender as Any,
+                                                          "audienceAges": self.audienceAge as Any,
+                                                          "audienceInterests": self.audienceInterests as Any,
+                                                          "audienceLanguage": self.audienceLanguage as Any
                     ]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDict"), object: nil, userInfo: filterBasedDict)
                     
@@ -749,15 +856,19 @@ class SearchViewController: UIViewController {
                 }
             }
         }
+        
+        saveState()
     }
     
     @objc func searchButtonTapped() {
         searchButtonClicked()
+        saveState()
         
     }
     
     @objc func dismissViewButtonTapped() {
         dismiss(animated: true, completion: nil)
+        saveState()
         
     }
     
@@ -774,8 +885,133 @@ class SearchViewController: UIViewController {
         reloadTableViews()
     }
     
+    
+    
+    func saveState() {
+        let ids = selectedFilterArray.map({$0.id})
+        UserDefaults.standard.set(ids, forKey: "stateSelected")
+        
+        let audienceIds = audienceSelectedFilterArray.map({$0.id})
+        UserDefaults.standard.set(audienceIds, forKey: "stateAudienceSelected")
+    }
+    
+    func loadAudienceSelectedOnes() {
+        guard let returnSelected = UserDefaults.standard.object(forKey: "stateAudienceSelected") else { return }
+        
+        let ret = returnSelected as! [Int]
+        print(ret)
+        for i in 0..<ret.count {
+            if let deSelectOne = arrayOneFollowersInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayOneFollowersInstagram[deSelectOne]
+                abb.isSelected = !abb.isSelected
+                audienceGender = abb.code as? String
+                audienceSelectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            if let deSelectTwo = arrayTwoFollowersInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayTwoFollowersInstagram[deSelectTwo]
+                abb.isSelected = !abb.isSelected
+                audienceAge.append(abb.code as? String)
+                audienceSelectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectThree = arrayThreeFollowersInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayThreeFollowersInstagram[deSelectThree]
+                abb.isSelected = !abb.isSelected
+                audienceInterests.append(abb.code as? Int)
+                audienceSelectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectFour = arrayFourFollowersInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayFourFollowersInstagram[deSelectFour]
+                abb.isSelected = !abb.isSelected
+                audienceLanguage = abb.code as? String
+                audienceSelectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+        
+            
+        }
+        
+        DispatchQueue.main.async {
+            self.followersFilterCollectionView.reloadData()
+        }
+        
+        DispatchQueue.main.async {
+            self.followersOptionsTableView.reloadData()
+        }
+    }
+    
+    func loadSelectedOnes() {
+        
+        guard let returnSelected = UserDefaults.standard.object(forKey: "stateSelected") else { return }
+        print(returnSelected)
+        let ret = returnSelected as! [Int]
+        print(ret)
+        for i in 0..<ret.count {
+            if let deSelectOne = arrayOneInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayOneInfluencerInstagram[deSelectOne]
+                abb.isSelected = !abb.isSelected
+                minFollowers = abb.code as? Int
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            if let deSelectTwo = arrayTwoInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayTwoInfluencerInstagram[deSelectTwo]
+                abb.isSelected = !abb.isSelected
+                maxFollowers = abb.code as? Int
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectThree = arrayThreeInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayThreeInfluencerInstagram[deSelectThree]
+                abb.isSelected = !abb.isSelected
+                gender = abb.code as? String
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectFour = arrayFourInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayFourInfluencerInstagram[deSelectFour]
+                abb.isSelected = !abb.isSelected
+                interests.append(abb.code as? Int)
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            
+            if let deSelectFive = arrayFiveInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arrayFiveInfluencerInstagram[deSelectFive]
+                abb.isSelected = !abb.isSelected
+                
+                language = abb.code as? String
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectSix = arraySixInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arraySixInfluencerInstagram[deSelectSix]
+                abb.isSelected = !abb.isSelected
+                
+                engagementRate = abb.code as? Double
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+            
+            if let deSelectSeven = arraySevenInfluencerInstagram.firstIndex(where: { $0.id == ret[i] }) {
+                let abb = arraySevenInfluencerInstagram[deSelectSeven]
+                abb.isSelected = !abb.isSelected
+                hasYoutube = abb.code as? Bool
+                selectedFilterArray.insert(.init(filterName: abb.option, id: abb.id), at: i)
+            }
+        
+            
+        }
+        
+        DispatchQueue.main.async {
+            self.influencerFilterCollectionView.reloadData()
+        }
+        
+        DispatchQueue.main.async {
+            self.influencerOptionsTableView.reloadData()
+        }
+        
+        
+        }
 }
-
 
 extension SearchViewController: CustomSegmentedControlDelegate {
     
@@ -787,7 +1023,7 @@ extension SearchViewController: CustomSegmentedControlDelegate {
             followersHeadingsTableView.isHidden = true
             followersOptionsTableView.isHidden = true
             
-            reloadTableViews()
+            
             
         case 1:
             influencerHeadingsTableView.isHidden = true
@@ -795,7 +1031,7 @@ extension SearchViewController: CustomSegmentedControlDelegate {
             followersHeadingsTableView.isHidden = false
             followersOptionsTableView.isHidden = false
             
-            reloadTableViews()
+            
             
         default:
             print("custom segmented switch default")
@@ -832,15 +1068,26 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     return 10
                     
                 }
+
+            case followersHeadingsTableView:
+                return followersPropertiesHeadingsInstagram.count
+            case followersOptionsTableView:
+                switch followersHeadingsTableView.indexPathForSelectedRow {
+                case [0,0]:
+                    return arrayOneFollowersInstagram.count
+                case [0,1]:
+                    return arrayTwoFollowersInstagram.count
+                case [0,2]:
+                    return arrayThreeFollowersInstagram.count
+                case [0,3]:
+                    return arrayFourFollowersInstagram.count
+                default:
+                    print("default returned 10")
+                    return 10
+                    
+                }
                 
                 
-                
-                //
-                //
-                //            case followersHeadingsTableView:
-                //                return followersPropertiesHeadingsInstagram.count
-                //            case followersOptionsTableView:
-                //                return populateFollowersInstagram.count
             default:
                 print("first numberOfRowsInSection switch error")
                 //                influencerOptionsTableView.isHidden = true
@@ -884,8 +1131,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func cellConfig(cell: UITableViewCell, cellText: String, optionArray: [OptionsSelected], indexPath: IndexPath) {
         cell.textLabel?.attributedText = NSAttributedString(string: cellText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
         cell.textLabel?.numberOfLines = 0
-        
-        
         
         if optionArray[indexPath.row].isSelected == false {
             cell.backgroundColor = .white
@@ -973,75 +1218,58 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 //                cell.selectionStyle = .none
                 //                return cell
                 //
+            
+            
+        case followersHeadingsTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
+            let cellText = followersPropertiesHeadingsInstagram[indexPath.row].title
+            cell.textLabel?.attributedText = NSAttributedString(string: cellText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
+            cell.textLabel?.numberOfLines = 0
+            cell.backgroundColor = .systemGray6
+            
+            cell.selectionStyle = .none
+            
+            return cell
+        case followersOptionsTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
+            
+            switch followersHeadingsTableView.indexPathForSelectedRow {
+            case [0,0]:
+                let cellText = arrayOneFollowersInstagram[indexPath.row].option
+                cellConfig(cell: cell, cellText: cellText, optionArray: arrayOneFollowersInstagram, indexPath: indexPath)
+                
+            case [0,1]:
+                let cellText = arrayTwoFollowersInstagram[indexPath.row].option
+                cellConfig(cell: cell, cellText: cellText, optionArray: arrayTwoFollowersInstagram, indexPath: indexPath)
+                
+            case [0,2]:
+                let cellText = arrayThreeFollowersInstagram[indexPath.row].option
+                cellConfig(cell: cell, cellText: cellText, optionArray: arrayThreeFollowersInstagram, indexPath: indexPath)
+                
+            case [0,3]:
+                let cellText = arrayFourFollowersInstagram[indexPath.row].option
+                cellConfig(cell: cell, cellText: cellText, optionArray: arrayFourFollowersInstagram, indexPath: indexPath)
+    
             default:
-                print("cellforrowat error")
-                return UITableViewCell()
+                print("whaaaaaaattttttt")
             }
             
-            
-            
-            
-            //        case 1:
-            //            switch tableView {
-            //            case influencerHeadingsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "influencerHeadingsTableView", for: indexPath)
-            //                let cellText = influencerPropertiesHeadingsYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case influencerOptionsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
-            //                let cellText = populateInfluencerYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case followersHeadingsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
-            //                let cellText = followersPropertiesHeadingsYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case followersOptionsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
-            //                let cellText = populateFollowersYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //
-            //            default:
-            //                print("cellforrowat error")
-            //
-            //
-            //            }
-            //
-            //
-            //        case 2:
-            //            switch tableView {
-            //            case influencerHeadingsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "influencerHeadingsTableView", for: indexPath)
-            //                let cellText = influencerPropertiesHeadingsYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case influencerOptionsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "influencerOptionsTableView", for: indexPath)
-            //                let cellText = populateInfluencerYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case followersHeadingsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "followersHeadingsTableView", for: indexPath)
-            //                let cellText = followersPropertiesHeadingsYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //            case followersOptionsTableView:
-            //                let cell = tableView.dequeueReusableCell(withIdentifier: "followersOptionsTableView", for: indexPath)
-            //                let cellText = populateFollowersYT[indexPath.row]
-            //                cellConfig(cell: cell, cellText: cellText, tableView: tableView, indexPath: indexPath)
-            //                return cell
-            //
-            //            default:
-            //                print("cellforrowat error")
-            //            }
-            
+            cell.selectionStyle = .none
+            return cell
             
         default:
-            print("")
+            print("cellforrowat error")
+            
+            
         }
+            
+        default:
+            print("cellforrowat error")
+            return UITableViewCell()
+        }
+            
+
+      
         return UITableViewCell()
     }
     
@@ -1194,11 +1422,104 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 default:
                     print("default is collapse")
                 }
-                //                influencerOptionsTableView.reloadData()
+              
                 
-                //                influencerOptionsTableView.reloadData()
-                //
-                //
+                
+                
+            case followersHeadingsTableView:
+                audienceSelectedIndex = indexPath
+                
+                let selectedRow = followersPropertiesHeadingsInstagram[indexPath.row]
+                selectedRow.isSelected = !selectedRow.isSelected
+                
+                let deSelectedCellsCount = (followersHeadingsTableView.numberOfRows(inSection: 0))
+                for x in 0..<deSelectedCellsCount {
+                    let selectedCells = followersHeadingsTableView.cellForRow(at: IndexPath(row: x, section: 0))
+                    selectedCells?.textLabel?.textColor = UIColor.black
+                    selectedCells?.textLabel?.attributedText = NSAttributedString(string: followersPropertiesHeadingsInstagram[x].title, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular)])
+                    selectedCells?.backgroundColor = .systemGray6
+                    
+                }
+                
+                if selectedRow.isSelected {
+                    
+                    let _ = followersPropertiesHeadingsInstagram.map({ $0.isSelected = false })
+                    print(selectedRow)
+                    let selectedCell = followersHeadingsTableView.cellForRow(at: indexPath)
+                    //                    selectedCell?.textLabel?.textColor = UIColor().infpromo
+                    selectedCell?.textLabel?.attributedText = NSAttributedString(string: selectedRow.title, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .bold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+                    selectedCell?.backgroundColor = .systemGray5
+                }
+                
+            case followersOptionsTableView:
+                audienceFilterIndexCount += 1
+                
+                switch followersHeadingsTableView.indexPathForSelectedRow {
+                case [0,0]:
+                    
+                    let selectedRowOne = arrayOneFollowersInstagram[indexPath.row]
+                    selectedRowOne.isSelected = !selectedRowOne.isSelected
+                    
+                    if selectedRowOne.isSelected {
+                        handleIsSelected(optionsArray: arrayOneFollowersInstagram, filteredArray: &audienceSelectedFilterArray, indexPath: indexPath)
+//                        minFollowers = selectedRowOne.code as? Int
+                        audienceGender = selectedRowOne.code as? String
+                    } else {
+                        audienceGender = nil
+                        if let first = audienceSelectedFilterArray.firstIndex(where: { $0.id == selectedRowOne.id}) {
+                            audienceSelectedFilterArray.remove(at: first)
+                        }
+                    }
+                    
+                case [0,1]:
+                    let selectedRowTwo = arrayTwoFollowersInstagram[indexPath.row]
+                    selectedRowTwo.isSelected = !selectedRowTwo.isSelected
+                    if selectedRowTwo.isSelected {
+                        audienceAge.append(selectedRowTwo.code as? String)
+                        audienceSelectedFilterArray.insert(.init(filterName: selectedRowTwo.option, id: selectedRowTwo.id), at: 0)
+                    }  else {
+                        if let interest = audienceAge.firstIndex(where: { $0 == arrayThreeFollowersInstagram[indexPath.row].code as? String }) {
+                            audienceAge.remove(at: interest)
+                        }
+                        if let first = audienceSelectedFilterArray.firstIndex(where: { $0.id == selectedRowTwo.id}) {
+                            audienceSelectedFilterArray.remove(at: first)
+                        }
+               
+                    }
+                case [0,2]:
+                    let selectedRowThree = arrayThreeFollowersInstagram[indexPath.row]
+                    selectedRowThree.isSelected = !selectedRowThree.isSelected
+                    if selectedRowThree.isSelected {
+                        audienceInterests.append(selectedRowThree.code as? Int)
+                        audienceSelectedFilterArray.insert(.init(filterName: selectedRowThree.option, id: selectedRowThree.id), at: 0)
+                    }  else {
+                        if let interest = audienceInterests.firstIndex(where: { $0 == arrayThreeFollowersInstagram[indexPath.row].code as? Int }) {
+                            audienceInterests.remove(at: interest)
+                        }
+                        if let first = audienceSelectedFilterArray.firstIndex(where: { $0.id == selectedRowThree.id}) {
+                            audienceSelectedFilterArray.remove(at: first)
+                        }
+               
+               
+                    }
+                    
+                case [0,3]:
+                    let selectedRowFour = arrayFourFollowersInstagram[indexPath.row]
+                    selectedRowFour.isSelected = !selectedRowFour.isSelected
+                    if selectedRowFour.isSelected {
+                        handleIsSelected(optionsArray: arrayFourFollowersInstagram, filteredArray: &audienceSelectedFilterArray, indexPath: indexPath)
+                        audienceLanguage = selectedRowFour.code as? String
+                    } else {
+                        audienceLanguage = nil
+                        if let first = audienceSelectedFilterArray.firstIndex(where: { $0.id == selectedRowFour.id}) {
+                            audienceSelectedFilterArray.remove(at: first)
+                        }
+                    }
+                    
+                default:
+                    print("default is collapse")
+                }
+                
             default:
                 print("????")
                 
@@ -1241,11 +1562,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             self.influencerFilterCollectionView.reloadData()
+            self.followersFilterCollectionView.reloadData()
         }
         
+        
+        
         influencerOptionsTableView.reloadData()
+        followersOptionsTableView.reloadData()
         
         self.influencerFilterCollectionView.scrollToItem(at: IndexPath(row: filterIndexCount, section: 0), at: .right, animated: true)
+        self.followersFilterCollectionView.scrollToItem(at: IndexPath(row: filterIndexCount, section: 0), at: .right, animated: true)
         hideSearchBar()
         
     }
@@ -1258,7 +1584,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case influencerFilterCollectionView:
             return selectedFilterArray.count
         case followersFilterCollectionView:
-            return models.count
+            return audienceSelectedFilterArray.count
         default:
             print("filters number of items in section")
         }
@@ -1280,8 +1606,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         case followersFilterCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowersFilterCollectionViewCell.reuseIdentifier, for: indexPath) as! FollowersFilterCollectionViewCell
-            cell.configureCellLabel(with: models[indexPath.item])
-            cell.label.preferredMaxLayoutWidth = influencerFilterCollectionView.frame.width
+            cell.configureCellLabel(with: audienceSelectedFilterArray[indexPath.row].filterName)
+            cell.label.preferredMaxLayoutWidth = followersFilterCollectionView.frame.width
+            cell.button.row = indexPath.row
+            cell.button.section = indexPath.section
+            cell.button.addTarget(self, action: #selector(audienceFilterDismissButtonTapped), for: .touchUpInside)
+            cell.backgroundColor = .white
+            print(selectedFilterArray)
             return cell
             
         default:

@@ -159,6 +159,11 @@ class HomeViewController: UIViewController {
     var engagementRate: Double?
     var hasYoutube: Bool?
     
+    var audinenceGender: String?
+    var audienceAges: [String?] = []
+    var audienceInterests: [Int?] = []
+    var audienceLanguage: String?
+    
     var influencerIds: [String] = []
     
     //loading gifs
@@ -376,6 +381,24 @@ class HomeViewController: UIViewController {
             hasYoutube = hasYoutubeDict
         }
         
+        if let audienceGenderDict = notification.userInfo?["audienceGender"] as? String {
+            audinenceGender = audienceGenderDict
+        }
+        
+       
+        if let audienceAgeDict = notification.userInfo?["audienceAges"] as? [String] {
+            audienceAges = audienceAgeDict
+        }
+        
+        if let audienceInterestsDict = notification.userInfo?["audienceInterests"] as? [Int] {
+            audienceInterests = audienceInterestsDict
+        }
+        
+        
+        if let audienceLanguageDict = notification.userInfo?["audienceLanguage"] as? String {
+            audienceLanguage = audienceLanguageDict
+        }
+        
         
         
     }
@@ -466,11 +489,11 @@ class HomeViewController: UIViewController {
         }
         
         // base search result
-        APICaller.shared.filter(page: initialPage, minFollowers: nil, maxFollowers: nil, gender: gender, interests: [nil], language: nil, engagementRate: nil, hasYoutube: nil, completion: { response in
+        APICaller.shared.filter(page: initialPage, minFollowers: nil, maxFollowers: nil, gender: nil, interests: [nil], language: nil, engagementRate: nil, hasYoutube: nil, audienceGender: nil, audienceAges: [], audienceInterests: [nil], audienceLanguage: nil, completion: { response in
             switch response {
             case .success(let model):
                 var filterResultData: [SearchWithFilterCellViewModel] = []
-                
+                print("success???")
                 filterResultData.append(contentsOf: model.data.bodyNew.lookalikes.map({
                     .init(engagementRate: $0.profile.engagementRate,
                           engagements: $0.profile.engagements,
@@ -509,6 +532,7 @@ class HomeViewController: UIViewController {
                 
             case .failure(let error):
                 print(error)
+                print("base result is not loading")
             }
             
             
@@ -603,7 +627,7 @@ class HomeViewController: UIViewController {
         maxPage = Int(total / 15)
         initialPage += 1
         if initialPage <= Int(maxPage) {
-            APICaller.shared.filter(page: initialPage, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, completion: { response in
+            APICaller.shared.filter(page: initialPage, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audinenceGender, audienceAges: audienceAges, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage, completion: { response in
                 switch response {
                 case .success(let model):
                     var filterResultData: [SearchWithFilterCellViewModel] = []
