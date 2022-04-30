@@ -1,14 +1,14 @@
 //
-//  InfluencerFilterCollectionViewCell.swift
+//  TiktokFollowersFilterCollectionViewCell.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 3.04.2022.
+//  Created by BaranK Kutlu on 30.04.2022.
 //
 
 import UIKit
 
-class InfluencerFilterCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "influencerFilterCollectionViewCellIdentifier"
+class TiktokFollowersFilterCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "tiktokFollowersFilterCollectionViewCellIdentifier"
     
     let label: UILabel = {
         let label = UILabel()
@@ -61,5 +61,4 @@ class InfluencerFilterCollectionViewCell: UICollectionViewCell {
     func configureCellLabel(with string: String) {
         label.text = string
     }
-    
 }

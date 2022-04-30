@@ -164,6 +164,11 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         if let username = viewModel.username {
             usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             
+        } else {
+            if let fullName = viewModel.fullname {
+                usernameButton.setAttributedTitle(NSAttributedString(string: "\(fullName)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+            }
+            
         }
         
         if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
@@ -200,8 +205,10 @@ class PastReportCollectionViewCell: UICollectionViewCell {
         
         if let fullName = viewModel.fullname {
             nameLabel.text = fullName
+            
         } else {
             nameLabel.text = viewModel.username
+            
         }
     }
         

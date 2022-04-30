@@ -19,6 +19,7 @@ class ReportDetailViewController: UIViewController {
     ]
     
     var influencerId = ""
+    var platform = ""
     
     var influencerDetails: ReportDetailViewModel?
     var firstDetail: FirstDetailViewModel?
@@ -177,9 +178,11 @@ class ReportDetailViewController: UIViewController {
         print(influencerId)
         view.backgroundColor = .white
         
+        
     }
     
 
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -233,7 +236,7 @@ class ReportDetailViewController: UIViewController {
     
     
     private func loadViewElements() {
-        APICaller.shared.getInfluencerReport(influencerId: influencerId) { result in
+        APICaller.shared.getInfluencerReport(platform: platform, influencerId: influencerId) { result in
             switch result {
             case .failure(let error):
                 print("getting influncer report error: \(error)")

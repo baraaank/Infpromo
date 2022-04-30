@@ -13,7 +13,7 @@ struct SearchByUsernameCellViewModel {
     let followers: Float?
     let fullname: String?
     let picture: String?
-//    let url: String?
+    let url: String?
     let username: String?
 //    let isPrivate: Bool?
 }

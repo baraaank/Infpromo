@@ -119,31 +119,64 @@ class PastReportViewController: UIViewController {
         collectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
     }
     
+    func directToAccount(urlString: String, name: String) {
+        if let urlString = URL(string: "https://www.\(urlString).com/\(name)") {
+            UIApplication.shared.open(urlString)
+        }
+    }
     
     @objc func usernameButtonTapped(sender: CustomFilterButton) {
         let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let responseIndex = profileResponseArray[indexPath.row]
         
-        
-        if let id = profileResponseArray[indexPath.row].username {
-            if let url = URL(string: "http://www.instagram.com/\(id)/") {
-                UIApplication.shared.open(url)
+        if let url = responseIndex.url {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
             }
         }
         
+        if let network = responseIndex.network {
+            if network == "youtube", let name = responseIndex.fullname {
+                directToAccount(urlString: network, name: name)
+            } else if network == "tiktok", let name = responseIndex.fullname {
+                directToAccount(urlString: network, name: "@\(name)")
+            }
+        }
+    }
+    
+    enum SocialMedia: String {
+        case instagram
+        case youtube
+        case tiktok
     }
     
     @objc func goToDetailButtonTapped(sender: CustomFilterButton) {
         
         let indexPath = IndexPath(row: sender.row, section: sender.section)
 
-        
-        if let influencerId = profileResponseArray[indexPath.row].influencerId {
-            let vc = ReportDetailViewController()
-            vc.influencerId = influencerId
-            navigationController?.pushViewController(vc, animated: true)
+        let networkIndex = profileResponseArray[indexPath.row]
+        if let influencerId = networkIndex.influencerId {
+            if let network = networkIndex.network {
+                if network == SocialMedia.instagram.rawValue {
+                    let vc = ReportDetailViewController()
+                    vc.influencerId = influencerId
+                    vc.platform = SocialMedia.instagram.rawValue
+                    navigationController?.pushViewController(vc, animated: true)
+                } else if network == SocialMedia.youtube.rawValue {
+                    let vc = YoutubeReportDetailViewController()
+                    vc.influencerId = influencerId
+                    vc.platform = SocialMedia.youtube.rawValue
+                    navigationController?.pushViewController(vc, animated: true)
+                } else if network == SocialMedia.tiktok.rawValue {
+                    let vc = YoutubeReportDetailViewController()
+                    vc.influencerId = influencerId
+                    vc.platform = SocialMedia.tiktok.rawValue
+                    navigationController?.pushViewController(vc, animated: true)
+                }
+            }
         }
-        
-        
+       
+   
         
         
     }

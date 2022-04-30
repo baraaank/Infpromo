@@ -500,7 +500,7 @@ class HomeViewController: UIViewController {
                           followers: $0.profile.followers,
                           fullname: $0.profile.fullname,
                           picture: $0.profile.picture,
-                          url: nil,
+                          url: $0.profile.url,
                           username: $0.profile.username,
                           isPrivate: nil,
                           influencerId: $0.userId)
@@ -638,7 +638,7 @@ class HomeViewController: UIViewController {
                               followers: $0.profile.followers,
                               fullname: $0.profile.fullname,
                               picture: $0.profile.picture,
-                              url: nil,
+                              url: $0.profile.url,
                               username: $0.profile.username,
                               isPrivate: nil,
                               influencerId: $0.userId)
@@ -669,18 +669,48 @@ class HomeViewController: UIViewController {
         
     }
     
+    func directToAccount(urlString: String, name: String) {
+        if let urlString = URL(string: "https://www.\(urlString).com/\(name)") {
+            UIApplication.shared.open(urlString)
+        }
+    }
+    
     @objc func usernameButtonTapped(sender: CustomFilterButton) {
         let indexPath = IndexPath(row: sender.row, section: sender.section)
         
         if !directProfileResponseArray.isEmpty {
-            let id = directProfileResponseArray[indexPath.row].username!
-            if let url = URL(string: "http://www.instagram.com/\(id)/") {
-                UIApplication.shared.open(url)
+            let responseIndex = directProfileResponseArray[indexPath.row]
+//            if let network = responseIndex.network {
+//                if network == "instagram", let name = responseIndex.username {
+//                    directToAccount(urlString: network, name: name)
+//                } else if network == "youtube", let name = responseIndex.fullname {
+//                    directToAccount(urlString: network, name: name)
+//                } else if network == "tiktok", let name = responseIndex.fullname {
+//                    directToAccount(urlString: network, name: "@\(name)")
+//                }
+//            }
+            if let url = responseIndex.url {
+                if let urlString = URL(string: url) {
+                    UIApplication.shared.open(urlString)
+                }
             }
+            
         } else {
-            let id = searchByFilterResultArray[indexPath.row].username!
-            if let url = URL(string: "http://www.instagram.com/\(id)/") {
-                UIApplication.shared.open(url)
+//            let responseIndex = directProfileResponseArray[indexPath.row]
+//            if let network = responseIndex.network {
+//                if network == "instagram", let name = responseIndex.username {
+//                    directToAccount(urlString: network, name: name)
+//                } else if network == "youtube", let name = responseIndex.fullname {
+//                    directToAccount(urlString: network, name: name)
+//                } else if network == "tiktok", let name = responseIndex.fullname {
+//                    directToAccount(urlString: network, name: "@\(name)")
+//                }
+//            }
+            let responseIndex = searchByFilterResultArray[indexPath.row]
+            if let url = responseIndex.url {
+                if let urlString = URL(string: url) {
+                    UIApplication.shared.open(urlString)
+                }
             }
         }
         
@@ -719,7 +749,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if directProfileResponseArray.isEmpty == false {
                 return 1
             }
-            //
+            
             if searchByFilterResultArray.isEmpty == false {
                 return searchByFilterResultArray.count
             } else {
@@ -757,7 +787,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.configureCellData(with: MostViewedProfileDataCellViewModel(viewCount: viewCount,
                                                                                 fullname: mostViewed.fullname ?? "",
                                                                                 username: "",
-                                                                                url: "",
+                                                                                url: mostViewed.url,
                                                                                 picture: mostViewed.picture,
                                                                                 followers: mostViewed.followers ?? 1,
                                                                                 engagementRate: mostViewed.engagementRate ?? 1,
@@ -800,7 +830,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        followers: searchByFilterResult.followers,
                                                        fullname: searchByFilterResult.fullname,
                                                        picture: searchByFilterResult.picture,
-                                                       url: nil,
+                                                       url: searchByFilterResult.url,
                                                        username: searchByFilterResult.username,
                                                        isPrivate: nil,
                                                        influencerId: searchByFilterResult.influencerId))
@@ -827,7 +857,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        followers: directProfileResponse.followers,
                                                        fullname: directProfileResponse.fullname,
                                                        picture: directProfileResponse.picture,
-                                                       url: nil,
+                                                       url: directProfileResponse.url,
                                                        username: directProfileResponse.username,
                                                        isPrivate: nil,
                                                        influencerId: directProfileResponse.influencerId))

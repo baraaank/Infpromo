@@ -48,6 +48,14 @@
 		8194A8B227FDB3940048314B /* PlanCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8194A8B127FDB3940048314B /* PlanCellViewModel.swift */; };
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
+		819CF16B281D37A100119E96 /* YoutubeReportDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16A281D37A100119E96 /* YoutubeReportDetailViewController.swift */; };
+		819CF16D281D431300119E96 /* HeadInfosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16C281D431300119E96 /* HeadInfosView.swift */; };
+		819CF16F281D464C00119E96 /* UserMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16E281D464C00119E96 /* UserMetricsView.swift */; };
+		819CF171281D5C3E00119E96 /* LastPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF170281D5C3E00119E96 /* LastPostsView.swift */; };
+		819CF173281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF172281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift */; };
+		819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF174281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift */; };
+		819CF177281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF176281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift */; };
+		819CF179281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF178281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift */; };
 		819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD127BCDD940083D3A2 /* Extensions.swift */; };
 		819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */; };
 		819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819FFBD727C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift */; };
@@ -132,6 +140,14 @@
 		8194A8B127FDB3940048314B /* PlanCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCellViewModel.swift; sourceTree = "<group>"; };
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		819CF16A281D37A100119E96 /* YoutubeReportDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeReportDetailViewController.swift; sourceTree = "<group>"; };
+		819CF16C281D431300119E96 /* HeadInfosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadInfosView.swift; sourceTree = "<group>"; };
+		819CF16E281D464C00119E96 /* UserMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMetricsView.swift; sourceTree = "<group>"; };
+		819CF170281D5C3E00119E96 /* LastPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPostsView.swift; sourceTree = "<group>"; };
+		819CF172281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeInfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		819CF174281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeFollowersFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		819CF176281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokInfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		819CF178281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokFollowersFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		819FFBD127BCDD940083D3A2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		819FFBD427BFD50B0083D3A2 /* BuyingOptionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyingOptionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		819FFBD727C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostVisitedReportsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -331,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				81BAF0E428128902009E865D /* ReportDetailViewController.swift */,
+				819CF16A281D37A100119E96 /* YoutubeReportDetailViewController.swift */,
 			);
 			path = ReportDetail;
 			sourceTree = "<group>";
@@ -345,6 +362,9 @@
 				8141A38E2817F432002CD861 /* FollowersLocationView.swift */,
 				81BAF0EC28128CF8009E865D /* Cells */,
 				81BAF0ED28128D07009E865D /* SupplemantaryViews */,
+				819CF16C281D431300119E96 /* HeadInfosView.swift */,
+				819CF16E281D464C00119E96 /* UserMetricsView.swift */,
+				819CF170281D5C3E00119E96 /* LastPostsView.swift */,
 			);
 			path = ReportDetail;
 			sourceTree = "<group>";
@@ -447,6 +467,10 @@
 			children = (
 				8194A8A527F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift */,
 				8194A8A727F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift */,
+				819CF172281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift */,
+				819CF174281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift */,
+				819CF176281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift */,
+				819CF178281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -614,6 +638,7 @@
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
 				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
 				8194A8B027FDB3010048314B /* Plan.swift in Sources */,
+				819CF16D281D431300119E96 /* HeadInfosView.swift in Sources */,
 				816B192C280DED050016BDE6 /* GetUser.swift in Sources */,
 				81BAF0F528128E8D009E865D /* ChartsCollectionReusableView.swift in Sources */,
 				816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */,
@@ -621,12 +646,15 @@
 				8141A38F2817F432002CD861 /* FollowersLocationView.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				813C27F32810155B0009616D /* HapticsManager.swift in Sources */,
+				819CF177281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift in Sources */,
+				819CF173281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
 				81BAF1002812EFCA009E865D /* AbbreviationsHelper.swift in Sources */,
 				8141A3912817FD54002CD861 /* CredibilityViewModel.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
+				819CF16F281D464C00119E96 /* UserMetricsView.swift in Sources */,
 				8141A3872817E706002CD861 /* HashtagsMentionsView.swift in Sources */,
 				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
 				81237AA92802BC5A00CD3749 /* UserError.swift in Sources */,
@@ -648,6 +676,7 @@
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
 				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
+				819CF16B281D37A100119E96 /* YoutubeReportDetailViewController.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
 				81BAF0E928128C99009E865D /* FirstDetailsCollectionViewCell.swift in Sources */,
 				81BAF0FE2812EE4A009E865D /* PopularPostViewModel.swift in Sources */,
@@ -662,6 +691,7 @@
 				813C27F52810863E0009616D /* ProfileInformationsCellViewModel.swift in Sources */,
 				81F61F0027F1E05900A91739 /* ProfileHeaderReusableViewModel.swift in Sources */,
 				819FFBD527BFD50C0083D3A2 /* BuyingOptionsCollectionViewCell.swift in Sources */,
+				819CF179281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift in Sources */,
 				8141A37F28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift in Sources */,
 				81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */,
 				8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */,
@@ -672,10 +702,12 @@
 				8141A3832817DD45002CD861 /* ChartsView.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
 				81BAF0E528128902009E865D /* ReportDetailViewController.swift in Sources */,
+				819CF171281D5C3E00119E96 /* LastPostsView.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				8194A8B227FDB3940048314B /* PlanCellViewModel.swift in Sources */,
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
+				819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,
 				816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */,
