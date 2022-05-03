@@ -88,6 +88,7 @@ class CustomSegmentedControl: UIView {
                 UIView.animate(withDuration: 0.3) {
                     self.selectorView.frame.origin.x = selectorPosition
                 }
+                
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
         }
