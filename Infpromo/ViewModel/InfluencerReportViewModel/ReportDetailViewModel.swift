@@ -11,6 +11,7 @@ struct ReportDetailViewModel {
     let fullName: String?
     let username: String?
     let picture: String?
+    let url: String?
 }
 
 

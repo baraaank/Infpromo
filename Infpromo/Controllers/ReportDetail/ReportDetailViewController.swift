@@ -25,6 +25,7 @@ class ReportDetailViewController: UIViewController {
     var firstDetail: FirstDetailViewModel?
     var popularPosts: [PopularPostViewModel] = []
     var chartStatHistory: [ChartsViewModel] = []
+    var chartStatHistoryComLike: [ChartsAvgLikesCommentsViewModel] = []
     var hashtags: [HashtagsViewModel] = []
     var mentions: [MentionsViewModel] = []
     
@@ -43,10 +44,31 @@ class ReportDetailViewController: UIViewController {
     var likersFollowersCityLocation: [FollowersGeoCities] = []
     var likersGendersPerAge: [GendersPerAgeViewModel] = []
     
+    //notable
+    var notableUsersModel: [SearchWithFilterCellViewModel] = []
+    var notableLikersModel: [SearchWithFilterCellViewModel] = []
+    
+    
+    var colors: [UIColor] = []
+    
+    
+    var influencerIds: [String] = []
+    var audienceInfluencerIds: [String] = []
+    var myInfluencerIds: [String] = []
+    var reportsCount = 0
+    
+    var titlesOfButton: [String] = []
+    var buttonColors: [UIColor] = []
+    
+    var audienceTitlesOfButton: [String] = []
+    var audienceButtonColors: [UIColor] = []
+    
+    
+    
     
     private let scrollView: UIScrollView = {
       let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .systemGray6
         return scrollView
     }()
     
@@ -56,10 +78,16 @@ class ReportDetailViewController: UIViewController {
             
             if sectionNumber == 0 {
                 //first informations
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalWidth(0.5))
+//                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalWidth(0.5))
+//                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
+//                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
+//                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+//                let section = NSCollectionLayoutSection(group: group)
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.boundarySupplementaryItems = [
@@ -78,9 +106,7 @@ class ReportDetailViewController: UIViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets.leading = 8
-                section.boundarySupplementaryItems = [
-                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: PopularPostsCollectionReusableView.kind, alignment: .topLeading)
-                ]
+                
                 return section
             }
     })
@@ -91,9 +117,10 @@ class ReportDetailViewController: UIViewController {
         
         
         collectionView.register(PopularPostsCollectionViewCell.self, forCellWithReuseIdentifier: PopularPostsCollectionViewCell.reuseIdentifier)
-        collectionView.register(PopularPostsCollectionReusableView.self, forSupplementaryViewOfKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier)
+        
         
       
+        collectionView.backgroundColor = .systemGray6
         collectionView.isScrollEnabled = false
         
         
@@ -101,25 +128,22 @@ class ReportDetailViewController: UIViewController {
     }()
     
     
-    private let agesCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { section, env in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalWidth(0.5))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            let section = NSCollectionLayoutSection(group: group)
-            
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
-            return section
-        }))
+    private lazy var agesCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayoutCircle())
         
         collectionView.register(GendersPerAgeCollectionViewCell.self, forCellWithReuseIdentifier: GendersPerAgeCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     
-    private let likersAgesCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { section, env in
+    private lazy var likersAgesCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayoutCircle())
+        collectionView.register(LikersGendersPerAgeCollectionViewCell.self, forCellWithReuseIdentifier: LikersGendersPerAgeCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .lightGray
+        return collectionView
+    }()
+    
+    func collectionViewLayoutCircle() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { section, env in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalWidth(0.5))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
@@ -129,12 +153,42 @@ class ReportDetailViewController: UIViewController {
             
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
             return section
-        }))
+        }
         
-        collectionView.register(LikersGendersPerAgeCollectionViewCell.self, forCellWithReuseIdentifier: LikersGendersPerAgeCollectionViewCell.reuseIdentifier)
+        return layout
+    }
+    
+    func notableCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { section, env in
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.30))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets.bottom = 8
+            return section
+        }
+        
+        return layout
+    }
+    
+    private lazy var notableUsersCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: notableCollectionViewLayout())
+        collectionView.register(NotableUsersCollectionViewCell.self, forCellWithReuseIdentifier: NotableUsersCollectionViewCell.reuseIdentifier)
         collectionView.backgroundColor = .lightGray
         return collectionView
     }()
+    
+    private lazy var notableLikersCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: notableCollectionViewLayout())
+        collectionView.register(NotableLikersCollectionViewCell.self, forCellWithReuseIdentifier: NotableLikersCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .lightGray
+        return collectionView
+    }()
+    
     
     
     
@@ -142,6 +196,7 @@ class ReportDetailViewController: UIViewController {
     let followersChart = ChartsView()
     let followingChart = ChartsView()
     let avgLikesChart = ChartsView()
+    let commentLikeChart = ChartsCommentLikeView()
     
     
     //create hashtags and mentions
@@ -174,6 +229,12 @@ class ReportDetailViewController: UIViewController {
         likersAgesCollectionView.delegate = self
         likersAgesCollectionView.dataSource = self
         
+        notableUsersCollectionView.delegate = self
+        notableUsersCollectionView.dataSource = self
+        
+        notableLikersCollectionView.delegate = self
+        notableLikersCollectionView.dataSource = self
+        
         
         print(influencerId)
         view.backgroundColor = .white
@@ -190,8 +251,10 @@ class ReportDetailViewController: UIViewController {
         reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 100)
         followersChart.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         followingChart.frame = CGRect(x: 10, y: followersChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        avgLikesChart.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        commentLikeChart.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        avgLikesChart.frame = CGRect(x: 10, y: commentLikeChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         hashtagsView.frame = CGRect(x: 10, y: avgLikesChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        
         mentionsView.frame = CGRect(x: 10, y: hashtagsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         fakeFollowersView.frame = CGRect(x: 10, y: mentionsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         
@@ -207,7 +270,10 @@ class ReportDetailViewController: UIViewController {
         likersFollowersLocationView.frame = CGRect(x: 10, y: likersFollowersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.2)
         likersAgesCollectionView.frame = CGRect(x: 0, y: likersFollowersLocationView.bottom + 10, width: scrollView.width, height: 600)
         
-        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + 200)
+        notableUsersCollectionView.frame = CGRect(x: 0, y: likersAgesCollectionView.bottom + 10, width: view.width, height: notableUsersCollectionView.contentSize.height + 20)
+        notableLikersCollectionView.frame = CGRect(x: 0, y: notableUsersCollectionView.bottom + 10, width: view.width, height: notableLikersCollectionView.contentSize.height + 20)
+        
+        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + notableUsersCollectionView.height + notableLikersCollectionView.height + 200)
     }
     
     func addSubviews() {
@@ -215,6 +281,7 @@ class ReportDetailViewController: UIViewController {
         scrollView.addSubview(reportCollectionView)
         scrollView.addSubview(followersChart)
         scrollView.addSubview(followingChart)
+        scrollView.addSubview(commentLikeChart)
         scrollView.addSubview(avgLikesChart)
         scrollView.addSubview(hashtagsView)
         scrollView.addSubview(mentionsView)
@@ -227,15 +294,99 @@ class ReportDetailViewController: UIViewController {
         scrollView.addSubview(likersFollowersGenderDistributionView)
         scrollView.addSubview(likersFollowersLocationView)
         scrollView.addSubview(likersAgesCollectionView)
+        scrollView.addSubview(notableUsersCollectionView)
+        scrollView.addSubview(notableLikersCollectionView)
     }
      
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        nilForViewWillAppear()
         loadViewElements()
+    }
+    
+    func nilForViewWillAppear() {
+        
+        colors.removeAll()
+        
+        influencerDetails = nil
+        firstDetail = nil
+        popularPosts.removeAll()
+        chartStatHistory.removeAll()
+        chartStatHistoryComLike.removeAll()
+        hashtags.removeAll()
+        mentions.removeAll()
+        
+        hashtagsView.deleteComponents()
+        mentionsView.deleteComponents()
+        
+        //followers datas
+        credibility = nil
+        gendersDistribution.removeAll()
+        followersCountryLocation.removeAll()
+        followersCityLocation.removeAll()
+        gendersPerAge.removeAll()
+        
+        //audience
+        likersCredibility = nil
+        likersNonFollowersLikes = nil
+        likersGenderDistribution.removeAll()
+        likersFollowersCountryLocation.removeAll()
+        likersFollowersCityLocation.removeAll()
+        likersGendersPerAge.removeAll()
+        
+        //notable
+        notableUsersModel.removeAll()
+        notableLikersModel.removeAll()
+        
+        
+    }
+    
+    
+    func buttonTitlesLogic(myIds: [String], ids: [String], reportCount: Int) -> ([String], [UIColor]) {
+        let myCount = myIds.count
+        var idsIn: [String] = []
+        idsIn.append(contentsOf: ids.map({$0}))
+        var buttonTitle = Array(repeating: "Detay +1", count: ids.count)
+        var buttonColors = Array(repeating: UIColor().infpromo, count: ids.count)
+        if reportCount == 0 {
+            buttonColors = Array(repeating: UIColor.gray, count: ids.count)
+        }
+        
+        for i in 0..<myCount {
+            if let myReportsIds = idsIn.firstIndex(where: {$0 == myIds[i]}) {
+                buttonTitle[myReportsIds] = "Detay"
+                buttonColors[myReportsIds] = UIColor().infpromo
+            }
+        }
+        
+        return (buttonTitle, buttonColors)
     }
     
     
     private func loadViewElements() {
+        
+        APICaller.shared.getUserReports { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let model):
+                self.myInfluencerIds.append(contentsOf: model.data.reports.map({$0.data.userId}))
+                
+            }
+        }
+        
+        APICaller.shared.getUser { result in
+            switch result {
+            case .success(let result):
+                if let reportsCount = result.data.userPublic.credit {
+                    self.reportsCount = reportsCount
+                }
+                
+            case .failure(let error):
+                print("getting report count from home vc is broken \(error.localizedDescription)")
+            }
+        }
+        
         APICaller.shared.getInfluencerReport(platform: platform, influencerId: influencerId) { result in
             switch result {
             case .failure(let error):
@@ -246,16 +397,34 @@ class ReportDetailViewController: UIViewController {
                 let influencerDetail = modelToProfile.profile
                 self.influencerDetails = .init(fullName: influencerDetail.fullname,
                                                username: influencerDetail.username,
-                                               picture: influencerDetail.picture)
+                                               picture: influencerDetail.picture,
+                                               url: influencerDetail.url
+                )
                 
                 let avgDetail = modelToProfile
+                
+                
                 self.firstDetail = .init(followers: influencerDetail.followers,
                                          engagementRate: influencerDetail.engagementRate,
                                          engagements: influencerDetail.engagements,
                                          likeValue: avgDetail.avgLikes,
-                                         likeCompared: avgDetail.stats.avgLikes.compared,
+                                         likeCompared: avgDetail.stats?.avgLikes.compared ?? 1,
                                          followersValue: avgDetail.avgComments,
-                                         followersCompared: avgDetail.stats.followers.compared)
+                                         followersCompared: avgDetail.stats?.followers.compared ?? 1)
+                
+                self.colors = Array(repeating: .green, count: 2)
+                if avgDetail.avgLikes! > 0 {
+                    self.colors.insert(.green, at: 0)
+                } else {
+                    self.colors.insert(.red, at: 0)
+                }
+                
+                if avgDetail.avgComments! > 0 {
+                    self.colors.insert(.green, at: 1)
+                } else {
+                    self.colors.insert(.red, at: 1)
+                }
+                
                 
                 let popularPostsFromModel = modelToProfile.popularPosts
                 self.popularPosts.append(contentsOf: popularPostsFromModel.map({
@@ -263,7 +432,7 @@ class ReportDetailViewController: UIViewController {
                           created: $0.created,
                           likes: $0.likes,
                           comments: $0.comments,
-                          image: $0.image)
+                          image: $0.image ?? "")
                 }))
                 
                 
@@ -271,10 +440,21 @@ class ReportDetailViewController: UIViewController {
                 
                 self.chartStatHistory.append(contentsOf: chartHistory.map({
                     .init(month: $0.month,
-                          followers: $0.followers,
+                          followers: $0.followers ?? 1,
                           avgLikes: $0.avgLikes,
-                          following: $0.following)
+                          following: $0.following ?? 1)
                 }))
+                
+                
+                let chartCommentLike = modelToProfile.recentPosts
+                
+                self.chartStatHistoryComLike.append(contentsOf: chartCommentLike.map({
+                    .init(likes: $0.likes,
+                          comments: $0.comments,
+                          created: $0.created)
+                }))
+                
+                print(self.chartStatHistoryComLike)
                 
                 let tagModel = modelToProfile
                 
@@ -331,6 +511,47 @@ class ReportDetailViewController: UIViewController {
                 if let likersGendersPerAge = likersGendersPerAge {
                     self.likersGendersPerAge = likersGendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
                 }
+                
+                let userNotableLikes = modelToProfile.audience.notableUsers
+                
+                if let userNotableLikes = userNotableLikes {
+                    self.notableUsersModel = userNotableLikes.map({.init(engagementRate: nil,
+                                                                       engagements: $0.engagements,
+                                                                       followers: $0.followers,
+                                                                       fullname: $0.fullname,
+                                                                       picture: $0.picture,
+                                                                       url: $0.url,
+                                                                       username: $0.username,
+                                                                       isPrivate: nil,
+                                                                         influencerId: $0.userId)}).prefix(15).map({$0})
+                    self.influencerIds.append(contentsOf: userNotableLikes.map({$0.userId!}))
+                }
+                
+                let notablesLikes = modelToProfile.audienceLikers.notableUsers
+                if let notablesLikes = notablesLikes {
+                    self.notableLikersModel = notablesLikes.map({.init(engagementRate: nil,
+                                                                       engagements: $0.engagements,
+                                                                       followers: $0.followers,
+                                                                       fullname: $0.fullname,
+                                                                       picture: $0.picture,
+                                                                       url: $0.url,
+                                                                       username: $0.username,
+                                                                       isPrivate: nil,
+                                                                       influencerId: $0.userId)}).prefix(15).map({$0})
+                    self.audienceInfluencerIds.append(contentsOf: notablesLikes.map({$0.userId!}))
+                    
+                }
+                
+                let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: self.influencerIds, reportCount: self.reportsCount)
+                let audienceTupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: self.audienceInfluencerIds, reportCount: self.reportsCount)
+                
+                self.titlesOfButton.append(contentsOf: tupleButton.0)
+                self.buttonColors.append(contentsOf: tupleButton.1)
+                
+                self.audienceTitlesOfButton.append(contentsOf: audienceTupleButton.0)
+                self.audienceButtonColors.append(contentsOf: audienceTupleButton.1)
+                
+                
                      
                 DispatchQueue.main.async {
                     self.callFillingFuncs()
@@ -341,6 +562,66 @@ class ReportDetailViewController: UIViewController {
         }
     }
     
+    func handleHaptics(buttonArray: [String], indexPath: IndexPath, button: CustomFilterButton) {
+        if reportsCount == 0 {
+            if buttonArray[indexPath.row] != "Detay" {
+                button.isUserInteractionEnabled = false
+                HapticsManager.shared.vibrate(for: .error)
+            } else {
+                button.isUserInteractionEnabled = true
+            }
+        } else {
+            if buttonArray[indexPath.row] != "Detay" {
+                HapticsManager.shared.vibrate(for: .success)
+            }
+        }
+    }
+    
+    
+    
+    
+    @objc func notableUsersNameButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let responseIndex = notableUsersModel[indexPath.row]
+        if let url = responseIndex.url {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
+            }
+        }
+    }
+    
+    @objc func notableUsersDetailButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let influencerId = notableUsersModel[indexPath.row].influencerId
+        handleHaptics(buttonArray: titlesOfButton, indexPath: indexPath, button: sender)
+    }
+    
+    @objc func notableLikersNameButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let responseIndex = notableLikersModel[indexPath.row]
+        if let url = responseIndex.url {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
+            }
+        }
+    }
+    
+    @objc func notableLikersDetailButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let influencerId = notableLikersModel[indexPath.row].influencerId
+        handleHaptics(buttonArray: audienceTitlesOfButton, indexPath: indexPath, button: sender)
+    }
+    
+    
+    @objc func tapGestureRecognizer(tapGestureRecognizer: CustomTapGesture) {
+        let indexPath = IndexPath(row: tapGestureRecognizer.row, section: tapGestureRecognizer.section)
+        let postsUrl = popularPosts[indexPath.row].url
+        if let urlString = URL(string: postsUrl) {
+            UIApplication.shared.open(urlString)
+        }
+        
+    }
+    
 }
 
 //functions to fill views with datas
@@ -349,6 +630,7 @@ extension ReportDetailViewController {
     func callFillingFuncs() {
         self.reportCollectionView.reloadData()
         self.handleCharts()
+        self.handleBarChart()
         self.handleHashtagsMentions()
         self.handleCredibility()
         self.handleGenderDistribution()
@@ -358,6 +640,16 @@ extension ReportDetailViewController {
         self.handleLikersGenderDistribution()
         self.handleLikersFollowersLocation()
         self.likersAgesCollectionView.reloadData()
+        self.notableUsersCollectionView.reloadData()
+        self.notableLikersCollectionView.reloadData()
+    }
+    
+    func handleBarChart() {
+        let indexLikes = chartStatHistoryComLike.map({$0.likes})
+        let indexComments = chartStatHistoryComLike.map({$0.comments})
+        let indexDates = chartStatHistoryComLike.map({$0.created})
+        
+        commentLikeChart.handleChart(likes: indexLikes, comments: indexComments, created: indexDates)
     }
     
     func handleCharts() {
@@ -410,6 +702,15 @@ extension ReportDetailViewController {
     
     func handleLikersFollowersLocation() {
         likersFollowersLocationView.configureFollowersLocations(with: likersFollowersCountryLocation, city: likersFollowersCityLocation)
+    }
+    
+    @objc func headUsernameButtonTapped(sender: CustomFilterButton) {
+        let responseIndex = influencerDetails?.url
+        if let url = responseIndex {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
+            }
+        }
     }
     
 }
@@ -465,21 +766,29 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                     
                     cell.secondInfoLabel.text = secondLabelFillArray[indexPath.row]
                     
-                    DispatchQueue.main.async {
-                        let targetCells = collectionView.numberOfItems(inSection: 0)
-                        for x in 0..<targetCells {
-                            if let targetCell = collectionView.cellForItem(at: IndexPath(item: x, section: 0)) as? FirstDetailsCollectionViewCell {
-                                if x == 0 {
-                                    targetCell.changeColorLabel(number: avgFollowersDetail)
-                                } else if x == 1 {
-                                    targetCell.changeColorLabel(number: avgLikesDetail)
-                                }
-                            }
-                            
-                            
-                        }
+                    let avgColorsZero = colors[0]
+                    let avgColorsFirst = colors[1]
+                    
+                    if let targetCell = collectionView.cellForItem(at: .init(row: 0, section: 0)) as? FirstDetailsCollectionViewCell {
+                        targetCell.changeColorLabel(colors: avgColorsZero)
                     }
                     
+                    if let targetCell = collectionView.cellForItem(at: .init(row: 1, section: 0)) as? FirstDetailsCollectionViewCell {
+                        targetCell.changeColorLabel(colors: avgColorsFirst)
+                    }
+                    
+//                    DispatchQueue.main.async {
+//                        let targetCells = collectionView.numberOfItems(inSection: 0)
+//                        for x in 0..<targetCells {
+//                            if let targetCell = collectionView.cellForItem(at: IndexPath(item: x, section: 0)) as? FirstDetailsCollectionViewCell {
+//                                if x == 0 {
+//                                    targetCell.changeColorLabel(number: avgFollowersDetail)
+//                                } else if x == 1 {
+//                                    targetCell.changeColorLabel(number: avgLikesDetail)
+//                                }
+//                            }
+//                    }
+
                     
                     cell.numberLabel.text = firstDetailArray[indexPath.row]
                 }
@@ -499,6 +808,16 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                                                likes: popularPostIndex.likes,
                                                comments: popularPostIndex.comments,
                                                image: popularPostIndex.image))
+                
+                cell.photoImageView.row = indexPath.row
+                cell.photoImageView.section = indexPath.section
+                
+                let tapGestureRecognizer = CustomTapGesture(target: self, action: #selector(tapGestureRecognizer))
+                tapGestureRecognizer.row = indexPath.row
+                tapGestureRecognizer.section = indexPath.section
+                
+                cell.photoImageView.addGestureRecognizer(tapGestureRecognizer)
+                
                 return cell
             }
             
@@ -519,17 +838,53 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                                            female: gendersPerAgeIndex.female))
             return cell
             
-        } else {
+        } else if collectionView == likersAgesCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LikersGendersPerAgeCollectionViewCell.reuseIdentifier, for: indexPath) as! LikersGendersPerAgeCollectionViewCell
-//            let gendersPerAgeIndex = gendersPerAge[indexPath.row]
-//            cell.configureCell(with: .init(code: gendersPerAgeIndex.code,
-//                                           male: gendersPerAgeIndex.male,
-//                                           female: gendersPerAgeIndex.female))
             
             let likersGendersPerAgeIndex = likersGendersPerAge[indexPath.row]
             cell.configureCell(with: .init(code: likersGendersPerAgeIndex.code,
                                            male: likersGendersPerAgeIndex.male,
                                            female: likersGendersPerAgeIndex.female))
+            return cell
+        } else if collectionView == notableUsersCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NotableUsersCollectionViewCell.reuseIdentifier, for: indexPath) as! NotableUsersCollectionViewCell
+            let notableIndex = notableUsersModel[indexPath.row]
+            cell.configureCellByFilter(with: .init(engagementRate: nil,
+                                                   engagements: notableIndex.engagements,
+                                                   followers: notableIndex.followers,
+                                                   fullname: notableIndex.fullname,
+                                                   picture: notableIndex.picture,
+                                                   url: notableIndex.url,
+                                                   username: notableIndex.username,
+                                                   isPrivate: nil,
+                                                   influencerId: notableIndex.influencerId))
+            cell.configureButtonTitle(titlesOfButton[indexPath.row], color: buttonColors[indexPath.row])
+            cell.usernameButton.row = indexPath.row
+            cell.usernameButton.section = indexPath.section
+            
+            cell.goToDetailButton.row = indexPath.row
+            cell.goToDetailButton.section = indexPath.section
+            
+            cell.usernameButton.addTarget(self, action: #selector(notableUsersNameButtonClicked), for: .touchUpInside)
+            cell.goToDetailButton.addTarget(self, action: #selector(notableUsersDetailButtonClicked), for: .touchUpInside)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NotableLikersCollectionViewCell.reuseIdentifier, for: indexPath) as! NotableLikersCollectionViewCell
+            let notableIndex = notableLikersModel[indexPath.row]
+            cell.configureCellByFilter(with: notableIndex)
+            cell.configureButtonTitle(audienceTitlesOfButton[indexPath.row], color: audienceButtonColors[indexPath.row])
+            
+            cell.usernameButton.row = indexPath.row
+            cell.usernameButton.section = indexPath.section
+            
+            cell.goToDetailButton.row = indexPath.row
+            cell.goToDetailButton.section = indexPath.section
+            
+            
+            
+            cell.usernameButton.addTarget(self, action: #selector(notableLikersNameButtonClicked), for: .touchUpInside)
+            cell.goToDetailButton.addTarget(self, action: #selector(notableLikersDetailButtonClicked), for: .touchUpInside)
+            
             return cell
         }
         
@@ -541,7 +896,11 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView == reportCollectionView {
             return 2
-        } else if collectionView == agesCollectionView{
+        } else if collectionView == agesCollectionView {
+            return 1
+        } else if collectionView == likersAgesCollectionView {
+            return 1
+        } else if collectionView == notableUsersCollectionView {
             return 1
         } else {
             return 1
@@ -558,8 +917,12 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
             }
         } else if collectionView == agesCollectionView {
             return gendersPerAge.count
-        } else {
+        } else if collectionView == likersAgesCollectionView {
             return likersGendersPerAge.count
+        } else if collectionView == notableUsersCollectionView {
+            return notableUsersModel.count
+        } else {
+            return notableLikersModel.count
         }
         
         
@@ -567,17 +930,18 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if collectionView == reportCollectionView {
-            if indexPath.section == 0 {
+            
                 let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: FirstDetailsCollectionReusableView.kind, withReuseIdentifier: FirstDetailsCollectionReusableView.reuseIdentifier, for: indexPath) as! FirstDetailsCollectionReusableView
                 
                 reuseView.configureProfile(with: .init(fullName: influencerDetails?.fullName,
                                                        username: influencerDetails?.username,
-                                                       picture: influencerDetails?.picture))
+                                                       picture: influencerDetails?.picture,
+                                                       url: influencerDetails?.url ))
+                reuseView.usernameButton.row = indexPath.row
+                reuseView.usernameButton.section = indexPath.section
+                reuseView.usernameButton.addTarget(self, action: #selector(headUsernameButtonTapped), for: .touchUpInside)
                 return reuseView
-            } else if indexPath.section == 1 {
-                let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier, for: indexPath)
-                return reuseView
-            }
+            
         }
         
         

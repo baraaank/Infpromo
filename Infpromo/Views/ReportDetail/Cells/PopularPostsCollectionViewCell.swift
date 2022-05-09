@@ -13,13 +13,16 @@ class PopularPostsCollectionViewCell: UICollectionViewCell {
     
     let dateLabel: UILabel = {
        let label = UILabel()
-        
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.textAlignment = .center
         return label
     }()
     
-    let photoImageView: UIImageView = {
-       let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+    let photoImageView: CustomImageView = {
+       let imageView = CustomImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -39,15 +42,14 @@ class PopularPostsCollectionViewCell: UICollectionViewCell {
     
     let likeslabel: UILabel = {
        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         
-        label.text = "-----"
         return label
     }()
     
     let commentslabel: UILabel = {
        let label = UILabel()
-        
-        label.text = "-----"
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
@@ -66,7 +68,7 @@ class PopularPostsCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        backgroundColor = .white
         addSubviews()
     }
     
@@ -116,14 +118,16 @@ class PopularPostsCollectionViewCell: UICollectionViewCell {
         dateFormatterPrint.dateFormat = "d MMM yyyy"
         
         guard let date: Date = dateFormatterGet.date(from: viewModel.created) else {
-            dateLabel.text = "Alındığı tarih: ----"
+            dateLabel.attributedText = NSAttributedString(string: "Tarih: ---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
             return
         }
         
-        dateLabel.text = "Tarih: \(dateFormatterPrint.string(from: date))"
         
-        commentslabel.text = "\(viewModel.clearComments)"
-        likeslabel.text = "\(viewModel.clearLikes)"
+        
+        dateLabel.attributedText = NSAttributedString(string: "Tarih: \(dateFormatterPrint.string(from: date))", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
+        
+        commentslabel.attributedText = NSAttributedString(string: "\(viewModel.clearComments)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
+        likeslabel.attributedText = NSAttributedString(string: "\(viewModel.clearLikes)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
 
     }
 }

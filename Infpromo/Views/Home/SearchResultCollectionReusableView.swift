@@ -15,7 +15,7 @@ class SearchResultCollectionReusableView: UICollectionReusableView {
     let button: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("ileri", for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "İleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "İleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 4
 //        button.layer.borderWidth = 1

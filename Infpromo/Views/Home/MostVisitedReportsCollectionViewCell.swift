@@ -30,12 +30,20 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
-        label.textAlignment = .center
+//    private let nameLabel: UILabel = {
+//        let label = UILabel()
+//        label.attributedText = NSAttributedString(string: "Cemal Can", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+//        label.textAlignment = .center
+//
+//        return label
+//    }()
+    
+    let nameButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
         
-        return label
+        button.setAttributedTitle(NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+        
+        return button
     }()
     
     private let numberOfFollowersLabel: UILabel = {
@@ -54,13 +62,11 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let button: UIButton = {
-        let button = UIButton(type: .system)
-        
+    let goToDetailButton: CustomFilterButton = {
+        let button = CustomFilterButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
-        
-        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+       
         return button
     }()
     
@@ -82,10 +88,12 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     func addSubviews() {
         contentView.addSubview(numberOfViewsLabel)
         contentView.addSubview(imageView)
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(nameButton)
+//        contentView.addSubview(nameLabel)
         contentView.addSubview(numberOfFollowersLabel)
         contentView.addSubview(numberOfEngagementRateLabel)
-        contentView.addSubview(button)
+        contentView.addSubview(goToDetailButton)
+        
     }
     
     override func layoutSubviews() {
@@ -95,10 +103,12 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         numberOfViewsLabel.frame = CGRect(x: 10, y: 5, width: width - 20, height: fiveOfOneHeight)
         imageView.frame = CGRect(x: width / 4, y: numberOfViewsLabel.bottom + 5, width: width / 2, height: width / 2)
         imageView.layer.cornerRadius = width / 4
-        nameLabel.frame = CGRect(x: 10, y: imageView.bottom + 5, width: width - 20, height: fiveOfOneHeight)
-        numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
+//        nameLabel.frame = CGRect(x: 10, y: imageView.bottom + 5, width: width - 20, height: fiveOfOneHeight)
+        nameButton.frame = CGRect(x: 10, y: imageView.bottom + 5, width: width - 20, height: fiveOfOneHeight)
+//        numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
+        numberOfFollowersLabel.frame = CGRect(x: width / 6, y: nameButton.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
         numberOfEngagementRateLabel.frame = CGRect(x: width / 6, y: numberOfFollowersLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight)
-        button.frame = CGRect(x: width / 6, y: numberOfEngagementRateLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight * 1.5)
+        goToDetailButton.frame = CGRect(x: width / 6, y: numberOfEngagementRateLabel.bottom + 5, width: width / 1.5, height: fiveOfOneHeight * 1.5)
         
     }
     
@@ -126,42 +136,63 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCellData(with viewModel: MostViewedProfileDataCellViewModel) {
-        nameLabel.text = viewModel.fullname
-        
-        guard let followers = viewModel.followers else {
-            return
+        if let fullname = viewModel.fullname {
+            nameButton.setAttributedTitle(NSAttributedString(string: fullname, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+        }
+            
+        if let followers = viewModel.followers {
+            let intFollowers = followers
+            numberOfFollowersLabel.text = "\(intFollowers.roundedWithAbbreviations)"
         }
         
-        let intFollowers = followers
-        numberOfFollowersLabel.text = "\(intFollowers.roundedWithAbbreviations)"
+        if let engagement = viewModel.engagementRate {
+            let clearEngagementRate = Double(engagement * 100)
+            let clearEngagement = clearEngagementRate.truncate(places: 2)
+            
+            numberOfEngagementRateLabel.text = "\(clearEngagement)%"
+        }
+        
+       
         
 //        let formattedFollowers = followers.formattedWithSeparator
 //        let clearFollowers = formattedFollowers.prefix(4)
 //        numberOfFollowersLabel.text = "\(clearFollowers) M"
-        guard let engagement = viewModel.engagementRate else {
-            return
+     
+        if let image = viewModel.picture {
+            if let imageUrl = URL(string: image) {
+                imageView.sd_setImage(with: imageUrl, completed: nil)
+            }
         }
-        let clearEngagementRate = Double(engagement * 100)
-        let clearEngagement = clearEngagementRate.truncate(places: 2)
         
-        numberOfEngagementRateLabel.text = "\(clearEngagement)%"
-        
-        guard let image = viewModel.picture else {
-            return
-        }
-        guard let imageURL = URL(string: image) else {
-            return
-        }
+    
 //        let imageData = try? Data(contentsOf: imageURL)
 //        imageView.image = UIImage(data: imageData ?? Data("pp".utf8))
-        imageView.sd_setImage(with: imageURL, completed: nil)
         
-        guard let viewCount = viewModel.viewCount else {
-            return
+        if let viewCount = viewModel.viewCount {
+            numberOfViewsLabel.text = String("\(viewCount * 113) kez görüntülendi.")
         }
-        numberOfViewsLabel.text = String("\(viewCount * 113) kez görüntülendi.")
+       
+        
         
     }
+    
+    func configureButtonTitle(_ with: String, color: UIColor) {
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(systemName: "doc", withConfiguration: UIImage.SymbolConfiguration.init(font: .systemFont(ofSize: 12, weight: .semibold), scale: .medium))?.withTintColor(.white)
+        imageAttachment.image = image
+        let fullString = NSMutableAttributedString(string: "\(with) ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white])
+        fullString.append(NSAttributedString(attachment: imageAttachment))
+        
+        if with == "Detay" {
+            goToDetailButton.setAttributedTitle(NSAttributedString(string: with, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        } else {
+            goToDetailButton.setAttributedTitle(fullString, for: .normal)
+        }
+        goToDetailButton.backgroundColor = color
+        
+    }
+    
+   
     
 //    override func prepareForReuse() {
 //        super.prepareForReuse()

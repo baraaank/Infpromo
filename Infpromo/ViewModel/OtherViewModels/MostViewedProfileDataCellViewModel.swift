@@ -16,4 +16,5 @@ struct MostViewedProfileDataCellViewModel {
     let followers: Int?
     let engagementRate: Float?
     let engagements: Int?
+    let influencerId: String?
 }

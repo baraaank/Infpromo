@@ -37,6 +37,14 @@ class YoutubeReportDetailViewController: UIViewController {
     
     
     
+    var headInfosViewModel: ReportDetailViewModel?
+    var userMetricsViewModel: FirstDetailViewModel?
+    var popularPostsViewModel: [PopularPostViewModel] = []
+    var notableSubscriptionViewModel: CredibilityViewModel?
+    var followersGenderDistributionViewModel: [GendersViewModel] = []
+    var followersLocationViewModel: [FollowersLocationViewModel] = []
+    
+    
     
     
     private let popularPostsLabel: UILabel = {
@@ -130,10 +138,55 @@ class YoutubeReportDetailViewController: UIViewController {
             case .success(let model):
                 let profile = model.data.pdfBody.data.profile
                 
+                let headInfos = profile.profile
+                self.headInfosViewModel = .init(fullName: headInfos.fullname,
+                                                username: headInfos.username,
+                                                picture: headInfos.picture,
+                                                url: headInfos.url)
+                
+//                self.userMetricsViewModel = .init(followers: headInfos.followers,
+//                                                  engagementRate: headInfos.engagementRate,
+//                                                  engagements: headInfos.engagements,
+//                                                  likeValue: profile.avgLikes,
+//                                                  likeCompared: profile.stats.avgLikes.compared,
+//                                                  followersValue: profile.avgComments,
+//                                                  followersCompared: profile.stats.followers.compared)
+//
+//
+//                self.popularPostsViewModel.append(contentsOf: profile.popularPosts.map({
+//                    .init(url: $0.url,
+//                          created: $0.created,
+//                          likes: $0.likes,
+//                          comments: $0.comments,
+//                          image: $0.image)
+//                }))
+                
+                if let credibility = profile.audienceLikers.credibility {
+                    self.notableSubscriptionViewModel = .init(credibility: credibility)
+                }
+                
+                self.followersGenderDistributionViewModel.append(contentsOf: profile.audience.genders.map({
+                    .init(code: $0.code, weight: $0.weight)
+                }))
+                
+                self.followersLocationViewModel.append(contentsOf: profile.audience.geoCountries.map({
+                    .init(code: $0.name, weight: $0.weight)
+                }))
+                
                 
             
+                self.fillViewWithDatas()
             }
         }
+    }
+    
+    
+    
+    func fillViewWithDatas() {
+        if let headInfosViewModel = headInfosViewModel {
+            headInfosView.configureProfile(with: headInfosViewModel)
+        }
+        
     }
 
 }

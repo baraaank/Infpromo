@@ -44,13 +44,17 @@ class HashtagsMentionsView: UIView {
     
     
     func configureHashtags(with viewModel: [HashtagsViewModel]) {
-           tagListView.addTags(viewModel.map({$0.clearHashtag}))
-       }
-       
-       
-       func configureMentions(with viewModel: [MentionsViewModel]) {
-           tagListView.addTags(viewModel.map({$0.clearMention}))
-       }
+        tagListView.addTags(viewModel.map({$0.clearHashtag}))
+    }
+    
+    
+    func configureMentions(with viewModel: [MentionsViewModel]) {
+        tagListView.addTags(viewModel.map({$0.clearMention}))
+    }
+    
+    func deleteComponents() {
+        tagListView.removeAllTags()
+    }
 }
 
 

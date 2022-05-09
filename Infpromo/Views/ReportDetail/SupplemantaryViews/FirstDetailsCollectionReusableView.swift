@@ -24,22 +24,22 @@ class FirstDetailsCollectionReusableView: UICollectionReusableView {
     let nameLabel: UILabel = {
        let label = UILabel()
 //        label.backgroundColor = .black
-        label.text = "---"
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         return label
     }()
     
 
     
-    let usernameButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("---", for: .normal)
+    let usernameButton: CustomFilterButton = {
+        let button = CustomFilterButton()
+        button.setAttributedTitle(NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .white
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(usernameButton)
@@ -74,7 +74,8 @@ class FirstDetailsCollectionReusableView: UICollectionReusableView {
         }
         
         if let username = viewModel.username {
-            usernameButton.setTitle("@\(username)", for: .normal)
+            
+            usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
         }
         
         

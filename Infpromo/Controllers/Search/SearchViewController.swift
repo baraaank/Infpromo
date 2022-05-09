@@ -1081,9 +1081,93 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        segmentedControl.selectedSegmentIndex = 0
+        
+        
+        if let indexSelectedBef = UserDefaults.standard.object(forKey: "selectedIndex") as? Int {
+            segmentedControl.selectedSegmentIndex = indexSelectedBef
+            
+            switch indexSelectedBef {
+            case 0:
+    //            changeToIndex(index: 0)
+                youtubeInfluencerHeadingsTableView.isHidden = true
+                youtubeInfluencerOptionsTableView.isHidden = true
+                youtubeFollowersHeadingsTableView.isHidden = true
+                youtubeFollowersOptionsTableView.isHidden = true
+                tiktokInfluencerHeadingsTableView.isHidden = true
+                tiktokInfluencerOptionsTableView.isHidden = true
+                tiktokFollowersHeadingsTableView.isHidden = true
+                tiktokFollowersOptionsTableView.isHidden = true
+                influencerHeadingsTableView.isHidden = false
+                influencerOptionsTableView.isHidden = false
+                followersHeadingsTableView.isHidden = false
+                followersOptionsTableView.isHidden = false
+                
+                influencerFilterCollectionView.isHidden = false
+                followersFilterCollectionView.isHidden = false
+                youtubeInfluencerFilterCollectionView.isHidden = true
+                youtubeFollowersFilterCollectionView.isHidden = true
+                tiktokInfluencerFilterCollectionView.isHidden = true
+                tiktokFollowersFilterCollectionView.isHidden = true
+                hideSearchBar()
+            case 1:
+    //            changeToIndex(index: 0)
+                influencerHeadingsTableView.isHidden = true
+                influencerOptionsTableView.isHidden = true
+                followersHeadingsTableView.isHidden = true
+                followersOptionsTableView.isHidden = true
+                tiktokInfluencerHeadingsTableView.isHidden = true
+                tiktokInfluencerOptionsTableView.isHidden = true
+                tiktokFollowersHeadingsTableView.isHidden = true
+                tiktokFollowersOptionsTableView.isHidden = true
+                youtubeInfluencerHeadingsTableView.isHidden = false
+                youtubeInfluencerOptionsTableView.isHidden = false
+                youtubeFollowersHeadingsTableView.isHidden = false
+                youtubeFollowersOptionsTableView.isHidden = false
+                
+                influencerFilterCollectionView.isHidden = true
+                followersFilterCollectionView.isHidden = true
+                youtubeInfluencerFilterCollectionView.isHidden = false
+                youtubeFollowersFilterCollectionView.isHidden = false
+                tiktokInfluencerFilterCollectionView.isHidden = true
+                tiktokFollowersFilterCollectionView.isHidden = true
+                hideSearchBar()
+            case 2:
+    //            changeToIndex(index: 0)
+                influencerHeadingsTableView.isHidden = true
+                influencerOptionsTableView.isHidden = true
+                followersHeadingsTableView.isHidden = true
+                followersOptionsTableView.isHidden = true
+                youtubeInfluencerHeadingsTableView.isHidden = true
+                youtubeInfluencerOptionsTableView.isHidden = true
+                youtubeFollowersHeadingsTableView.isHidden = true
+                youtubeFollowersOptionsTableView.isHidden = true
+                tiktokInfluencerHeadingsTableView.isHidden = false
+                tiktokInfluencerOptionsTableView.isHidden = false
+                tiktokFollowersHeadingsTableView.isHidden = false
+                tiktokFollowersOptionsTableView.isHidden = false
+                
+                influencerFilterCollectionView.isHidden = true
+                followersFilterCollectionView.isHidden = true
+                youtubeInfluencerFilterCollectionView.isHidden = true
+                youtubeFollowersFilterCollectionView.isHidden = true
+                tiktokInfluencerFilterCollectionView.isHidden = false
+                tiktokFollowersFilterCollectionView.isHidden = false
+                hideSearchBar()
+            default:
+
+                print("default hidden")
+                            
+
+         
+            }
+        }
+        
+      
+        
         DispatchQueue.main.async {
             let indexPath = IndexPath(row: 0, section: 0)
+            self.customSegmented.setIndex(index: 0)
+            self.customSegmented.delegate?.changeToIndex(index: 0)
             self.influencerHeadingsTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             self.influencerHeadingsTableView.delegate?.tableView?(self.influencerHeadingsTableView, didSelectRowAt: indexPath)
             
@@ -1139,14 +1223,7 @@ class SearchViewController: UIViewController {
         
     }
     
-    //??????
-    func commonClear(optionsArray: [OptionsSelected], filteredArray: [SelectedFilter], id: Int) -> Any? {
-        if let deSelectOne = optionsArray.firstIndex(where: { $0.id == id}) {
-            optionsArray[deSelectOne].isSelected = !optionsArray[deSelectOne].isSelected
-            return nil
-        }
-        return nil
-    }
+  
     
     func audienceClearFilters(row: Int, section: Int) {
         let indexPath = IndexPath(row: row, section: section)
@@ -1528,6 +1605,7 @@ class SearchViewController: UIViewController {
     }
     
     func searchButtonClicked() {
+        
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
         }
@@ -1543,101 +1621,271 @@ class SearchViewController: UIViewController {
             searchBarText = "@\(searchBar.text!)"
         }
         
-        if !searchBar.isHidden {
-            APICaller.shared.searchByUsername(username: searchBarText) { response in
-                switch response {
-                case .success(let model):
-                    var directProfileResponse: [SearchWithFilterCellViewModel] = []
-                    directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
-                        .init(engagementRate: $0.profile.engagementRate,
-                              engagements: $0.profile.engagements,
-                              followers: $0.profile.followers,
-                              fullname: $0.profile.fullname,
-                              picture: $0.profile.picture,
-                              url: $0.profile.url,
-                              username: $0.profile.username,
-                              isPrivate: $0.profile.isPrivate,
-                              influencerId: $0.userId)
-                    })
-                    )
-                    
-                    
-                    let dataDict: [String: [SearchWithFilterCellViewModel]] = ["dataDict": directProfileResponse]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
-                    
-                    
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    let errorString = "Aradığınız öğe bulunamadı."
-                    let usernameErrorDict: [String: String] = ["searcByUsernameUnsuccessful": errorString]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "usernameErrorDict"), object: nil, userInfo: usernameErrorDict)
-                    
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            if !searchBar.isHidden {
+                let platform = "instagram"
+                APICaller.shared.searchByUsername(platform: platform, username: searchBarText) { response in
+                    switch response {
+                    case .success(let model):
+                        var directProfileResponse: [SearchWithFilterCellViewModel] = []
+                        directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: $0.profile.isPrivate,
+                                  influencerId: $0.userId)
+                        })
+                        )
+                        
+                        
+                        let dataDict: [String: [SearchWithFilterCellViewModel]] = ["dataDict": directProfileResponse]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        let errorString = "Aradığınız öğe bulunamadı."
+                        let usernameErrorDict: [String: String] = ["searcByUsernameUnsuccessful": errorString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "usernameErrorDict"), object: nil, userInfo: usernameErrorDict)
+                        
+                    }
                 }
-                
-                
-            }
-        } else {
-//            print("minFollowers \(minFollowers)")
-//            print("maxFollowers \(maxFollowers)")
-//            print("gender \(gender)")
-//            print("interests \(interests)")
-//            print("language \(language)")
-//            print("engagementRate \(engagementRate)")
-//            print("hasYoutube \(hasYoutube)" )
-//            print("audience age: \(audienceAge)")
-//            print("audience lang: \(audienceLanguage)")
-//            print("audience gender: \(audienceGender)")
-//            print("audience interests: \(audienceInterests)")
-////
-            APICaller.shared.filter(page: 0, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audienceGender, audienceAges: audienceAge, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage) { response in
-                
-                switch response {
-                case .success(let model):
-                    var filterResultArray: [SearchWithFilterCellViewModel] = []
-                    filterResultArray.append(contentsOf: model.data.bodyNew.lookalikes.map({
-                        .init(engagementRate: $0.profile.engagementRate,
-                              engagements: $0.profile.engagements,
-                              followers: $0.profile.followers,
-                              fullname: $0.profile.fullname,
-                              picture: $0.profile.picture,
-                              url: $0.profile.url,
-                              username: $0.profile.username,
-                              isPrivate: nil,
-                              influencerId: $0.userId)
-                    }))
+            } else {
+                APICaller.shared.filter(page: 0, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audienceGender, audienceAges: audienceAge, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage) { response in
                     
-                    
-                    let filterBasedDict: [String: Any] = ["total": model.data.bodyNew.total,
-                                                          "minFollowers": self.minFollowers as Any,
-                                                          "maxFollowers": self.maxFollowers as Any,
-                                                          "gender": self.gender as Any,
-                                                          "interests": self.interests,
-                                                          "engagementRate": self.engagementRate as Any,
-                                                          "hasYoutube": self.hasYoutube as Any,
-                                                          "audienceGender": self.audienceGender as Any,
-                                                          "audienceAges": self.audienceAge as Any,
-                                                          "audienceInterests": self.audienceInterests as Any,
-                                                          "audienceLanguage": self.audienceLanguage as Any,
-                                                        
-                    ]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDict"), object: nil, userInfo: filterBasedDict)
-                    
+                    switch response {
+                    case .success(let model):
+                        var filterResultArray: [SearchWithFilterCellViewModel] = []
+                        filterResultArray.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        var influencerIds: [String] = []
+                        influencerIds.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+                        
+                        
+                        let filterBasedDict: [String: Any] = ["total": model.data.bodyNew.total,
+                                                              "minFollowers": self.minFollowers as Any,
+                                                              "maxFollowers": self.maxFollowers as Any,
+                                                              "gender": self.gender as Any,
+                                                              "interests": self.interests,
+                                                              "engagementRate": self.engagementRate as Any,
+                                                              "hasYoutube": self.hasYoutube as Any,
+                                                              "audienceGender": self.audienceGender as Any,
+                                                              "audienceAges": self.audienceAge as Any,
+                                                              "audienceInterests": self.audienceInterests as Any,
+                                                              "audienceLanguage": self.audienceLanguage as Any,
+                                                              "ids": influencerIds as Any
+                                                            
+                        ]
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDict"), object: nil, userInfo: filterBasedDict)
+                        
 
-                    let filterResultDict: [String: [SearchWithFilterCellViewModel]] = ["filterResultDict": filterResultArray]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newFilterResultDict"), object: nil, userInfo: filterResultDict)
-                    
-                    
-                    
-                    
-                case .failure(let error):
-                    print(error)
-                    
-                    let filterString = "Aradığınız öğe bulunamadı."
-                    let filterErrorDict: [String: String] = ["searcByFilterUnsuccessful": filterString]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
+                        let filterResultDict: [String: [SearchWithFilterCellViewModel]] = ["filterResultDict": filterResultArray]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newFilterResultDict"), object: nil, userInfo: filterResultDict)
+                        
+                        
+                        
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        let filterString = "Aradığınız öğe bulunamadı."
+                        let filterErrorDict: [String: String] = ["searcByFilterUnsuccessful": filterString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
+                    }
                 }
             }
+        case 1:
+            
+            print("case 1")
+            if !searchBar.isHidden {
+                let platform = "youtube"
+                APICaller.shared.searchByUsername(platform: platform, username: searchBarText) { result in
+                    switch result {
+                    case .success(let model):
+                        var directProfileResponse: [SearchWithFilterCellViewModel] = []
+                        directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: $0.profile.isPrivate,
+                                  influencerId: $0.userId)
+                        })
+                        )
+                        
+                        
+                        let dataDict: [String: [SearchWithFilterCellViewModel]] = ["dataDict": directProfileResponse]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        let errorString = "Aradığınız öğe bulunamadı."
+                        let usernameErrorDict: [String: String] = ["searcByUsernameUnsuccessful": errorString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "usernameErrorDict"), object: nil, userInfo: usernameErrorDict)
+                        
+                    }
+                }
+            } else {
+                let platform = "youtube"
+                APICaller.shared.filterYoutubeTiktok(platform: platform, page: 0, minFollowers: minFollowersYoutube, maxFollowers: maxFollowersYoutube, minViews: minViewsYoutube, maxViews: maxViewsYoutube, gender: genderYoutube, language: languageYoutube, engagementRate: engagementRateYoutube, audienceGender: audienceGenderYoutube, audienceAges: audienceAgeYoutube, audienceLanguage: audienceLanguageYoutube) { result in
+                    switch result {
+                    case .success(let model):
+                        var filterResultArrayYoutube: [SearchWithFilterCellViewModel] = []
+                        filterResultArrayYoutube.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        var influencerIds: [String] = []
+                        influencerIds.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+                        
+                        let filterBasedDictYoutube: [String: Any] = ["totalYoutube": model.data.bodyNew.total,
+                                                                     "minFollowersYoutube": self.minFollowersYoutube as Any,
+                                                                     "maxFollowersYoutube": self.maxFollowersYoutube as Any,
+                                                                     "minViewsYoutube": self.minViewsYoutube as Any,
+                                                                     "maxViewsYoutube": self.maxViewsYoutube as Any,
+                                                                     "genderYoutube": self.genderYoutube as Any,
+                                                                     "languageYoutube": self.languageYoutube as Any,
+                                                                     "engagementRateYoutube": self.engagementRateYoutube as Any,
+                                                                     "audienceGenderYoutube": self.audienceGenderYoutube as Any,
+                                                                     "audienceAgesYoutube": self.audienceAgeYoutube as Any,
+                                                                     "audienceLanguageYoutube": self.audienceLanguageYoutube as Any,
+                                                                     "ids": influencerIds as Any
+                        ]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDictYoutube"), object: nil, userInfo: filterBasedDictYoutube)
+                        
+                        let filterResultDictYoutube: [String: [SearchWithFilterCellViewModel]] = ["filterResultDictYoutube": filterResultArrayYoutube]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newFilterResultDictYoutube"), object: nil, userInfo: filterResultDictYoutube)
+                        
+
+//                        print(filterResultArray)
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        let filterString = "Aradığınız öğe bulunamadı."
+                        let filterErrorDict: [String: String] = ["searcByFilterUnsuccessful": filterString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
+                    }
+                }
+            }
+        case 2:
+            print("case 2")
+            if !searchBar.isHidden {
+                let platform = "tiktok"
+                print("case 2 username")
+                APICaller.shared.searchByUsername(platform: platform, username: searchBarText) { result in
+                    switch result {
+                    case .success(let model):
+                        var directProfileResponse: [SearchWithFilterCellViewModel] = []
+                        directProfileResponse.append(contentsOf: model.data.bodyNew.directs.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: $0.profile.isPrivate,
+                                  influencerId: $0.userId)
+                        })
+                        )
+                        
+                        
+                        let dataDict: [String: [SearchWithFilterCellViewModel]] = ["dataDict": directProfileResponse]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newDataNotif"), object: nil, userInfo: dataDict)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        let errorString = "Aradığınız öğe bulunamadı."
+                        let usernameErrorDict: [String: String] = ["searcByUsernameUnsuccessful": errorString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "usernameErrorDict"), object: nil, userInfo: usernameErrorDict)
+                        
+                    }
+                }
+            } else {
+                let platform = "tiktok"
+                
+                
+                
+                APICaller.shared.filterYoutubeTiktok(platform: platform, page: 0, minFollowers: minFollowersTiktok, maxFollowers: maxFollowersTiktok, minViews: minViewsTiktok, maxViews: maxViewsTiktok, gender: genderTiktok, language: languageTiktok, engagementRate: engagementRateTiktok, audienceGender: audienceGenderTiktok, audienceAges: audienceAgeTiktok, audienceLanguage: audienceLanguageTiktok) { result in
+                    switch result {
+                    case .success(let model):
+                        var filterResultArrayTiktok: [SearchWithFilterCellViewModel] = []
+                        filterResultArrayTiktok.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        var influencerIds: [String] = []
+                        influencerIds.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+                        
+                        
+                        let filterBasedDictTiktok: [String: Any] = ["total": model.data.bodyNew.total,
+                                                                     "minFollowers": self.minFollowersTiktok as Any,
+                                                                     "maxFollowers": self.maxFollowersTiktok as Any,
+                                                                     "minViews": self.minViewsTiktok as Any,
+                                                                     "maxViews": self.maxViewsTiktok as Any,
+                                                                     "gender": self.genderTiktok as Any,
+                                                                     "language": self.languageTiktok as Any,
+                                                                     "engagementRate": self.engagementRateTiktok as Any,
+                                                                     "audienceGender": self.audienceGenderTiktok as Any,
+                                                                     "audienceAges": self.audienceAgeTiktok as Any,
+                                                                     "audienceLanguage": self.audienceLanguageTiktok as Any,
+                                                                    "ids": influencerIds as Any
+                        ]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterBasedDictTiktok"), object: nil, userInfo: filterBasedDictTiktok)
+                        
+                        print("filterBasedDictTiktok: \(filterBasedDictTiktok)")
+                        
+                        let filterResultDictTiktok: [String: [SearchWithFilterCellViewModel]] = ["filterResultDictTiktok": filterResultArrayTiktok]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newFilterResultDictTiktok"), object: nil, userInfo: filterResultDictTiktok)
+                        
+
+                        print(filterResultArrayTiktok)
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        let filterString = "Aradığınız öğe bulunamadı."
+                        let filterErrorDict: [String: String] = ["searcByFilterUnsuccessful": filterString]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "filterErrorDict"), object: nil, userInfo: filterErrorDict)
+                    }
+                }
+            }
+            
+        default:
+            print("deeffffff")
         }
         
         saveState()
@@ -1698,14 +1946,20 @@ class SearchViewController: UIViewController {
     
     func saveState() {
         saveLastState(filterArray: selectedFilterArray, audienceFilterArray: audienceSelectedFilterArray, key1: "stateSelected", key2: "stateAudienceSelected")
+        let selectedIndex = segmentedControl.selectedSegmentIndex
+        UserDefaults.standard.set(selectedIndex, forKey: "selectedIndex")
     }
     
     func saveStateYoutube() {
         saveLastState(filterArray: youtubeSelectedFilterArray, audienceFilterArray: youtubeAudienceSelectedFilterArray, key1: "stateSelectedYoutube", key2: "stateAudienceSelectedYoutube")
+        let selectedIndex = segmentedControl.selectedSegmentIndex
+        UserDefaults.standard.set(selectedIndex, forKey: "selectedIndex")
     }
     
     func saveStateTiktok() {
         saveLastState(filterArray: tiktokSelectedFilterArray, audienceFilterArray: tiktokAudienceSelectedFilterArray, key1: "stateSelectedTiktok", key2: "stateAudienceSelectedTiktok")
+        let selectedIndex = segmentedControl.selectedSegmentIndex
+        UserDefaults.standard.set(selectedIndex, forKey: "selectedIndex")
     }
     
     
@@ -2959,17 +3213,17 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return UICollectionViewCell()
     }
     
-    func headerConfig(header: UICollectionReusableView, width: CGFloat) -> UICollectionReusableView {
+    func headerConfig(header: UICollectionReusableView, width: CGFloat, title: String) -> UICollectionReusableView {
         header.frame = CGRect(x: 0, y: 0, width: width / 5, height: 25)
         header.backgroundColor = .white
-        let title = UILabel()
-        title.font = UIFont.systemFont(ofSize: 12)
-        title.sizeToFit()
-        title.textColor = UIColor().infpromo
-        title.text = "influencer: "
-        title.numberOfLines = 0
-        title.frame = header.frame
-        header.addSubview(title)
+        let titleIn = UILabel()
+        titleIn.font = UIFont.systemFont(ofSize: 12)
+        titleIn.sizeToFit()
+        titleIn.textColor = UIColor().infpromo
+        titleIn.text = "\(title):"
+        titleIn.numberOfLines = 0
+        titleIn.frame = header.frame
+        header.addSubview(titleIn)
         return header
     }
     
@@ -2977,22 +3231,22 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch kind {
         case HeaderKinds.instagramInfluencer.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.instagramInfluencer.rawValue, withReuseIdentifier: HeaderIdentifiers.instagramInfluencerIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "influencer")
         case HeaderKinds.instagramFollowers.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.instagramFollowers.rawValue, withReuseIdentifier: HeaderIdentifiers.instagramFollowersIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "takipçi")
         case HeaderKinds.youtubeInfluencer.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.youtubeInfluencer.rawValue, withReuseIdentifier: HeaderIdentifiers.youtubeInfluencerIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "influencer")
         case HeaderKinds.youtubeFollowers.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.youtubeFollowers.rawValue, withReuseIdentifier: HeaderIdentifiers.youtubeFollowersIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "takipçi")
         case HeaderKinds.tiktokInfluencer.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.tiktokInfluencer.rawValue, withReuseIdentifier: HeaderIdentifiers.tiktokInfluencerIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "influencer")
         case HeaderKinds.tiktokFollowers.rawValue:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderKinds.tiktokFollowers.rawValue, withReuseIdentifier: HeaderIdentifiers.tiktokFollowersIdentifier.rawValue, for: indexPath)
-            return headerConfig(header: header, width: collectionView.width)
+            return headerConfig(header: header, width: collectionView.width, title: "takipçi")
         default:
             print("collection view header error")
         }

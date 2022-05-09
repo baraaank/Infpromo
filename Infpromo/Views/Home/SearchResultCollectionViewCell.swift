@@ -81,7 +81,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         let button = CustomFilterButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
-        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "Detay -1", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         return button
     }()
     
@@ -160,12 +160,36 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func configureButtonTitle(_ with: String, color: UIColor) {
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(systemName: "doc", withConfiguration: UIImage.SymbolConfiguration.init(font: .systemFont(ofSize: 12, weight: .semibold), scale: .medium))?.withTintColor(.white)
+        imageAttachment.image = image
+        let fullString = NSMutableAttributedString(string: "\(with) ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white])
+        
+        fullString.append(NSAttributedString(attachment: imageAttachment))
+        
+        if with == "Detay" {
+            goToDetailButton.setAttributedTitle(NSAttributedString(string: with, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        } else {
+            goToDetailButton.setAttributedTitle(fullString, for: .normal)
+
+        }
+        
+        goToDetailButton.backgroundColor = color
+    }
+    
     func configureCellByFilter(with viewModel: SearchWithFilterCellViewModel) {
         if let username = viewModel.username {
 //            usernameLabel.text = "@\(username)"
 //            usernameButton.setTitle("@\(username)", for: .normal)
             usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             
+        }
+        
+        if viewModel.username == "" {
+            if let name = viewModel.fullname {
+                usernameButton.setAttributedTitle(NSAttributedString(string: "\(name)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+            }
         }
         
         if let engagements = viewModel.engagements, let engagementsRate = viewModel.engagementRate {
@@ -202,6 +226,9 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         } else {
             nameLabel.text = viewModel.username
         }
+        
+        
+        
     }
     
 //    func configureCellData(with viewModel: SearchByUsernameCellViewModel) {

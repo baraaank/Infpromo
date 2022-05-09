@@ -8,6 +8,16 @@
 import UIKit
 import SkeletonView
 
+class InfluencerIdsWTitle {
+    let id: String
+    let title: String
+    
+    init(id: String, title: String) {
+        self.id = id
+        self.title = title
+    }
+}
+
 class HomeViewController: UIViewController {
     
     
@@ -141,7 +151,7 @@ class HomeViewController: UIViewController {
         return imageView
     }()
     
-    var mostViewedArray: [MostViewedProfileData] = []
+    var mostViewedArray: [MostViewedProfileDataCellViewModel] = []
     var viewCountArray: [Int] = []
     
     var directProfileResponseArray: [SearchWithFilterCellViewModel] = []
@@ -158,13 +168,52 @@ class HomeViewController: UIViewController {
     var language: String?
     var engagementRate: Double?
     var hasYoutube: Bool?
-    
     var audinenceGender: String?
     var audienceAges: [String?] = []
     var audienceInterests: [Int?] = []
     var audienceLanguage: String?
     
+    var minFollowersYoutube: Int?
+    var maxFollowersYoutube: Int?
+    var minViewsYoutube: Int?
+    var maxViewsYoutube: Int?
+    var genderYoutube: String?
+    var languageYoutube: String?
+    var engagementRateYoutube: Double?
+    var audinenceGenderYoutube: String?
+    var audienceAgesYoutube: [String?] = []
+    var audienceLanguageYoutube: String?
+    
+    var minFollowersTiktok: Int?
+    var maxFollowersTiktok: Int?
+    var minViewsTiktok: Int?
+    var maxViewsTiktok: Int?
+    var genderTiktok: String?
+    var languageTiktok: String?
+    var engagementRateTiktok: Double?
+    var audinenceGenderTiktok: String?
+    var audienceAgesTiktok: [String?] = []
+    var audienceLanguageTiktok: String?
+   
+    
     var influencerIds: [String] = []
+    var myInfluencerIds: [String] = []
+    
+    var matchingOutputs: [String] = []
+    
+    var instagramNext = 1
+    var youtubeNext = 0
+    var tiktokNext = 0
+    
+    
+    var reportsCount = 0
+    var mostViewedReportsCount = 0
+    
+    var titlesOfButton: [String] = []
+    var buttonColors: [UIColor] = []
+    
+    var mostViewsTitlesOfButton: [String] = []
+    var mostViewedButtonColors: [UIColor] = []
     
     //loading gifs
     var gif: LoadingGif!
@@ -223,10 +272,29 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(totalByFilter), name: NSNotification.Name(rawValue: "filterBasedDict"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByFilter), name: NSNotification.Name(rawValue: "newFilterResultDict"), object: nil)
+        
+        
+        
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(totalByFilterYoutube), name: NSNotification.Name(rawValue: "filterBasedDictYoutube"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByFilterYoutube), name: NSNotification.Name(rawValue: "newFilterResultDictYoutube"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(totalByFilterTiktok), name: NSNotification.Name(rawValue: "filterBasedDictTiktok"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByFilterTiktok), name: NSNotification.Name(rawValue: "newFilterResultDictTiktok"), object: nil)
+        
+        
+        
+        
+        
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByUsername), name: NSNotification.Name(rawValue: "newDataNotif"), object: nil)
         
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshUIByFilter), name: NSNotification.Name(rawValue: "newFilterResultDict"), object: nil)
+      
         
         NotificationCenter.default.addObserver(self, selector: #selector(deletedComponentsFromHome), name: NSNotification.Name(rawValue: "deleteComponents"), object: nil)
         
@@ -258,13 +326,14 @@ class HomeViewController: UIViewController {
         
         startBlur()
         APIisNotWorking()
+//        userLogForButton()
         
 //        tabBarController?.tabBar.isUserInteractionEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+//        userLogForButton()
     }
     
     func APIisNotWorking() {
@@ -291,6 +360,12 @@ class HomeViewController: UIViewController {
 //        tabBarController?.tabBar.barTintColor = .white
 //        tabBarController?.tabBar.isUserInteractionEnabled = true
     
+    }
+    
+    
+    
+    func userLogForButton()  {
+        
     }
     
     @objc func usernameSearchError(_ notification: NSNotification) {
@@ -325,36 +400,229 @@ class HomeViewController: UIViewController {
             directProfileResponseArray.removeAll()
             influencerIds.removeAll()
             
+            instagramNext = 0
+            youtubeNext = 0
+            tiktokNext = 0
             
-            print("eeeyyyyooooo")
-            print(initialPage)
-            print(maxPage)
-            print(searchByFilterResultArray.count)
+            buttonColors.removeAll()
+            titlesOfButton.removeAll()
+           
+            scrollView.isScrollEnabled = true
+            searchResultCollectionView.isScrollEnabled = true
+//
+//            print("eeeyyyyooooo")
+//            print(initialPage)
+//            print(maxPage)
+            
         }
         
     }
     
-    
-    //filter objects and total numb
-    @objc func totalByFilter(_ notification: NSNotification) {
-        if let byTotalFilter = notification.userInfo?["total"] as? Int {
+    @objc func totalByFilterYoutube(_ notification: NSNotification) {
+        
+       
+        youtubeNext = 2
+        
+        if let byTotalFilter = notification.userInfo?["totalYoutube"] as? Int {
+            
+            
             total = byTotalFilter
             initialPage = 0
             
             if (total / 15) <= 1 {
                 maxPage = 0
+                
             }
             
-            //            if (total / 15) is Int {
-            //                maxPage = 0
-            //            }
+            
+
+            
+            print("total: \(byTotalFilter)")
             
             DispatchQueue.main.async {
                 self.accountCountLabel.text = "\"\(self.total)\" hesap bulundu."
-                
-                
-                
             }
+        }
+        
+        if let minFollowersDict = notification.userInfo?["minFollowersYoutube"] as? Int {
+            minFollowersYoutube = minFollowersDict
+            
+        }
+        
+        if let maxFollowersDict = notification.userInfo?["maxFollowersYoutube"] as? Int {
+            maxFollowersYoutube = maxFollowersDict
+        }
+        
+        if let minFollowersDict = notification.userInfo?["minViewsYoutube"] as? Int {
+            minViewsYoutube = minFollowersDict
+        }
+        
+        if let maxFollowersDict = notification.userInfo?["maxViewsYoutube"] as? Int {
+            maxViewsYoutube = maxFollowersDict
+        }
+        
+        
+        if let genderDict = notification.userInfo?["genderYoutube"] as? String {
+            genderYoutube = genderDict
+        }
+        
+        
+        if let engagementRateDict = notification.userInfo?["engagementRateYoutube"] as? Double {
+            engagementRateYoutube = engagementRateDict
+        }
+        
+        if let audienceGenderDict = notification.userInfo?["audienceGenderYoutube"] as? String {
+            audinenceGenderYoutube = audienceGenderDict
+        }
+        
+       
+        if let audienceAgeDict = notification.userInfo?["audienceAgesYoutube"] as? [String] {
+            audienceAgesYoutube = audienceAgeDict
+        }
+        
+        
+        if let audienceLanguageDict = notification.userInfo?["audienceLanguageYoutube"] as? String {
+            audienceLanguageYoutube = audienceLanguageDict
+        }
+        
+        if let idsFromSearch = notification.userInfo?["ids"] as? [String] {
+            influencerIds = idsFromSearch
+        }
+        
+        
+    }
+    
+    @objc func refreshUIByFilterYoutube(_ notification: NSNotification) {
+//        searchByFilterResultArray.removeAll()
+        if let byFilterDict = notification.userInfo?["filterResultDictYoutube"] as? [SearchWithFilterCellViewModel] {
+            searchByFilterResultArray = byFilterDict
+            
+            let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: self.influencerIds, reportCount: self.reportsCount)
+            self.titlesOfButton.append(contentsOf: tupleButton.0)
+            self.buttonColors.append(contentsOf: tupleButton.1)
+            
+            DispatchQueue.main.async {
+                self.stopBlur()
+                self.searchResultCollectionView.reloadData()
+            }
+            
+            
+                
+            
+        }
+    }
+    
+    @objc func totalByFilterTiktok(_ notification: NSNotification) {
+        
+        tiktokNext = 3
+        
+        if let byTotalFilter = notification.userInfo?["total"] as? Int {
+            total = byTotalFilter
+            initialPage = 0
+            print("count tiktok: \(searchByFilterResultArray.count)")
+            if (total / 15) <= 1 {
+                maxPage = 0
+            }
+            
+            DispatchQueue.main.async {
+                self.accountCountLabel.text = "\"\(self.total)\" hesap bulundu."
+            }
+        }
+        
+        if let minFollowersDict = notification.userInfo?["minFollowers"] as? Int {
+            minFollowersTiktok = minFollowersDict
+        }
+        
+        if let maxFollowersDict = notification.userInfo?["maxFollowers"] as? Int {
+            maxFollowersTiktok = maxFollowersDict
+        }
+        
+        if let minFollowersDict = notification.userInfo?["minViews"] as? Int {
+            minViewsTiktok = minFollowersDict
+        }
+        
+        if let maxFollowersDict = notification.userInfo?["maxViews"] as? Int {
+            maxViewsTiktok = maxFollowersDict
+        }
+        
+        
+        if let genderDict = notification.userInfo?["gender"] as? String {
+            genderTiktok = genderDict
+        }
+        
+        
+        if let engagementRateDict = notification.userInfo?["engagementRate"] as? Double {
+            engagementRateTiktok = engagementRateDict
+        }
+        
+        if let audienceGenderDict = notification.userInfo?["audienceGender"] as? String {
+            audinenceGenderTiktok = audienceGenderDict
+        }
+        
+       
+        if let audienceAgeDict = notification.userInfo?["audienceAges"] as? [String] {
+            audienceAgesTiktok = audienceAgeDict
+        }
+        
+        
+        if let audienceLanguageDict = notification.userInfo?["audienceLanguage"] as? String {
+            audienceLanguageTiktok = audienceLanguageDict
+        }
+        
+        if let idsFromSearch = notification.userInfo?["ids"] as? [String] {
+            influencerIds = idsFromSearch
+        }
+    }
+    
+    @objc func refreshUIByFilterTiktok(_ notification: NSNotification) {
+//        searchByFilterResultArray.removeAll()
+        if let byFilterDict = notification.userInfo?["filterResultDictTiktok"] as? [SearchWithFilterCellViewModel] {
+            print("filterdictTiktok: \(byFilterDict)")
+            searchByFilterResultArray = byFilterDict
+            
+            let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: self.influencerIds, reportCount: self.reportsCount)
+            self.titlesOfButton.append(contentsOf: tupleButton.0)
+            self.buttonColors.append(contentsOf: tupleButton.1)
+            
+            DispatchQueue.main.async {
+                self.stopBlur()
+                self.searchResultCollectionView.reloadData()
+            }
+        }
+    }
+    
+    //filter objects and total numb
+    @objc func totalByFilter(_ notification: NSNotification) {
+        instagramNext = 1
+        
+//        var buttonColorsIn: [UIColor] = []
+//        var buttonTitlesIn: [String] = []
+        
+        if let byTotalFilter = notification.userInfo?["total"] as? Int {
+            total = byTotalFilter
+            initialPage = 0
+            print("doubletotal : \((Double(total) / 15.0))")
+            if (Double(total) / 15.0) <= 1 {
+                maxPage = 0
+            }
+            
+            DispatchQueue.main.async {
+                self.accountCountLabel.text = "\"\(self.total)\" hesap bulundu."
+            }
+            
+//            if total < 15 {
+//                buttonColorsIn = Array(repeating: UIColor().infpromo, count: total)
+//                buttonTitlesIn = Array(repeating: "Detay +1", count: total)
+//            } else {
+//                buttonColorsIn = Array(repeating: UIColor().infpromo, count: 15)
+//                buttonTitlesIn = Array(repeating: "Detay +1", count: 15)
+//            }
+//
+//            titlesOfButton = buttonTitlesIn
+//            buttonColors = buttonColorsIn
+//
+//            print("titlesOfButtonInFilter: \(titlesOfButton)")
+//            print("colorOfButtonInFilter: \(buttonColors)")
         }
         
         if let minFollowersDict = notification.userInfo?["minFollowers"] as? Int {
@@ -399,18 +667,30 @@ class HomeViewController: UIViewController {
             audienceLanguage = audienceLanguageDict
         }
         
+        if let idsFromSearch = notification.userInfo?["ids"] as? [String] {
+            influencerIds = idsFromSearch
+        }
         
         
     }
     
     //influencers by filter
     @objc func refreshUIByFilter(_ notification: NSNotification) {
-        searchByFilterResultArray.removeAll()
+//        searchByFilterResultArray.removeAll()
         if let byFilterDict = notification.userInfo?["filterResultDict"] as? [SearchWithFilterCellViewModel] {
             searchByFilterResultArray = byFilterDict
+            
+            let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: self.influencerIds, reportCount: self.reportsCount)
+
+            
+            self.titlesOfButton.append(contentsOf: tupleButton.0)
+            self.buttonColors.append(contentsOf: tupleButton.1)
+        
+            
             DispatchQueue.main.async {
                 self.stopBlur()
                 self.searchResultCollectionView.reloadData()
+               
             }
         }
     }
@@ -421,10 +701,22 @@ class HomeViewController: UIViewController {
         if let byUsernameDict = notification.userInfo?["dataDict"] as? [SearchWithFilterCellViewModel] {
             directProfileResponseArray = byUsernameDict
             total = 1
+            
+            
+            let infId = directProfileResponseArray.map({$0.influencerId})
+            let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: infId as! [String], reportCount: self.reportsCount)
+
+            self.titlesOfButton.append(contentsOf: tupleButton.0)
+            self.buttonColors.append(contentsOf: tupleButton.1)
+        
             DispatchQueue.main.async {
                 self.stopBlur()
                 self.searchResultCollectionView.reloadData()
                 self.accountCountLabel.text = "\"\(self.total)\" hesap bulundu."
+                self.scrollView.isScrollEnabled = false
+                self.searchResultCollectionView.isScrollEnabled = false
+//                self.searchResultCollectionView.sizeToFit()
+//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.view.height * 0.6)
             }
             
         }
@@ -432,6 +724,38 @@ class HomeViewController: UIViewController {
     
     
     
+//    let myInfluencerCount = self.myInfluencerIds.count
+//    var ids: [String] = []
+//    ids.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+//    var buttonTitle = Array(repeating: "Detay +1", count: ids.count)
+//    for i in 0..<myInfluencerCount {
+//        if let myReportsIds = ids.firstIndex(where: {$0 == self.myInfluencerIds[i]}) {
+//            buttonTitle[myReportsIds] = "Detay"
+//        }
+//    }
+//
+//
+//    self.titlesOfButton.append(contentsOf: buttonTitle.map({$0}))
+    
+    func buttonTitlesLogic(myIds: [String], ids: [String], reportCount: Int) -> ([String], [UIColor]) {
+        let myCount = myIds.count
+        var idsIn: [String] = []
+        idsIn.append(contentsOf: ids.map({$0}))
+        var buttonTitle = Array(repeating: "Detay +1", count: ids.count)
+        var buttonColors = Array(repeating: UIColor().infpromo, count: ids.count)
+        if reportCount == 0 {
+            buttonColors = Array(repeating: UIColor.gray, count: ids.count)
+        }
+        
+        for i in 0..<myCount {
+            if let myReportsIds = idsIn.firstIndex(where: {$0 == myIds[i]}) {
+                buttonTitle[myReportsIds] = "Detay"
+                buttonColors[myReportsIds] = UIColor().infpromo
+            }
+        }
+        
+        return (buttonTitle, buttonColors)
+    }
     
     func loadViewElements() {
         
@@ -444,33 +768,53 @@ class HomeViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.customLabel.text = "Rapor: \(reportsCount)"
                     }
+                    self.reportsCount = reportsCount
                 }
-                
                 
             case .failure(let error):
                 print("getting user from home vc is broken \(error.localizedDescription)")
             }
         }
         
+        APICaller.shared.getUserReports { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let model):
+                self.myInfluencerIds.append(contentsOf: model.data.reports.map({$0.data.userId}))
+                
+            }
+        }
         
         APICaller.shared.getMostViews { response in
             switch response {
             case .success(let response):
-                var mostViewedProfileData: [MostViewedProfileData] = []
+                var mostViewedProfileData: [MostViewedProfileDataCellViewModel] = []
                 
-                mostViewedProfileData.append(contentsOf: response.data.reports.map({.init(fullname: $0.data.profile.profile.fullname,
+                let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: response.data.reports.map({$0.data.profile.userId}), reportCount: self.reportsCount)
+
+                self.mostViewsTitlesOfButton.append(contentsOf: tupleButton.0)
+                self.mostViewedButtonColors.append(contentsOf: tupleButton.1)
+                
+                
+                mostViewedProfileData.append(contentsOf: response.data.reports.map({.init(viewCount: $0.viewCount,
+                                                                                          fullname: $0.data.profile.profile.fullname,
                                                                                           username: $0.data.profile.profile.username,
                                                                                           url: $0.data.profile.profile.url,
                                                                                           picture: $0.data.profile.profile.picture,
                                                                                           followers: $0.data.profile.profile.followers,
                                                                                           engagementRate: $0.data.profile.profile.engagementRate,
-                                                                                          engagements: $0.data.profile.profile.engagements)}))
+                                                                                          engagements: $0.data.profile.profile.engagements,
+                                                                                          influencerId: $0._id)}))
                 self.mostViewedArray = mostViewedProfileData.prefix(8).map({$0}) // get first 8 item
                 var viewCount: [Int] = []
                 viewCount.append(contentsOf: response.data.reports.map({
                     $0.viewCount
                 }))
                 self.viewCountArray = viewCount
+                
+              
+                
                 
                 DispatchQueue.main.async {
                     
@@ -493,7 +837,28 @@ class HomeViewController: UIViewController {
             switch response {
             case .success(let model):
                 var filterResultData: [SearchWithFilterCellViewModel] = []
-                print("success???")
+                
+//                let myInfluencerCount = self.myInfluencerIds.count
+//                var ids: [String] = []
+//                ids.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+//                var buttonTitle = Array(repeating: "Detay +1", count: ids.count)
+//                for i in 0..<myInfluencerCount {
+//                    if let myReportsIds = ids.firstIndex(where: {$0 == self.myInfluencerIds[i]}) {
+//                        buttonTitle[myReportsIds] = "Detay"
+//                    }
+//                }
+//
+//
+//                self.titlesOfButton.append(contentsOf: buttonTitle.map({$0}))
+//
+                
+                //                self.titlesOfButton.append(contentsOf: self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: reportsCount))
+                                
+                let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: self.reportsCount)
+
+                self.titlesOfButton.append(contentsOf: tupleButton.0)
+                self.buttonColors.append(contentsOf: tupleButton.1)
+                
                 filterResultData.append(contentsOf: model.data.bodyNew.lookalikes.map({
                     .init(engagementRate: $0.profile.engagementRate,
                           engagements: $0.profile.engagements,
@@ -503,31 +868,32 @@ class HomeViewController: UIViewController {
                           url: $0.profile.url,
                           username: $0.profile.username,
                           isPrivate: nil,
-                          influencerId: $0.userId)
+                          influencerId: $0.userId
+                    )
                 }))
-                
-//                var influencerId: [String] = []
-//                influencerId.append(contentsOf:model.data.bodyNew.lookalikes.map({
-//                    $0.userId
-//                }))
-                
-               
-                
-//                self.influencerIds = influencerId
                 
                 self.total = model.data.bodyNew.total
                 print("total: \(self.total)")
                 
                 self.searchByFilterResultArray = filterResultData
+                self.influencerIds.append(contentsOf:  model.data.bodyNew.lookalikes.map({$0.userId}))
+
+//                var idsWithTitle: [InfluencerIdsWTitle] = []
+                
+                
+                
                 
                 DispatchQueue.main.async {
-                    
+                    self.userLogForButton()
                     self.accountCountLabel.text =  "\"\(self.total)\" hesap bulundu."
                     self.searchResultCollectionView.reloadData()
                     self.accountCountLabel.hideSkeleton()
                     self.accountCountLabel.stopSkeletonAnimation()
                     self.stopBlur()
+                    
                 }
+                
+                
                 
                 
             case .failure(let error):
@@ -587,81 +953,171 @@ class HomeViewController: UIViewController {
         
     }
     
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        super.viewDidAppear(animated)
-    //        mostVisitedReportsCollectionView.isSkeletonable = true
-    //    }
-    //
+
     @objc func filterButtonClicked() {
         let vc = SearchViewController()
-        //        let navVc = UINavigationController(rootViewController: vc)
-        //        navVc.modalPresentationStyle = .formSheet
+
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
-        
-        
-        
-        
-        //        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
-        
-        //        navigationController?.present(navVc, animated: true)
+
     }
     
     @objc func searchButtonClicked() {
         let vc = SearchViewController()
-        //        let navVc = UINavigationController(rootViewController: vc)
-        //        navVc.modalPresentationStyle = .formSheet
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
         
-        
-        //        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
-        
-        //        navigationController?.present(navVc, animated: true)
-        
+
     }
     
     
     
     @objc func nextButtonClicked() {
         maxPage = Int(total / 15)
+        print("maxPage: \(maxPage)")
         initialPage += 1
+        print("initialnext: \(initialPage)")
         if initialPage <= Int(maxPage) {
-            APICaller.shared.filter(page: initialPage, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audinenceGender, audienceAges: audienceAges, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage, completion: { response in
-                switch response {
-                case .success(let model):
-                    var filterResultData: [SearchWithFilterCellViewModel] = []
-                    
-                    filterResultData.append(contentsOf: model.data.bodyNew.lookalikes.map({
-                        .init(engagementRate: $0.profile.engagementRate,
-                              engagements: $0.profile.engagements,
-                              followers: $0.profile.followers,
-                              fullname: $0.profile.fullname,
-                              picture: $0.profile.picture,
-                              url: $0.profile.url,
-                              username: $0.profile.username,
-                              isPrivate: nil,
-                              influencerId: $0.userId)
-                    }))
-                    
-                    self.total = model.data.bodyNew.total
-                    
-                    self.searchByFilterResultArray.append(contentsOf: filterResultData)
-                    //                self.searchByFilterResultArray = filterResultData
-                    
-//                    self.influencerIds.append(contentsOf: model.data.bodyNew.lookalikes.map({
-//                        $0.userId
-//                    }))
-//
-                    DispatchQueue.main.async {
-                        self.searchResultCollectionView.reloadData()
+            if instagramNext == 1 {
+                APICaller.shared.filter(page: initialPage, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audinenceGender, audienceAges: audienceAges, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage, completion: { response in
+                    switch response {
+                    case .success(let model):
+                        var filterResultData: [SearchWithFilterCellViewModel] = []
+                        
+//                        let myInfluencerCount = self.myInfluencerIds.count
+//                        var ids: [String] = []
+//                        ids.append(contentsOf: model.data.bodyNew.lookalikes.map({$0.userId}))
+//                        var buttonTitle = Array(repeating: "Detay +1", count: ids.count)
+//                        for i in 0..<myInfluencerCount {
+//                            if let myReportsIds = ids.firstIndex(where: {$0 == self.myInfluencerIds[i]}) {
+//                                buttonTitle[myReportsIds] = "Detay"
+//                            }
+//                        }
+                        
+                        
+//                        self.titlesOfButton.append(contentsOf: buttonTitle.map({$0}))
+                        
+//                        self.titlesOfButton.append(contentsOf: self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId})))
+                        
+                        let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: self.reportsCount)
+
+                        self.titlesOfButton.append(contentsOf: tupleButton.0)
+                        self.buttonColors.append(contentsOf: tupleButton.1)
+                        
+                        filterResultData.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        self.total = model.data.bodyNew.total
+                        
+                        self.searchByFilterResultArray.append(contentsOf: filterResultData)
+
+    //
+                        DispatchQueue.main.async {
+                            self.searchResultCollectionView.reloadData()
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                    }
+                })
+                
+            }
+            
+            if youtubeNext == 2 {
+                let platform = "youtube"
+                APICaller.shared.filterYoutubeTiktok(platform: platform, page: initialPage, minFollowers: minFollowersYoutube, maxFollowers: maxFollowersYoutube, minViews: minViewsYoutube, maxViews: maxViewsYoutube, gender: genderYoutube, language: languageYoutube, engagementRate: engagementRateYoutube, audienceGender: audinenceGenderYoutube, audienceAges: audienceAgesYoutube, audienceLanguage: audienceLanguageYoutube) { result in
+                    switch result {
+                    case .success(let model):
+                        var filterResultArrayYoutube: [SearchWithFilterCellViewModel] = []
+                        
+                        let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: self.reportsCount)
+                        self.titlesOfButton.append(contentsOf: tupleButton.0)
+                        self.buttonColors.append(contentsOf: tupleButton.1)
+                        
+                        filterResultArrayYoutube.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        self.total = model.data.bodyNew.total
+                        
+                        self.searchByFilterResultArray.append(contentsOf: filterResultArrayYoutube)
+
+    //
+                        DispatchQueue.main.async {
+                            self.searchResultCollectionView.reloadData()
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        
                     }
                     
-                case .failure(let error):
-                    print(error)
                 }
-            })
+            }
             
+            if tiktokNext == 3 {
+                let platform = "tiktok"
+                APICaller.shared.filterYoutubeTiktok(platform: platform, page: initialPage, minFollowers: minFollowersTiktok, maxFollowers: maxFollowersTiktok, minViews: minViewsTiktok, maxViews: maxViewsTiktok, gender: genderTiktok, language: languageTiktok, engagementRate: engagementRateTiktok, audienceGender: audinenceGenderTiktok, audienceAges: audienceAgesTiktok, audienceLanguage: audienceLanguageTiktok) { result in
+                    switch result {
+                    case .success(let model):
+                        var filterResultArrayTiktok: [SearchWithFilterCellViewModel] = []
+                        
+                        let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: self.reportsCount)
+                        self.titlesOfButton.append(contentsOf: tupleButton.0)
+                        self.buttonColors.append(contentsOf: tupleButton.1)
+                        
+                        filterResultArrayTiktok.append(contentsOf: model.data.bodyNew.lookalikes.map({
+                            .init(engagementRate: $0.profile.engagementRate,
+                                  engagements: $0.profile.engagements,
+                                  followers: $0.profile.followers,
+                                  fullname: $0.profile.fullname,
+                                  picture: $0.profile.picture,
+                                  url: $0.profile.url,
+                                  username: $0.profile.username,
+                                  isPrivate: nil,
+                                  influencerId: $0.userId)
+                        }))
+                        
+                        self.total = model.data.bodyNew.total
+                        
+                        self.searchByFilterResultArray.append(contentsOf: filterResultArrayTiktok)
+                        
+                        //
+                        DispatchQueue.main.async {
+                            self.searchResultCollectionView.reloadData()
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                }
+            }
         }
         
         print("\(maxPage) : maxPage")
@@ -680,32 +1136,12 @@ class HomeViewController: UIViewController {
         
         if !directProfileResponseArray.isEmpty {
             let responseIndex = directProfileResponseArray[indexPath.row]
-//            if let network = responseIndex.network {
-//                if network == "instagram", let name = responseIndex.username {
-//                    directToAccount(urlString: network, name: name)
-//                } else if network == "youtube", let name = responseIndex.fullname {
-//                    directToAccount(urlString: network, name: name)
-//                } else if network == "tiktok", let name = responseIndex.fullname {
-//                    directToAccount(urlString: network, name: "@\(name)")
-//                }
-//            }
             if let url = responseIndex.url {
                 if let urlString = URL(string: url) {
                     UIApplication.shared.open(urlString)
                 }
             }
-            
         } else {
-//            let responseIndex = directProfileResponseArray[indexPath.row]
-//            if let network = responseIndex.network {
-//                if network == "instagram", let name = responseIndex.username {
-//                    directToAccount(urlString: network, name: name)
-//                } else if network == "youtube", let name = responseIndex.fullname {
-//                    directToAccount(urlString: network, name: name)
-//                } else if network == "tiktok", let name = responseIndex.fullname {
-//                    directToAccount(urlString: network, name: "@\(name)")
-//                }
-//            }
             let responseIndex = searchByFilterResultArray[indexPath.row]
             if let url = responseIndex.url {
                 if let urlString = URL(string: url) {
@@ -717,26 +1153,62 @@ class HomeViewController: UIViewController {
         
     }
     
+    func handleHaptics(buttonArray: [String], indexPath: IndexPath, button: CustomFilterButton) {
+        if reportsCount == 0 {
+            if buttonArray[indexPath.row] != "Detay" {
+                button.isUserInteractionEnabled = false
+                HapticsManager.shared.vibrate(for: .error)
+            } else {
+                button.isUserInteractionEnabled = true
+            }
+        } else {
+            if buttonArray[indexPath.row] != "Detay" {
+                HapticsManager.shared.vibrate(for: .success)
+            }
+        }
+    }
+    
     @objc func goToDetailButtonTapped(sender: CustomFilterButton) {
         
         let indexPath = IndexPath(row: sender.row, section: sender.section)
         
-        
         if !directProfileResponseArray.isEmpty {
             let influencerId = directProfileResponseArray[indexPath.row].influencerId
-            print("influencer id: \(influencerId)")
+            handleHaptics(buttonArray: titlesOfButton, indexPath: indexPath, button: sender)
         } else {
             let influencerId = searchByFilterResultArray[indexPath.row].influencerId
-            print("influencer id: \(influencerId)")
+            handleHaptics(buttonArray: titlesOfButton, indexPath: indexPath, button: sender)
+
         }
             
-        HapticsManager.shared.vibrate(for: .success)
+        
         
         
         
         
     }
     
+    @objc func mostViewedDetailButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        let influencerId = mostViewedArray[indexPath.row].influencerId
+        
+        
+        handleHaptics(buttonArray: mostViewsTitlesOfButton, indexPath: indexPath, button: sender)
+        
+    }
+    
+    @objc func mostViewedNameButtonClicked(sender: CustomFilterButton) {
+        let indexPath = IndexPath(row: sender.row, section: sender.section)
+        
+        
+        let responseIndex = mostViewedArray[indexPath.row]
+        
+        if let url = responseIndex.url {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
+            }
+        }
+    }
     
     
 }
@@ -776,7 +1248,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //            cell.contentView.backgroundColor = .white
             //            cell.backgroundColor = .white
             //            cell.showAnimatedGradientSkeleton()
-            if mostViewedArray.count == 0 {
+            if mostViewedArray.isEmpty {
                 // do skeleton view
                 cell.isSkeletonable = true
                 cell.showAnimatedGradientSkeleton()
@@ -784,14 +1256,29 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             } else {
                 let mostViewed = mostViewedArray[indexPath.row]
                 let viewCount = viewCountArray[indexPath.row]
+                
+                
+                cell.nameButton.row = indexPath.row
+                cell.nameButton.section = indexPath.section
+                
+                cell.goToDetailButton.row = indexPath.row
+                cell.goToDetailButton.section = indexPath.section
+                
+                cell.nameButton.addTarget(self, action: #selector(mostViewedNameButtonClicked), for: .touchUpInside)
+                cell.goToDetailButton.addTarget(self, action: #selector(mostViewedDetailButtonClicked), for: .touchUpInside)
+                
                 cell.configureCellData(with: MostViewedProfileDataCellViewModel(viewCount: viewCount,
-                                                                                fullname: mostViewed.fullname ?? "",
-                                                                                username: "",
+                                                                                fullname: mostViewed.fullname,
+                                                                                username: mostViewed.username,
                                                                                 url: mostViewed.url,
                                                                                 picture: mostViewed.picture,
-                                                                                followers: mostViewed.followers ?? 1,
-                                                                                engagementRate: mostViewed.engagementRate ?? 1,
-                                                                                engagements: 1))
+                                                                                followers: mostViewed.followers,
+                                                                                engagementRate: mostViewed.engagementRate,
+                                                                                engagements: mostViewed.engagements,
+                                                                                influencerId: mostViewed.influencerId))
+                
+                cell.configureButtonTitle(mostViewsTitlesOfButton[indexPath.row], color: mostViewedButtonColors[indexPath.row])
+                
                 cell.contentView.isHidden = false
                 //                cell.backgroundColor = .clear
                 cell.hideSkeleton()
@@ -814,6 +1301,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             cell.goToDetailButton.row = indexPath.row
             cell.goToDetailButton.section = indexPath.section
+            
+            
+            
             cell.goToDetailButton.addTarget(self, action: #selector(goToDetailButtonTapped), for: .touchUpInside)
             
             if searchByFilterResultArray.isEmpty && directProfileResponseArray.isEmpty {
@@ -825,6 +1315,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             if searchByFilterResultArray.isEmpty == false {
                 let searchByFilterResult = searchByFilterResultArray[indexPath.row]
+                
+                
+   
                 cell.configureCellByFilter(with: .init(engagementRate: searchByFilterResult.engagementRate,
                                                        engagements: searchByFilterResult.engagements,
                                                        followers: searchByFilterResult.followers,
@@ -835,8 +1328,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        isPrivate: nil,
                                                        influencerId: searchByFilterResult.influencerId))
                 
-                //                cell.usernameButton.row = indexPath.row
-                //                cell.usernameButton.section = indexPath.section
+                cell.configureButtonTitle(titlesOfButton[indexPath.row], color: buttonColors[indexPath.row])
+                
                 
                 
                 DispatchQueue.main.async {
@@ -862,6 +1355,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                                                        isPrivate: nil,
                                                        influencerId: directProfileResponse.influencerId))
                 
+                cell.configureButtonTitle(titlesOfButton[indexPath.row], color: buttonColors[indexPath.row])
+                
                 //                cell.backgroundColor = .clear
                 cell.contentView.isHidden = false
                 cell.hideSkeleton()
@@ -882,19 +1377,32 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 let footer = collectionView.dequeueReusableSupplementaryView(ofKind: SearchResultCollectionReusableView.kind, withReuseIdentifier: SearchResultCollectionReusableView.reuseIdentifier, for: indexPath) as! SearchResultCollectionReusableView
                 footer.button.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
                 
+               
+               
                 if maxPage <= 0 {
-                    footer.button.isHidden = true
+                    footer.button.backgroundColor = .gray
+                    footer.button.isUserInteractionEnabled = false
                 }
                 
+                if maxPage == -1 {
+                    footer.button.backgroundColor = UIColor().infpromo
+                    footer.button.isUserInteractionEnabled = true
+                }
                 
                 
                 if initialPage == maxPage {
-                    footer.button.isHidden = true
+                    footer.button.backgroundColor = .gray
+                    footer.button.isUserInteractionEnabled = false
                 } else {
-                    footer.button.isHidden = false
+                    footer.button.backgroundColor = UIColor().infpromo
+                    footer.button.isUserInteractionEnabled = true
                 }
                 
                 
+                if total == 1 {
+                    footer.button.backgroundColor = .gray
+                    footer.button.isUserInteractionEnabled = false
+                }
                 
                 return footer
             } else {

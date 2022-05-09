@@ -21,13 +21,14 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
     
     let numberLabel: UILabel = {
         let label = UILabel()
-//        label.backgroundColor = .black
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         return label
     }()
     
     private let firstInfoLabel: UILabel = {
         let label = UILabel()
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
@@ -37,7 +38,9 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
     
     let secondInfoLabel: UILabel = {
         let label = UILabel()
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -45,8 +48,8 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
-        
+    
+        backgroundColor = .white
         addSubviews()
     }
     
@@ -78,17 +81,22 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
     func configureCell(with model: SFImagesForReport) {
         imageView.image = UIImage(systemName: model.image)
         
-        firstInfoLabel.text = model.explanation
+        firstInfoLabel.attributedText = NSAttributedString(string: model.explanation, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         
     }
     
     
-    func changeColorLabel(number: Double) {
-        if number > 0 {
-            secondInfoLabel.textColor = .green
-        } else if number < 0 {
-            secondInfoLabel.textColor = .red
-        }
+    func changeColorLabel(colors: UIColor) {
+        
+            secondInfoLabel.textColor = colors
+        
+            
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        secondInfoLabel.textColor = nil
     }
    
 }

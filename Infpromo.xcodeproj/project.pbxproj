@@ -35,6 +35,10 @@
 		8141A39728182100002CD861 /* GendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */; };
 		8141A399281949D7002CD861 /* GendersPerAgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */; };
 		8141A39D2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */; };
+		8145375228291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145375128291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift */; };
+		814537542829200400413006 /* ChartsCommentLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537532829200400413006 /* ChartsCommentLikeView.swift */; };
+		814537562829301600413006 /* NotableUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537552829301600413006 /* NotableUsersCollectionViewCell.swift */; };
+		814537582829302B00413006 /* NotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -127,6 +131,10 @@
 		8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GendersPerAgeViewModel.swift; sourceTree = "<group>"; };
 		8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikersGendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		8145375128291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsAvgLikesCommentsViewModel.swift; sourceTree = "<group>"; };
+		814537532829200400413006 /* ChartsCommentLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCommentLikeView.swift; sourceTree = "<group>"; };
+		814537552829301600413006 /* NotableUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableUsersCollectionViewCell.swift; sourceTree = "<group>"; };
+		814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -356,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				8141A3822817DD45002CD861 /* ChartsView.swift */,
+				814537532829200400413006 /* ChartsCommentLikeView.swift */,
 				8141A3862817E706002CD861 /* HashtagsMentionsView.swift */,
 				8141A3882817EA54002CD861 /* PercentsFollowersView.swift */,
 				8141A38A2817EE07002CD861 /* FollowersGenderDistributionView.swift */,
@@ -378,6 +387,8 @@
 				8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */,
 				8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */,
 				8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */,
+				814537552829301600413006 /* NotableUsersCollectionViewCell.swift */,
+				814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -393,7 +404,7 @@
 			path = SupplemantaryViews;
 			sourceTree = "<group>";
 		};
-		81BAF0FA2812AB5C009E865D /* InfleuncerReportViewModel */ = {
+		81BAF0FA2812AB5C009E865D /* InfluencerReportViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */,
@@ -405,8 +416,9 @@
 				8141A39228180162002CD861 /* GendersViewModel.swift */,
 				8141A39428180A90002CD861 /* FollowersLocationViewModel.swift */,
 				8141A398281949D7002CD861 /* GendersPerAgeViewModel.swift */,
+				8145375128291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift */,
 			);
-			path = InfleuncerReportViewModel;
+			path = InfluencerReportViewModel;
 			sourceTree = "<group>";
 		};
 		81BAF1012813F32D009E865D /* OtherViewModels */ = {
@@ -498,7 +510,7 @@
 		81F61EF627F088D100A91739 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				81BAF0FA2812AB5C009E865D /* InfleuncerReportViewModel */,
+				81BAF0FA2812AB5C009E865D /* InfluencerReportViewModel */,
 				81BAF1012813F32D009E865D /* OtherViewModels */,
 			);
 			path = ViewModel;
@@ -636,7 +648,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				819FFBDE27C3AD2C0083D3A2 /* PastReportCollectionViewCell.swift in Sources */,
+				814537582829302B00413006 /* NotableLikersCollectionViewCell.swift in Sources */,
 				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
+				814537542829200400413006 /* ChartsCommentLikeView.swift in Sources */,
 				8194A8B027FDB3010048314B /* Plan.swift in Sources */,
 				819CF16D281D431300119E96 /* HeadInfosView.swift in Sources */,
 				816B192C280DED050016BDE6 /* GetUser.swift in Sources */,
@@ -666,6 +680,7 @@
 				81AF02A627A27E7E0054F4C5 /* TabBarController.swift in Sources */,
 				8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */,
 				81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */,
+				8145375228291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,
 				819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */,
@@ -710,6 +725,7 @@
 				819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,
+				814537562829301600413006 /* NotableUsersCollectionViewCell.swift in Sources */,
 				816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,
 				810AE0CF27D8E51E00F23713 /* SearchResultCollectionReusableView.swift in Sources */,

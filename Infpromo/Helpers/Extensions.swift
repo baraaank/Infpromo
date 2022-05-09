@@ -11,23 +11,23 @@ import UIKit
 
 //uncertain json objects
 enum QuantumValue: Decodable {
-
+    
     case float(Float), string(String)
-
+    
     init(from decoder: Decoder) throws {
         if let float = try? decoder.singleValueContainer().decode(Float.self) {
             self = .float(float)
             return
         }
-
+        
         if let string = try? decoder.singleValueContainer().decode(String.self) {
             self = .string(string)
             return
         }
-
+        
         throw QuantumError.missingValue
     }
-
+    
     enum QuantumError:Error {
         case missingValue
     }
@@ -107,6 +107,16 @@ class CustomFilterButton: UIButton {
     var row : Int = 0
 }
 
+class CustomImageView: UIImageView {
+    var section: Int = 0
+    var row: Int = 0
+}
+
+class CustomTapGesture: UITapGestureRecognizer {
+    var section: Int = 0
+    var row: Int = 0
+}
+
 
 
 extension Int {
@@ -128,7 +138,7 @@ extension Int {
 
 
 extension UINavigationBar {
-
+    
     func shouldRemoveShadow(_ value: Bool) -> Void {
         if value {
             self.setValue(true, forKey: "hidesShadow")
@@ -141,27 +151,27 @@ extension UINavigationBar {
 
 //text field password eye
 extension UITextField {
-fileprivate func setPasswordToggleImage(_ button: UIButton) {
-    if(isSecureTextEntry){
-        button.setImage(UIImage(systemName: "eye.slash", withConfiguration: UIImage.SymbolConfiguration.init(weight: .light)), for: .normal)
-        button.tintColor = UIColor().infpromoBorder
-    } else {
-        button.setImage(UIImage(systemName: "eye", withConfiguration: UIImage.SymbolConfiguration.init(weight: .light)), for: .normal)
-        button.tintColor = UIColor().infpromo
+    fileprivate func setPasswordToggleImage(_ button: UIButton) {
+        if(isSecureTextEntry){
+            button.setImage(UIImage(systemName: "eye.slash", withConfiguration: UIImage.SymbolConfiguration.init(weight: .light)), for: .normal)
+            button.tintColor = UIColor().infpromoBorder
+        } else {
+            button.setImage(UIImage(systemName: "eye", withConfiguration: UIImage.SymbolConfiguration.init(weight: .light)), for: .normal)
+            button.tintColor = UIColor().infpromo
+        }
     }
-}
-
-func enablePasswordToggle(){
-    let button = UIButton(type: .custom)
-    setPasswordToggleImage(button)
-    button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
-    button.frame = CGRect(x: CGFloat(self.frame.size.width - 25), y: CGFloat(5), width: CGFloat(20), height: CGFloat(20))
-    button.addTarget(self, action: #selector(togglePasswordView), for: .touchUpInside)
-    self.rightView = button
-    self.rightViewMode = .always
-}
-@objc func togglePasswordView(_ sender: Any) {
-    self.isSecureTextEntry = !self.isSecureTextEntry
-    setPasswordToggleImage(sender as! UIButton)
-}
+    
+    func enablePasswordToggle(){
+        let button = UIButton(type: .custom)
+        setPasswordToggleImage(button)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
+        button.frame = CGRect(x: CGFloat(self.frame.size.width - 25), y: CGFloat(5), width: CGFloat(20), height: CGFloat(20))
+        button.addTarget(self, action: #selector(togglePasswordView), for: .touchUpInside)
+        self.rightView = button
+        self.rightViewMode = .always
+    }
+    @objc func togglePasswordView(_ sender: Any) {
+        self.isSecureTextEntry = !self.isSecureTextEntry
+        setPasswordToggleImage(sender as! UIButton)
+    }
 }

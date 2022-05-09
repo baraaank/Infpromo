@@ -137,7 +137,13 @@ class PastReportViewController: UIViewController {
         
         if let network = responseIndex.network {
             if network == "youtube", let name = responseIndex.fullname {
-                directToAccount(urlString: network, name: name)
+                if let username = responseIndex.username {
+                    directToAccount(urlString: network, name: username)
+                } else {
+                    directToAccount(urlString: network, name: name)
+                }
+                
+                
             } else if network == "tiktok", let name = responseIndex.fullname {
                 directToAccount(urlString: network, name: "@\(name)")
             }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct SearchWithFilterCellViewModel {
     let engagementRate: Float?
@@ -18,3 +19,4 @@ struct SearchWithFilterCellViewModel {
     let isPrivate: Bool?
     let influencerId: String?
 }
+

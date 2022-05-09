@@ -83,12 +83,12 @@ final class APICaller {
         }
     }
     
-    public func searchByUsername(username: String, completion: @escaping (Result<SearchByUsername, Error>) -> Void) {
+    public func searchByUsername(platform: String, username: String, completion: @escaping (Result<SearchByUsername, Error>) -> Void) {
         guard let userId = AuthManager.shared.userId else {
             print("failed to get user id")
             return
         }
-        createRequest(with: URL(string: Constants.baseAPIURL + "/instagram/searchUserName/\(userId)"), type: .POST) { baseRequest in
+        createRequest(with: URL(string: Constants.baseAPIURL + "/\(platform)/searchUserName/\(userId)"), type: .POST) { baseRequest in
             var request = baseRequest
             
             let parameters: [String: Any] = [
@@ -291,8 +291,6 @@ final class APICaller {
         createRequest(with: URL(string: Constants.baseAPIURL + "/instagram/search/\(userId)"), type: .POST) { baseRequest in
             var request = baseRequest
             
-            
-
             let parameters: [String: Any] = [
                 "sort": [
                     "field": "followers",
@@ -346,7 +344,80 @@ final class APICaller {
     }
     
     
-    
+    public func filterYoutubeTiktok(platform: String,
+                                    page: Int,
+                                    minFollowers: Int?,
+                                    maxFollowers: Int?,
+                                    minViews: Int?,
+                                    maxViews: Int?,
+                                    gender: String?,
+                                    language: String?,
+                                    engagementRate: Double?,
+                                    audienceGender: String?,
+                                    audienceAges: [String?],
+                                    audienceLanguage: String?,
+                                    completion: @escaping (Result<SearchWithFilter, Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            print("failed to get user id")
+            return
+        }
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/\(platform)/search/\(userId)"), type: .POST) { baseRequest in
+            var request = baseRequest
+            
+            let parameters: [String: Any] = [
+                "sort": [
+                    "field": "followers",
+                    "direction": "desc"
+                ],
+                "page": page,
+                "filter": [
+                    "influencer": [
+                        "followers": [
+                            "min": minFollowers as Any,
+                            "max": maxFollowers as Any
+                        ],
+                        "views": [
+                            "min": minViews as Any,
+                            "max": maxViews as Any
+                        ],
+                        "gender": gender as Any,
+                        "language": language as Any,
+                        "engagementRate": engagementRate as Any,
+                        "location": [
+                            "174737" // tr instagram code
+                        ],
+                    ],
+                    "audience": [
+                        "language": audienceLanguage as Any,
+                        "gender": audienceGender as Any,
+                        "age": audienceAges as Any
+                    ]
+                ]
+            ]
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(SearchWithFilter.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+            
+        }
+    }
     
     
     func getInfluencerReport(platform: String, influencerId: String, completion: @escaping (Result<ReportDetail, Error>) -> Void) {
@@ -358,9 +429,9 @@ final class APICaller {
         createRequest(with: URL(string: Constants.baseAPIURL + "/\(platform)/profile/\(influencerId)/report/\(userId)"), type: .GET) { baseRequest in
             var request = baseRequest
             
-            let parameters: [String: Any] = [
-                "influencerId": influencerId
-            ]
+//            let parameters: [String: Any] = [
+//                "influencerId": influencerId
+//            ]
             
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             let task = URLSession.shared.dataTask(with: request) { data, reponse, error in

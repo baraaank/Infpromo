@@ -50,8 +50,5 @@ class MyReportsDateCollectionReusableView: UICollectionReusableView {
         
 
         dateLabel.text = "Alındığı tarih: \(dateFormatterPrint.string(from: date))"
-
-        
-        
     }
 }

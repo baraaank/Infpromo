@@ -58,4 +58,24 @@ class HeadInfosView: UIView {
         nameLabel.frame = CGRect(x: 40, y: profileImageView.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
         usernameButton.frame = CGRect(x: 40, y: nameLabel.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
     }
+    
+    
+    func configureProfile(with viewModel: ReportDetailViewModel) {
+        if let image = viewModel.picture {
+            if let imageURL = URL(string: image) {
+                profileImageView.sd_setImage(with: imageURL, completed: nil)
+            }
+        }
+        
+        
+        if let name = viewModel.fullName {
+            nameLabel.text = name
+        }
+        
+        if let username = viewModel.username {
+            usernameButton.setTitle("@\(username)", for: .normal)
+        }
+        
+        
+    }
 }
