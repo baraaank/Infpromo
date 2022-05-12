@@ -13,37 +13,39 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
     
     private let agesLabel: UILabel = {
        let label = UILabel()
-        
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
     private let menLabel: UILabel = {
        let label = UILabel()
-        label.text = "Erkek:"
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.01
+        label.attributedText = NSAttributedString(string: "Erkek:", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+//        label.adjustsFontSizeToFitWidth = true
+//        label.minimumScaleFactor = 0.01
         return label
     }()
     
     private let womenLabel: UILabel = {
        let label = UILabel()
-        label.text = "Kadın:"
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.01
+        label.attributedText = NSAttributedString(string: "Kadın:", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+//        label.adjustsFontSizeToFitWidth = true
+//        label.minimumScaleFactor = 0.01
         return label
     }()
     
     private let manPercentageLabel: UILabel = {
        let label = UILabel()
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.01
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+//        label.adjustsFontSizeToFitWidth = true
+//        label.minimumScaleFactor = 0.01
+        label.textAlignment = .center
         return label
     }()
     
     private let womanPercentageLabel: UILabel = {
        let label = UILabel()
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.01
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.textAlignment = .center
         return label
     }()
     
@@ -82,7 +84,7 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
-        backgroundColor = .lightGray
+        backgroundColor = .white
         menCreateCircularPath(layer: manCircleLayer)
         womenCreateCircularPath(layer: womenCircleLayer)
     }
@@ -96,10 +98,10 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
         let oneOfHeight = height / 12
         let oneOfWidth = width / 12
         agesLabel.frame = CGRect(x: 10, y: (height / 2) - oneOfHeight, width: width / 4, height: oneOfHeight * 2)
-        menLabel.frame = CGRect(x: agesLabel.right + (oneOfHeight / 2), y: (3.5 * oneOfWidth) - (oneOfHeight / 2) , width: oneOfHeight * 2, height: oneOfHeight)
-        womenLabel.frame = CGRect(x: agesLabel.right + (oneOfHeight / 2), y:  height - (3.5 * oneOfWidth) - (oneOfHeight / 2), width: oneOfHeight * 2, height: oneOfHeight)
-        manPercentageLabel.frame = CGRect(x: width - ( 3 * oneOfWidth) - (oneOfWidth), y: (3.5 * oneOfWidth) - (oneOfWidth / 2), width: oneOfWidth * 2, height: oneOfWidth)
-        womanPercentageLabel.frame = CGRect(x: width - ( 3 * oneOfWidth) - (oneOfWidth), y: height - (3.5 * oneOfWidth) - (oneOfWidth / 2), width: oneOfWidth * 2, height: oneOfWidth)
+        menLabel.frame = CGRect(x: agesLabel.right + (oneOfHeight / 2) - 10, y: (3.5 * oneOfWidth) - (oneOfHeight / 2) , width: oneOfHeight * 2 + 20, height: oneOfHeight)
+        womenLabel.frame = CGRect(x: agesLabel.right + (oneOfHeight / 2) - 10, y:  height - (3.5 * oneOfWidth) - (oneOfHeight / 2), width: oneOfHeight * 2 + 20, height: oneOfHeight)
+        manPercentageLabel.frame = CGRect(x: width - ( 3 * oneOfWidth) - (oneOfWidth) - 8, y: (3.5 * oneOfWidth) - (oneOfWidth / 2), width: oneOfWidth * 2 + 16, height: oneOfWidth)
+        womanPercentageLabel.frame = CGRect(x: width - ( 3 * oneOfWidth) - (oneOfWidth) - 8, y: height - (3.5 * oneOfWidth) - (oneOfWidth / 2), width: oneOfWidth * 2 + 16, height: oneOfWidth)
     }
     
     func addSubviews() {
@@ -118,9 +120,9 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
         layer.path = circularPath.cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.lineCap = .round
-        layer.lineWidth = 8.0
+        layer.lineWidth = 4.0
         layer.strokeEnd = 1.0
-        layer.strokeColor = UIColor.white.cgColor
+        layer.strokeColor = UIColor.systemGray5.cgColor
         contentView.layer.addSublayer(layer)
         
         
@@ -133,9 +135,9 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
         layer.path = circularPath.cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.lineCap = .round
-        layer.lineWidth = 8.0
+        layer.lineWidth = 4.0
         layer.strokeEnd = 1.0
-        layer.strokeColor = UIColor.white.cgColor
+        layer.strokeColor = UIColor.systemGray5.cgColor
         contentView.layer.addSublayer(layer)
         
         
@@ -148,7 +150,7 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
         layer.path = circularPath.cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.lineCap = .round
-        layer.lineWidth = 8.0
+        layer.lineWidth = 4.0
         layer.strokeEnd = strokeEnd
         layer.strokeColor = UIColor.systemBlue.cgColor
         contentView.layer.addSublayer(layer)
@@ -162,7 +164,7 @@ class LikersGendersPerAgeCollectionViewCell: UICollectionViewCell {
         layer.path = circularPath.cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.lineCap = .round
-        layer.lineWidth = 8.0
+        layer.lineWidth = 4.0
         layer.strokeEnd = strokeEnd
         layer.strokeColor = UIColor.systemPink.cgColor
         

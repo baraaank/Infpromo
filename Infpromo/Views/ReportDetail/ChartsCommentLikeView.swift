@@ -8,11 +8,13 @@
 import UIKit
 import Charts
 
-class ChartsCommentLikeView: UIView {
+class ChartsCommentLikeView: UIView, IValueFormatter {
+    
 
     private let barChartView: BarChartView = {
        let chart = BarChartView()
-        chart.backgroundColor = .green
+        chart.backgroundColor = .white
+        chart.xAxis.labelRotationAngle = -30
         return chart
     }()
     
@@ -55,10 +57,24 @@ class ChartsCommentLikeView: UIView {
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
         
-        let setBarChartDataEntriesFirst = BarChartDataSet(entries: barChartDatasFirst)
-        let setBarChartDataEntriesSecond = BarChartDataSet(entries: barChartDatasSecond)
+        let setBarChartDataEntriesFirst = BarChartDataSet(entries: barChartDatasFirst, label: "")
+        setBarChartDataEntriesFirst.colors = [NSUIColor.systemBlue]
+        setBarChartDataEntriesFirst.valueFormatter = self
         
+        let setBarChartDataEntriesSecond = BarChartDataSet(entries: barChartDatasSecond, label: "")
+        setBarChartDataEntriesSecond.colors = [NSUIColor.systemYellow]
+       
+        setBarChartDataEntriesSecond.valueFormatter = self
         barChartView.data = BarChartData(dataSets: [setBarChartDataEntriesFirst, setBarChartDataEntriesSecond])
+        
+        barChartView.rightAxis.drawLabelsEnabled = false
+        barChartView.legend.form = .none
+        barChartView.barData?.barWidth = 0.4
+        
+        barChartView.leftAxis.valueFormatter = YAxisValueFormatter()
+        barChartView.leftAxis.granularity = 1
+        
+       
         
         
         
@@ -69,7 +85,7 @@ class ChartsCommentLikeView: UIView {
         dateFormatterGet.dateFormat = "yyy-MM-dd'T'HH:mm:ss.SSSZ"
 
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "d MMM yyyy"
+        dateFormatterPrint.dateFormat = "d MMM YY"
         var dates: [String] = []
         for i in 0..<dateArray.count {
             if let date = dateFormatterGet.date(from: dateArray[i]) {
@@ -77,12 +93,23 @@ class ChartsCommentLikeView: UIView {
             }
         }
         
+        print(dates)
+        
         return dates
         
     }
     
     
+    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+        let intOne = Int(value)
+        let stringOne = intOne.roundedWithAbbreviations
+        
+        return String(stringOne)
+    }
     
     
 
 }
+
+
+

@@ -16,11 +16,10 @@ class HashtagsMentionsView: UIView {
         tagView.cornerRadius = 4
         tagView.paddingX = 4
         tagView.paddingY = 4
-        
-        //        tagView.alignment = .center
-        
-        tagView.textColor = .red
+        tagView.textFont = UIFont.systemFont(ofSize: 12)
+        tagView.textColor = .white
         tagView.clipsToBounds = true
+        tagView.tagBackgroundColor = UIColor().infpromo
         
         return tagView
     }()
@@ -28,7 +27,7 @@ class HashtagsMentionsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(tagListView)
-        backgroundColor = .blue
+        backgroundColor = .white
     }
     
     
@@ -45,6 +44,7 @@ class HashtagsMentionsView: UIView {
     
     func configureHashtags(with viewModel: [HashtagsViewModel]) {
         tagListView.addTags(viewModel.map({$0.clearHashtag}))
+        
     }
     
     

@@ -1,14 +1,15 @@
 //
-//  FirstDetailsCollectionViewCell.swift
+//  YoutubeFirstDetailsCollectionViewCell.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 22.04.2022.
+//  Created by BaranK Kutlu on 11.05.2022.
 //
 
 import UIKit
 
-class FirstDetailsCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "firstDetailsCollectionViewCellIdentifier"
+class YoutubeFirstDetailsCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "youtubeFirstDetailsCollectionViewCellIdentifier"
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -101,5 +102,4 @@ class FirstDetailsCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         secondInfoLabel.textColor = nil
     }
-   
 }

@@ -29,8 +29,6 @@ struct FirstDetailViewModel {
     var clearFollowersCompared: Double {
         return AbbreviationsHelper.clear(doubleOne: self.followersCompared)
     }
-    
-
 }
 
 

@@ -1,17 +1,14 @@
 //
-//  GendersPerAgeCollectionViewCell.swift
+//  YoutubeGendersPerAgeCollectionViewCell.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 26.04.2022.
+//  Created by BaranK Kutlu on 11.05.2022.
 //
 
 import UIKit
-import Charts
 
-
-class GendersPerAgeCollectionViewCell: UICollectionViewCell {
-    
-    static let reuseIdentifier = "gendersPerAgeCollectionViewCellIdentifier"
+class YoutubeGendersPerAgeCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "youtubeGendersPerAgeCollectionViewCellIdentifier"
     
     private let agesLabel: UILabel = {
        let label = UILabel()

@@ -1,15 +1,15 @@
 //
-//  FirstDetailsCollectionReusableView.swift
+//  YoutubeFirstDetailsCollectionReusableView.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 22.04.2022.
+//  Created by BaranK Kutlu on 11.05.2022.
 //
 
 import UIKit
 
-class FirstDetailsCollectionReusableView: UICollectionReusableView {
-    static let reuseIdentifier = "firstDetailsCollectionReusableViewIdentifier"
-    static let kind = "firstDetailsCollectionReusableViewKind"
+class YoutubeFirstDetailsCollectionReusableView: UICollectionReusableView {
+    static let reuseIdentifier = "youtubeFirstDetailsCollectionReusableViewIdentifier"
+    static let kind = "youtubeFirstDetailsCollectionReusableViewKind"
     
 
     
@@ -76,6 +76,9 @@ class FirstDetailsCollectionReusableView: UICollectionReusableView {
         if let username = viewModel.username {
             
             usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
+        } else if let name = viewModel.fullName {
+            
+            usernameButton.setAttributedTitle(NSAttributedString(string: name, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
         }
         
         

@@ -974,6 +974,16 @@ class SearchViewController: UIViewController {
         
         loadSelectedOnesTiktok()
         loadAudienceSelectedOnesTiktok()
+        
+//        if let userDefault = UserDefaults.standard.object(forKey: "stateSelected") {
+//            if let userDefaultY = UserDefaults.standard.object(forKey: "stateSelectedYoutube") as! [Int] {
+//                if let userDefaultT = UserDefaults.standard.object(forKey: "stateSelectedTiktok") as! [Int] {
+//                    segmentedControl.selectedSegmentIndex = 0
+//                }
+//            }
+//        }
+//
+       
     }
     
     func delegatesAndDataSources() {
@@ -2022,7 +2032,9 @@ class SearchViewController: UIViewController {
     
     func loadSelectedOnes() {
         
-        guard let returnSelected = UserDefaults.standard.object(forKey: "stateSelected") else { return }
+        guard let returnSelected = UserDefaults.standard.object(forKey: "stateSelected") else {
+            return
+        }
         print(returnSelected)
         let ret = returnSelected as! [Int]
         print(ret)
@@ -3113,10 +3125,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
           self.tiktokInfluencerFilterCollectionView.scrollToItem(at: IndexPath(row: filterIndexCountTiktok, section: 0), at: .right, animated: true)
           self.tiktokFollowersFilterCollectionView.scrollToItem(at: IndexPath(row: audienceFilterIndexCountTiktok, section: 0), at: .right, animated: true)
           
-         
-       
-        
-        
+
         
         
         hideSearchBar()

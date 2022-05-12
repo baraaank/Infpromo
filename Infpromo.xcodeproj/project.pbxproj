@@ -39,6 +39,22 @@
 		814537542829200400413006 /* ChartsCommentLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537532829200400413006 /* ChartsCommentLikeView.swift */; };
 		814537562829301600413006 /* NotableUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537552829301600413006 /* NotableUsersCollectionViewCell.swift */; };
 		814537582829302B00413006 /* NotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */; };
+		8145375A282BAC8500413006 /* YoutubeFirstDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453759282BAC8300413006 /* YoutubeFirstDetailsCollectionViewCell.swift */; };
+		8145375C282BAC9C00413006 /* TiktokFirstDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145375B282BAC9C00413006 /* TiktokFirstDetailsCollectionViewCell.swift */; };
+		8145375E282BACB200413006 /* YoutubePopularPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145375D282BACB200413006 /* YoutubePopularPostsCollectionViewCell.swift */; };
+		81453760282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145375F282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift */; };
+		81453762282BADA200413006 /* YoutubeFirstDetailsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453761282BADA200413006 /* YoutubeFirstDetailsCollectionReusableView.swift */; };
+		81453764282BADB300413006 /* TiktokFirstDetailsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453763282BADB300413006 /* TiktokFirstDetailsCollectionReusableView.swift */; };
+		81453766282BADC400413006 /* YoutubePopularPostsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453765282BADC400413006 /* YoutubePopularPostsCollectionReusableView.swift */; };
+		81453768282BADCF00413006 /* TiktokPopularPostsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453767282BADCF00413006 /* TiktokPopularPostsCollectionReusableView.swift */; };
+		8145376A282BB30700413006 /* YoutubePopularPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453769282BB30700413006 /* YoutubePopularPostsViewModel.swift */; };
+		8145376C282BB55B00413006 /* YoutubeFirstDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145376B282BB55B00413006 /* YoutubeFirstDetailViewModel.swift */; };
+		8145376E282BD55400413006 /* YoutubeGendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145376D282BD55400413006 /* YoutubeGendersPerAgeCollectionViewCell.swift */; };
+		81453770282BD56600413006 /* TiktokGendersPerAgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145376F282BD56600413006 /* TiktokGendersPerAgeCollectionViewCell.swift */; };
+		81453772282BDBA700413006 /* YoutubeNotableUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453771282BDBA700413006 /* YoutubeNotableUsersCollectionViewCell.swift */; };
+		81453774282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453773282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift */; };
+		81453776282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453775282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift */; };
+		81453778282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -53,9 +69,6 @@
 		819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */; };
 		819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */; };
 		819CF16B281D37A100119E96 /* YoutubeReportDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16A281D37A100119E96 /* YoutubeReportDetailViewController.swift */; };
-		819CF16D281D431300119E96 /* HeadInfosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16C281D431300119E96 /* HeadInfosView.swift */; };
-		819CF16F281D464C00119E96 /* UserMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF16E281D464C00119E96 /* UserMetricsView.swift */; };
-		819CF171281D5C3E00119E96 /* LastPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF170281D5C3E00119E96 /* LastPostsView.swift */; };
 		819CF173281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF172281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift */; };
 		819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF174281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift */; };
 		819CF177281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819CF176281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift */; };
@@ -135,6 +148,22 @@
 		814537532829200400413006 /* ChartsCommentLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCommentLikeView.swift; sourceTree = "<group>"; };
 		814537552829301600413006 /* NotableUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableUsersCollectionViewCell.swift; sourceTree = "<group>"; };
 		814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453759282BAC8300413006 /* YoutubeFirstDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeFirstDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8145375B282BAC9C00413006 /* TiktokFirstDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokFirstDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8145375D282BACB200413006 /* YoutubePopularPostsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePopularPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8145375F282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokPopularPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453761282BADA200413006 /* YoutubeFirstDetailsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeFirstDetailsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81453763282BADB300413006 /* TiktokFirstDetailsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokFirstDetailsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81453765282BADC400413006 /* YoutubePopularPostsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePopularPostsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81453767282BADCF00413006 /* TiktokPopularPostsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokPopularPostsCollectionReusableView.swift; sourceTree = "<group>"; };
+		81453769282BB30700413006 /* YoutubePopularPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePopularPostsViewModel.swift; sourceTree = "<group>"; };
+		8145376B282BB55B00413006 /* YoutubeFirstDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeFirstDetailViewModel.swift; sourceTree = "<group>"; };
+		8145376D282BD55400413006 /* YoutubeGendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeGendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		8145376F282BD56600413006 /* TiktokGendersPerAgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokGendersPerAgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453771282BDBA700413006 /* YoutubeNotableUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeNotableUsersCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453773282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokNotableUsersCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453775282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeNotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokNotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -149,9 +178,6 @@
 		819C5CAE27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		819CF16A281D37A100119E96 /* YoutubeReportDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeReportDetailViewController.swift; sourceTree = "<group>"; };
-		819CF16C281D431300119E96 /* HeadInfosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadInfosView.swift; sourceTree = "<group>"; };
-		819CF16E281D464C00119E96 /* UserMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMetricsView.swift; sourceTree = "<group>"; };
-		819CF170281D5C3E00119E96 /* LastPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPostsView.swift; sourceTree = "<group>"; };
 		819CF172281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeInfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		819CF174281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeFollowersFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		819CF176281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokInfluencerFilterCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -371,9 +397,6 @@
 				8141A38E2817F432002CD861 /* FollowersLocationView.swift */,
 				81BAF0EC28128CF8009E865D /* Cells */,
 				81BAF0ED28128D07009E865D /* SupplemantaryViews */,
-				819CF16C281D431300119E96 /* HeadInfosView.swift */,
-				819CF16E281D464C00119E96 /* UserMetricsView.swift */,
-				819CF170281D5C3E00119E96 /* LastPostsView.swift */,
 			);
 			path = ReportDetail;
 			sourceTree = "<group>";
@@ -382,13 +405,23 @@
 			isa = PBXGroup;
 			children = (
 				81BAF0E828128C99009E865D /* FirstDetailsCollectionViewCell.swift */,
+				81453759282BAC8300413006 /* YoutubeFirstDetailsCollectionViewCell.swift */,
+				8145375B282BAC9C00413006 /* TiktokFirstDetailsCollectionViewCell.swift */,
 				81BAF0EA28128CBB009E865D /* PopularPostsCollectionViewCell.swift */,
+				8145375D282BACB200413006 /* YoutubePopularPostsCollectionViewCell.swift */,
+				8145375F282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift */,
 				81BAF0F228128E7F009E865D /* ChartsCollectionViewCell.swift */,
 				8141A37E28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift */,
 				8141A39628182100002CD861 /* GendersPerAgeCollectionViewCell.swift */,
+				8145376D282BD55400413006 /* YoutubeGendersPerAgeCollectionViewCell.swift */,
+				8145376F282BD56600413006 /* TiktokGendersPerAgeCollectionViewCell.swift */,
 				8141A39C2819EAB9002CD861 /* LikersGendersPerAgeCollectionViewCell.swift */,
 				814537552829301600413006 /* NotableUsersCollectionViewCell.swift */,
+				81453771282BDBA700413006 /* YoutubeNotableUsersCollectionViewCell.swift */,
+				81453773282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift */,
 				814537572829302B00413006 /* NotableLikersCollectionViewCell.swift */,
+				81453775282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift */,
+				81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -397,7 +430,11 @@
 			isa = PBXGroup;
 			children = (
 				81BAF0EE28128D2B009E865D /* FirstDetailsCollectionReusableView.swift */,
+				81453761282BADA200413006 /* YoutubeFirstDetailsCollectionReusableView.swift */,
+				81453763282BADB300413006 /* TiktokFirstDetailsCollectionReusableView.swift */,
 				81BAF0F028128D44009E865D /* PopularPostsCollectionReusableView.swift */,
+				81453765282BADC400413006 /* YoutubePopularPostsCollectionReusableView.swift */,
+				81453767282BADCF00413006 /* TiktokPopularPostsCollectionReusableView.swift */,
 				81BAF0F428128E8D009E865D /* ChartsCollectionReusableView.swift */,
 				8141A37C28173A05002CD861 /* HashtagsMentionsCollectionReusableView.swift */,
 			);
@@ -409,7 +446,9 @@
 			children = (
 				81BAF0F8281299CE009E865D /* ReportDetailViewModel.swift */,
 				81BAF0FB2812AB8D009E865D /* FirstDetailViewModel.swift */,
+				8145376B282BB55B00413006 /* YoutubeFirstDetailViewModel.swift */,
 				81BAF0FD2812EE4A009E865D /* PopularPostViewModel.swift */,
+				81453769282BB30700413006 /* YoutubePopularPostsViewModel.swift */,
 				8141A35A281686CF002CD861 /* ChartsViewModel.swift */,
 				8141A3842817E41D002CD861 /* TagsViewModel.swift */,
 				8141A3902817FD54002CD861 /* CredibilityViewModel.swift */,
@@ -652,14 +691,18 @@
 				8194A8AA27FA0F0E0048314B /* SearchWithFilter.swift in Sources */,
 				814537542829200400413006 /* ChartsCommentLikeView.swift in Sources */,
 				8194A8B027FDB3010048314B /* Plan.swift in Sources */,
-				819CF16D281D431300119E96 /* HeadInfosView.swift in Sources */,
+				81453770282BD56600413006 /* TiktokGendersPerAgeCollectionViewCell.swift in Sources */,
 				816B192C280DED050016BDE6 /* GetUser.swift in Sources */,
+				8145376E282BD55400413006 /* YoutubeGendersPerAgeCollectionViewCell.swift in Sources */,
 				81BAF0F528128E8D009E865D /* ChartsCollectionReusableView.swift in Sources */,
 				816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */,
+				8145376A282BB30700413006 /* YoutubePopularPostsViewModel.swift in Sources */,
+				81453772282BDBA700413006 /* YoutubeNotableUsersCollectionViewCell.swift in Sources */,
 				8141A39528180A90002CD861 /* FollowersLocationViewModel.swift in Sources */,
 				8141A38F2817F432002CD861 /* FollowersLocationView.swift in Sources */,
 				81AF02AA27A2836E0054F4C5 /* HomeViewController.swift in Sources */,
 				813C27F32810155B0009616D /* HapticsManager.swift in Sources */,
+				81453766282BADC400413006 /* YoutubePopularPostsCollectionReusableView.swift in Sources */,
 				819CF177281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift in Sources */,
 				819CF173281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
@@ -668,7 +711,6 @@
 				81BAF1002812EFCA009E865D /* AbbreviationsHelper.swift in Sources */,
 				8141A3912817FD54002CD861 /* CredibilityViewModel.swift in Sources */,
 				819FFBD827C253860083D3A2 /* MostVisitedReportsCollectionViewCell.swift in Sources */,
-				819CF16F281D464C00119E96 /* UserMetricsView.swift in Sources */,
 				8141A3872817E706002CD861 /* HashtagsMentionsView.swift in Sources */,
 				81F61EF327F04E9600A91739 /* AuthManager.swift in Sources */,
 				81237AA92802BC5A00CD3749 /* UserError.swift in Sources */,
@@ -681,6 +723,7 @@
 				8141A35B281686CF002CD861 /* ChartsViewModel.swift in Sources */,
 				81BAF0F128128D44009E865D /* PopularPostsCollectionReusableView.swift in Sources */,
 				8145375228291E9200413006 /* ChartsAvgLikesCommentsViewModel.swift in Sources */,
+				8145375E282BACB200413006 /* YoutubePopularPostsCollectionViewCell.swift in Sources */,
 				81F61EF827F0890E00A91739 /* MostViewedProfileDataCellViewModel.swift in Sources */,
 				81F61F0427F2016700A91739 /* MyReportsPlatformCollectionReusableView.swift in Sources */,
 				819FFBD227BCDD940083D3A2 /* Extensions.swift in Sources */,
@@ -688,11 +731,13 @@
 				81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */,
 				81BAF0EF28128D2B009E865D /* FirstDetailsCollectionReusableView.swift in Sources */,
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
+				81453760282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
 				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,
 				81F61EFC27F0D67700A91739 /* SearchByUsernameCellViewModel.swift in Sources */,
 				819CF16B281D37A100119E96 /* YoutubeReportDetailViewController.swift in Sources */,
 				819C5CB127CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				8145376C282BB55B00413006 /* YoutubeFirstDetailViewModel.swift in Sources */,
 				81BAF0E928128C99009E865D /* FirstDetailsCollectionViewCell.swift in Sources */,
 				81BAF0FE2812EE4A009E865D /* PopularPostViewModel.swift in Sources */,
 				8194A8A827F9BCBF0048314B /* FollowersFilterCollectionViewCell.swift in Sources */,
@@ -709,19 +754,26 @@
 				819CF179281D82C700119E96 /* TiktokFollowersFilterCollectionViewCell.swift in Sources */,
 				8141A37F28173A1C002CD861 /* HashtagsMentionsCollectionViewCell.swift in Sources */,
 				81BAF0F9281299CE009E865D /* ReportDetailViewModel.swift in Sources */,
+				81453778282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift in Sources */,
 				8194A8A627F9BCA20048314B /* InfluencerFilterCollectionViewCell.swift in Sources */,
 				8141A39328180162002CD861 /* GendersViewModel.swift in Sources */,
 				81F61EFA27F0C1F700A91739 /* SearchByUsername.swift in Sources */,
 				8141A38D2817EEBE002CD861 /* ProgressBarWithInfos.swift in Sources */,
+				81453768282BADCF00413006 /* TiktokPopularPostsCollectionReusableView.swift in Sources */,
+				81453774282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift in Sources */,
 				81BAF0F728129389009E865D /* ReportDetail.swift in Sources */,
 				8141A3832817DD45002CD861 /* ChartsView.swift in Sources */,
 				81AF02B327A284140054F4C5 /* ProfileViewController.swift in Sources */,
 				81BAF0E528128902009E865D /* ReportDetailViewController.swift in Sources */,
-				819CF171281D5C3E00119E96 /* LastPostsView.swift in Sources */,
+				8145375C282BAC9C00413006 /* TiktokFirstDetailsCollectionViewCell.swift in Sources */,
 				81E9EE0227E9475400FDA44B /* APICaller.swift in Sources */,
 				811B0CD827CD13B9004730DA /* SearchHeadings.swift in Sources */,
 				8194A8B227FDB3940048314B /* PlanCellViewModel.swift in Sources */,
+				81453764282BADB300413006 /* TiktokFirstDetailsCollectionReusableView.swift in Sources */,
+				81453762282BADA200413006 /* YoutubeFirstDetailsCollectionReusableView.swift in Sources */,
+				8145375A282BAC8500413006 /* YoutubeFirstDetailsCollectionViewCell.swift in Sources */,
 				810AE0C527D641B500F23713 /* ProfileInformationsViewController.swift in Sources */,
+				81453776282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift in Sources */,
 				819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,

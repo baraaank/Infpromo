@@ -12,7 +12,7 @@ class FollowersLocationView: UIView {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.textAlignment = .center
-        label.text = "Takipçi Lokasyonları"
+        label.attributedText = NSAttributedString(string: "Takipçi Lokasyonları", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     
@@ -24,41 +24,41 @@ class FollowersLocationView: UIView {
     private let topCityLabel: UILabel = {
         let label = UILabel()
          label.textAlignment = .center
-        label.text = "Top 5 Şehir"
+        label.attributedText = NSAttributedString(string: "Top 5 Şehir", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
          return label
     }()
     
     private let firstCityLabel: UILabel = {
       let label = UILabel()
-        label.backgroundColor = .green
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
     
     private let secondCityLabel: UILabel = {
       let label = UILabel()
-        label.backgroundColor = .green
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
     
     private let thirdCityLabel: UILabel = {
       let label = UILabel()
-        label.backgroundColor = .green
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
     
     private let forthCityLabel: UILabel = {
       let label = UILabel()
-        label.backgroundColor = .green
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
     
     private let fifthCityLabel: UILabel = {
       let label = UILabel()
-        label.backgroundColor = .green
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
@@ -66,7 +66,7 @@ class FollowersLocationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
-        backgroundColor = .systemGray2
+        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -77,10 +77,10 @@ class FollowersLocationView: UIView {
         super.layoutSubviews()
         let oneOfHeight = height / 30
         titleLabel.frame = CGRect(x: 10, y: oneOfHeight, width: width - 20, height: oneOfHeight * 2)
-        firstCountry.frame = CGRect(x: 10, y: titleLabel.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
-        secondCountry.frame = CGRect(x: 10, y: firstCountry.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
-        thirdCountry.frame = CGRect(x: 10, y: secondCountry.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
-        forthCountry.frame = CGRect(x: 10, y: thirdCountry.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
+        firstCountry.frame = CGRect(x: 10, y: titleLabel.bottom + oneOfHeight, width: width - 20, height: width / 9)
+        secondCountry.frame = CGRect(x: 10, y: firstCountry.bottom + oneOfHeight, width: width - 20, height: width / 9)
+        thirdCountry.frame = CGRect(x: 10, y: secondCountry.bottom + oneOfHeight, width: width - 20, height: width / 9)
+        forthCountry.frame = CGRect(x: 10, y: thirdCountry.bottom + oneOfHeight, width: width - 20, height: width / 9)
         topCityLabel.frame = CGRect(x: 10, y: forthCountry.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 2)
         firstCityLabel.frame = CGRect(x: 10, y: topCityLabel.bottom + oneOfHeight, width: width - 20, height: oneOfHeight)
         secondCityLabel.frame = CGRect(x: 10, y: firstCityLabel.bottom + oneOfHeight, width: width - 20, height: oneOfHeight)
@@ -117,10 +117,10 @@ class FollowersLocationView: UIView {
         percentageClear.append(contentsOf: viewModel.map({ $0.clearWeight}))
         
         if codes.count != 0 && progress.count != 0 {
-            firstCountry.configureLabels(label: codes[0], progress: Float(progress[0]), progressPercentageLabel: "\(percentageClear[0])%")
-            secondCountry.configureLabels(label: codes[1], progress: Float(progress[1]), progressPercentageLabel: "\(percentageClear[1])%")
-            thirdCountry.configureLabels(label: codes[2], progress: Float(progress[2]), progressPercentageLabel: "\(percentageClear[2])%")
-            forthCountry.configureLabels(label: codes[3], progress: Float(progress[3]), progressPercentageLabel: "\(percentageClear[3])%")
+            firstCountry.configureLabels(label: codes[0], progress: Float(progress[0]), progressPercentageLabel: "\(percentageClear[0])%", color: .systemBlue)
+            secondCountry.configureLabels(label: codes[1], progress: Float(progress[1]), progressPercentageLabel: "\(percentageClear[1])%", color: .systemBlue)
+            thirdCountry.configureLabels(label: codes[2], progress: Float(progress[2]), progressPercentageLabel: "\(percentageClear[2])%", color: .systemBlue)
+            forthCountry.configureLabels(label: codes[3], progress: Float(progress[3]), progressPercentageLabel: "\(percentageClear[3])%", color: .systemBlue)
         }
         
         

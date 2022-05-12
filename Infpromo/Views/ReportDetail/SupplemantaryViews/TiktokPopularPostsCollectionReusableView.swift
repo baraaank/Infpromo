@@ -1,15 +1,15 @@
 //
-//  PopularPostsCollectionReusableView.swift
+//  TiktokPopularPostsCollectionReusableView.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 22.04.2022.
+//  Created by BaranK Kutlu on 11.05.2022.
 //
 
 import UIKit
 
-class PopularPostsCollectionReusableView: UICollectionReusableView {
-    static let reuseIdentifier = "popularPostsCollectionReusableViewIdentifier"
-    static let kind = "popularPostsCollectionReusableViewKind"
+class TiktokPopularPostsCollectionReusableView: UICollectionReusableView {
+    static let reuseIdentifier = "tiktokPopularPostsCollectionReusableViewIdentifier"
+    static let kind = "tiktokPopularPostsCollectionReusableViewKind"
     
     
     let label: UILabel = {

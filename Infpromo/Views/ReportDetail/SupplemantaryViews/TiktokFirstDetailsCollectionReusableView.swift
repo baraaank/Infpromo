@@ -1,13 +1,18 @@
 //
-//  HeadInfosView.swift
+//  TiktokFirstDetailsCollectionReusableView.swift
 //  Infpromo
 //
-//  Created by BaranK Kutlu on 30.04.2022.
+//  Created by BaranK Kutlu on 11.05.2022.
 //
 
 import UIKit
 
-class HeadInfosView: UIView {
+class TiktokFirstDetailsCollectionReusableView: UICollectionReusableView {
+    static let reuseIdentifier = "tiktokFirstDetailsCollectionReusableViewIdentifier"
+    static let kind = "tiktokFirstDetailsCollectionReusableViewKind"
+    
+
+    
     
     let profileImageView: UIImageView = {
        let imageView = UIImageView()
@@ -19,33 +24,30 @@ class HeadInfosView: UIView {
     let nameLabel: UILabel = {
        let label = UILabel()
 //        label.backgroundColor = .black
-        label.text = "---"
+        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .light), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         return label
     }()
     
 
     
-    let usernameButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("---", for: .normal)
+    let usernameButton: CustomFilterButton = {
+        let button = CustomFilterButton()
+        button.setAttributedTitle(NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubviews()
-        backgroundColor = .red
+        backgroundColor = .white
+        addSubview(profileImageView)
+        addSubview(nameLabel)
+        addSubview(usernameButton)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func addSubviews() {
-        addSubview(profileImageView)
-        addSubview(nameLabel)
-        addSubview(usernameButton)
     }
     
     override func layoutSubviews() {
@@ -58,7 +60,6 @@ class HeadInfosView: UIView {
         nameLabel.frame = CGRect(x: 40, y: profileImageView.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
         usernameButton.frame = CGRect(x: 40, y: nameLabel.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
     }
-    
     
     func configureProfile(with viewModel: ReportDetailViewModel) {
         if let image = viewModel.picture {
@@ -73,7 +74,8 @@ class HeadInfosView: UIView {
         }
         
         if let username = viewModel.username {
-            usernameButton.setTitle("@\(username)", for: .normal)
+            
+            usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
         }
         
         

@@ -105,6 +105,11 @@ class CustomSegmentedControl: UIView {
         }
     }
     
+    func setTitleAttributes(sender: UIButton, size: Int, title: String) {
+        sender.setAttributedTitle(NSAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: CGFloat(size), weight: .regular)]), for: .normal)
+        
+    }
+    
     private func updateView() {
         createButton()
         configSelectorView()

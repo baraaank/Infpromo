@@ -11,7 +11,7 @@ class FollowersGenderDistributionView: UIView {
 
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Takipçi Cinsiyet Dağılımı"
+        label.attributedText = NSAttributedString(string: "Takipçi Cinsiyet Dağılımı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .center
         return label
     }()
@@ -22,7 +22,7 @@ class FollowersGenderDistributionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
-        backgroundColor = .systemGray5
+        backgroundColor = .white
     }
     
     
@@ -35,8 +35,8 @@ class FollowersGenderDistributionView: UIView {
         super.layoutSubviews()
         let oneOfHeight = height / 12
         titleLabel.frame = CGRect(x: 10, y: oneOfHeight, width: width - 20, height: oneOfHeight * 2)
-        womenView.frame = CGRect(x: 10, y: titleLabel.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 3)
-        manView.frame = CGRect(x: 10, y: womenView.bottom + oneOfHeight, width: width - 20, height: oneOfHeight * 3)
+        womenView.frame = CGRect(x: 10, y: titleLabel.bottom + oneOfHeight, width: width - 20, height: width / 9)
+        manView.frame = CGRect(x: 10, y: womenView.bottom + oneOfHeight, width: width - 20, height: width / 9)
         
     }
     
@@ -56,12 +56,12 @@ class FollowersGenderDistributionView: UIView {
         
         
         
-        womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "\(progressWomenLabel)%")
-        manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "\(progressManLabel)%")
+        womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "\(progressWomenLabel)%", color: .systemPink)
+        manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "\(progressManLabel)%", color: .blue)
         
         if progressManLabel == 0.0 {
-            womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "NaN%")
-            manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "NaN%")
+            womenView.configureLabels(label: "Kadın:", progress: progressWomen, progressPercentageLabel: "NaN%", color: .clear)
+            manView.configureLabels(label: "Erkek:", progress: progressMan, progressPercentageLabel: "NaN%", color: .clear)
         }
 //        var genderLabel = viewModel.code
 //        if viewModel.code == "FEMALE" {

@@ -39,7 +39,7 @@ class SearchResultCollectionReusableView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        button.frame = CGRect(x: 120, y: 40, width: width - 240, height: height - 80)
+        button.frame = CGRect(x: 120, y: 10, width: width - 240, height: height - 20)
     }
     
 }

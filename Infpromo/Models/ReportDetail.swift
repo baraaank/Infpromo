@@ -37,14 +37,15 @@ struct PDFProfile: Codable {
     let hashtags: [HashtagsResponse]
     let mentions: [MentionsResponse]
     let audience: AudienceResponse //followers datas
-    let audienceLikers: AudienceLikersResponse
+    let audienceLikers: AudienceLikersResponse?
+    let audienceCommenters: AudienceCommentersResponse?
 }
 
 
 struct PDFInfluencerProfile: Codable {
     let fullname: String?
     let username: String?
-    let picture: String
+    let picture: String?
     let followers: Int
     let engagementRate: Double
     let engagements: Int
@@ -54,9 +55,14 @@ struct PDFInfluencerProfile: Codable {
 }
 
 struct RecentPostsResponse: Codable {
+    let url: String
+    let created: String
     let likes: Int
     let comments: Int
-    let created: String
+    let views: Int?
+    let image: String?
+    let video: String?
+    let thumbnail: String?
 }
 
 struct StatsResponse: Codable {
@@ -80,8 +86,11 @@ struct PopularPostResponse: Codable {
     let created: String
     let likes: Int
     let comments: Int
+    let views: Int?
     let image: String?
     let video: String?
+    let thumbnail: String?
+    
 }
 
 struct StatHistoryResponse: Codable {
@@ -103,7 +112,8 @@ struct MentionsResponse: Codable {
 }
 
 struct AudienceResponse: Codable {
-    let credibility: Double
+    let credibility: Double?
+    let notable: Double?
     let genders: [GendersResponse]
     let geoCities: [GeoCitiesResponse]
     let geoCountries: [GeoCountriesResponse]
@@ -164,6 +174,20 @@ struct AudienceNotableUsersResponse: Codable {
     let userId: String?
 }
 
+struct AudienceCommentersResponse: Codable {
+    let notableUsers: [AudienceCommentersNotableUsersResponse]?
+   
+}
+
+struct AudienceCommentersNotableUsersResponse: Codable {
+    let engagements: Float?
+    let followers: Float?
+    let fullname: String?
+    let picture: String?
+    let url: String?
+    let username: String?
+    let userId: String?
+}
 
 struct LikersGendersResponse: Codable {
     let code: String

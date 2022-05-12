@@ -45,11 +45,6 @@ class ChartsView: UIView {
         
         let intY = yValues.map({Int($0)})
         
-        var roundedOnes: [String] = []
-        
-        for i in 0..<intY.count {
-            roundedOnes.append(intY[i].roundedWithAbbreviations)
-        }
         
        
         

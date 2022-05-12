@@ -64,7 +64,89 @@ class ReportDetailViewController: UIViewController {
     var audienceButtonColors: [UIColor] = []
     
     
+    private let firstChartLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takipçiler bu ay xxx artış göstermiş", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
     
+    private let secondChartLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takip edilen sayısı", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let thirdChartLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Son 8 Post Etkileşimleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let fourthChartLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Beğeni sayısı bu ay xxx artış göstermiş", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let hashtagsLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Popüler # (hastags)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let mentionsLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Popüler @ (mentions)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let audienceDatasLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takipçilere göre kitle verileri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let audienceAgeGenderLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takipçi Yaş ve Cinsiyet Grafikleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let likersDataLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Beğenenlere göre kitle verileri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let likersAgeGenderLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Beğenenlerin Yaş ve Cinsiyet Grafikleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let notableFollowersLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Takipçilerin referans kullanıcıları (Notable followers)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let notableLikersLabel: UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Beğenenlerin referans kullanıcıları (Notable likers)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.backgroundColor = .clear
+        return label
+    }()
     
     private let scrollView: UIScrollView = {
       let scrollView = UIScrollView()
@@ -77,27 +159,22 @@ class ReportDetailViewController: UIViewController {
                                               collectionViewLayout: UICollectionViewCompositionalLayout { sectionNumber,env in
             
             if sectionNumber == 0 {
-                //first informations
-//                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalWidth(0.5))
-//                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
-//                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
-//                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//                let section = NSCollectionLayoutSection(group: group)
+                let inset: CGFloat = 4
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
+                item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+                
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.boundarySupplementaryItems = [
                     .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5)), elementKind: FirstDetailsCollectionReusableView.kind, alignment: .top)
                 ]
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
+                
+                section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
                 return section
             } else {
-                
-                
+
                 //populer posts
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -106,7 +183,9 @@ class ReportDetailViewController: UIViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets.leading = 8
-                
+                section.boundarySupplementaryItems = [
+                                   .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: PopularPostsCollectionReusableView.kind, alignment: .topLeading)
+                               ]
                 return section
             }
     })
@@ -117,7 +196,7 @@ class ReportDetailViewController: UIViewController {
         
         
         collectionView.register(PopularPostsCollectionViewCell.self, forCellWithReuseIdentifier: PopularPostsCollectionViewCell.reuseIdentifier)
-        
+        collectionView.register(PopularPostsCollectionReusableView.self, forSupplementaryViewOfKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier)
         
       
         collectionView.backgroundColor = .systemGray6
@@ -132,13 +211,14 @@ class ReportDetailViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayoutCircle())
         
         collectionView.register(GendersPerAgeCollectionViewCell.self, forCellWithReuseIdentifier: GendersPerAgeCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .systemGray6
         return collectionView
     }()
     
     private lazy var likersAgesCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayoutCircle())
         collectionView.register(LikersGendersPerAgeCollectionViewCell.self, forCellWithReuseIdentifier: LikersGendersPerAgeCollectionViewCell.reuseIdentifier)
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .systemGray6
         return collectionView
     }()
     
@@ -178,14 +258,14 @@ class ReportDetailViewController: UIViewController {
     private lazy var notableUsersCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: notableCollectionViewLayout())
         collectionView.register(NotableUsersCollectionViewCell.self, forCellWithReuseIdentifier: NotableUsersCollectionViewCell.reuseIdentifier)
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .systemGray6
         return collectionView
     }()
     
     private lazy var notableLikersCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: notableCollectionViewLayout())
         collectionView.register(NotableLikersCollectionViewCell.self, forCellWithReuseIdentifier: NotableLikersCollectionViewCell.reuseIdentifier)
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .systemGray6
         return collectionView
     }()
     
@@ -248,32 +328,51 @@ class ReportDetailViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 100)
-        followersChart.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        followingChart.frame = CGRect(x: 10, y: followersChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        commentLikeChart.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        avgLikesChart.frame = CGRect(x: 10, y: commentLikeChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        hashtagsView.frame = CGRect(x: 10, y: avgLikesChart.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 1)
+        firstChartLabel.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        followersChart.frame = CGRect(x: 10, y: firstChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        secondChartLabel.frame = CGRect(x: 10, y: followersChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        followingChart.frame = CGRect(x: 10, y: secondChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        thirdChartLabel.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        commentLikeChart.frame = CGRect(x: 10, y: thirdChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        fourthChartLabel.frame = CGRect(x: 10, y: commentLikeChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        avgLikesChart.frame = CGRect(x: 10, y: fourthChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        hashtagsLabel.frame = CGRect(x: 10, y: avgLikesChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
         
-        mentionsView.frame = CGRect(x: 10, y: hashtagsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
-        fakeFollowersView.frame = CGRect(x: 10, y: mentionsView.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        hashtagsView.frame = CGRect(x: 10, y: hashtagsLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        mentionsLabel.frame = CGRect(x: 10, y: hashtagsView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        mentionsView.frame = CGRect(x: 10, y: mentionsLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        
+        
+        audienceDatasLabel.frame = CGRect(x: 10, y: mentionsView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        fakeFollowersView.frame = CGRect(x: 10, y: audienceDatasLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         
         
         followersGenderDistributionView.frame = CGRect(x: 10, y: fakeFollowersView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
-        followersLocationView.frame = CGRect(x: 10, y: followersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.2)
-        agesCollectionView.frame = CGRect(x: 0, y: followersLocationView.bottom + 10, width: scrollView.width, height: 600)
+        followersLocationView.frame = CGRect(x: 10, y: followersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.4)
+        audienceAgeGenderLabel.frame = CGRect(x: 10, y: followersLocationView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        agesCollectionView.frame = CGRect(x: 0, y: audienceAgeGenderLabel.bottom + 10, width: scrollView.width, height: agesCollectionView.contentSize.height + 0.1)
         
-        likersCredibilityView.frame = CGRect(x: 10, y: agesCollectionView.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
-        likersNonFollowersLikesView.frame = CGRect(x: likersCredibilityView.right + 10, y: agesCollectionView.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
+        likersDataLabel.frame = CGRect(x: 10, y: agesCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        likersCredibilityView.frame = CGRect(x: 10, y: likersDataLabel.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
+        likersNonFollowersLikesView.frame = CGRect(x: likersCredibilityView.right + 10, y: likersDataLabel.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
         
         likersFollowersGenderDistributionView.frame = CGRect(x: 10, y: likersNonFollowersLikesView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
-        likersFollowersLocationView.frame = CGRect(x: 10, y: likersFollowersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.2)
-        likersAgesCollectionView.frame = CGRect(x: 0, y: likersFollowersLocationView.bottom + 10, width: scrollView.width, height: 600)
+        likersFollowersLocationView.frame = CGRect(x: 10, y: likersFollowersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.4)
+        likersAgeGenderLabel.frame = CGRect(x: 10, y: likersFollowersLocationView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        likersAgesCollectionView.frame = CGRect(x: 0, y: likersAgeGenderLabel.bottom + 10, width: scrollView.width, height: likersAgesCollectionView.contentSize.height + 0.1)
         
-        notableUsersCollectionView.frame = CGRect(x: 0, y: likersAgesCollectionView.bottom + 10, width: view.width, height: notableUsersCollectionView.contentSize.height + 20)
-        notableLikersCollectionView.frame = CGRect(x: 0, y: notableUsersCollectionView.bottom + 10, width: view.width, height: notableLikersCollectionView.contentSize.height + 20)
+        notableLikersLabel.frame = CGRect(x: 10, y: likersAgesCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        notableUsersCollectionView.frame = CGRect(x: 0, y: notableLikersLabel.bottom + 10, width: view.width, height: notableUsersCollectionView.contentSize.height + 0.1)
+        notableFollowersLabel.frame = CGRect(x: 10, y: notableUsersCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        notableLikersCollectionView.frame = CGRect(x: 0, y: notableFollowersLabel.bottom + 10, width: view.width, height: notableLikersCollectionView.contentSize.height + 0.1)
         
-        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + notableUsersCollectionView.height + notableLikersCollectionView.height + 200)
+        
+        
+        
+        
+        
+        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + notableUsersCollectionView.height + notableLikersCollectionView.height + 300 + view.width * 1.2)
     }
     
     func addSubviews() {
@@ -296,6 +395,20 @@ class ReportDetailViewController: UIViewController {
         scrollView.addSubview(likersAgesCollectionView)
         scrollView.addSubview(notableUsersCollectionView)
         scrollView.addSubview(notableLikersCollectionView)
+        
+        scrollView.addSubview(firstChartLabel)
+        scrollView.addSubview(secondChartLabel)
+        scrollView.addSubview(thirdChartLabel)
+        scrollView.addSubview(fourthChartLabel)
+        
+        scrollView.addSubview(hashtagsLabel)
+        scrollView.addSubview(mentionsLabel)
+        scrollView.addSubview(audienceDatasLabel)
+        scrollView.addSubview(audienceAgeGenderLabel)
+        scrollView.addSubview(likersDataLabel)
+        scrollView.addSubview(likersAgeGenderLabel)
+        scrollView.addSubview(notableFollowersLabel)
+        scrollView.addSubview(notableLikersLabel)
     }
      
     override func viewWillAppear(_ animated: Bool) {
@@ -454,7 +567,6 @@ class ReportDetailViewController: UIViewController {
                           created: $0.created)
                 }))
                 
-                print(self.chartStatHistoryComLike)
                 
                 let tagModel = modelToProfile
                 
@@ -467,7 +579,7 @@ class ReportDetailViewController: UIViewController {
                 }))
                 
                 let credibilityModel = modelToProfile.audience
-                self.credibility = .init(credibility: credibilityModel.credibility)
+                self.credibility = .init(credibility: credibilityModel.credibility ?? 0)
                 
                 let genderDistributionModel = modelToProfile.audience.genders
                 self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
@@ -482,32 +594,32 @@ class ReportDetailViewController: UIViewController {
                 self.gendersPerAge = gendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
                 
                 let likersCredibilityModel = modelToProfile.audienceLikers
-                self.likersCredibility = .init(credibility: likersCredibilityModel.credibility ?? 0.0)
+                self.likersCredibility = .init(credibility: likersCredibilityModel?.credibility ?? 0.0)
                 
                 let likersNonFollowersLikesModel = modelToProfile.audienceLikers
-                self.likersNonFollowersLikes = .init(credibility: likersNonFollowersLikesModel.nonFollowerLikes ?? 0.0)
+                self.likersNonFollowersLikes = .init(credibility: likersNonFollowersLikesModel?.nonFollowerLikes ?? 0.0)
                 
-                let likersGenderDistributionModel = modelToProfile.audienceLikers.genders
+                let likersGenderDistributionModel = modelToProfile.audienceLikers?.genders
                 
                 if let likersGenderDistributionModel = likersGenderDistributionModel {
                     self.likersGenderDistribution = likersGenderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
                 }
                 
                 
-                let likersAudienceLocations = modelToProfile.audienceLikers.geoCountries
+                let likersAudienceLocations = modelToProfile.audienceLikers?.geoCountries
                 if let likersAudienceLocations = likersAudienceLocations {
                     self.likersFollowersCountryLocation = likersAudienceLocations.map({.init(code: $0.name, weight: $0.weight)})
                 }
                 
                 
-                let likersAudienceCityLocations = modelToProfile.audienceLikers.geoCities
+                let likersAudienceCityLocations = modelToProfile.audienceLikers?.geoCities
                 
                 if let likersAudienceCityLocations = likersAudienceCityLocations {
                     self.likersFollowersCityLocation = likersAudienceCityLocations.map({.init(name: $0.name)})
                 }
                 
                 
-                let likersGendersPerAge = modelToProfile.audienceLikers.gendersPerAge
+                let likersGendersPerAge = modelToProfile.audienceLikers?.gendersPerAge
                 if let likersGendersPerAge = likersGendersPerAge {
                     self.likersGendersPerAge = likersGendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
                 }
@@ -527,8 +639,8 @@ class ReportDetailViewController: UIViewController {
                     self.influencerIds.append(contentsOf: userNotableLikes.map({$0.userId!}))
                 }
                 
-                let notablesLikes = modelToProfile.audienceLikers.notableUsers
-                if let notablesLikes = notablesLikes {
+                if let notablesLikes = modelToProfile.audienceLikers?.notableUsers {
+                
                     self.notableLikersModel = notablesLikes.map({.init(engagementRate: nil,
                                                                        engagements: $0.engagements,
                                                                        followers: $0.followers,
@@ -622,6 +734,15 @@ class ReportDetailViewController: UIViewController {
         
     }
     
+    @objc func headUsernameButtonTapped(sender: CustomFilterButton) {
+        let responseIndex = influencerDetails?.url
+        if let url = responseIndex {
+            if let urlString = URL(string: url) {
+                UIApplication.shared.open(urlString)
+            }
+        }
+    }
+    
 }
 
 //functions to fill views with datas
@@ -704,14 +825,7 @@ extension ReportDetailViewController {
         likersFollowersLocationView.configureFollowersLocations(with: likersFollowersCountryLocation, city: likersFollowersCityLocation)
     }
     
-    @objc func headUsernameButtonTapped(sender: CustomFilterButton) {
-        let responseIndex = influencerDetails?.url
-        if let url = responseIndex {
-            if let urlString = URL(string: url) {
-                UIApplication.shared.open(urlString)
-            }
-        }
-    }
+   
     
 }
 
@@ -777,18 +891,6 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                         targetCell.changeColorLabel(colors: avgColorsFirst)
                     }
                     
-//                    DispatchQueue.main.async {
-//                        let targetCells = collectionView.numberOfItems(inSection: 0)
-//                        for x in 0..<targetCells {
-//                            if let targetCell = collectionView.cellForItem(at: IndexPath(item: x, section: 0)) as? FirstDetailsCollectionViewCell {
-//                                if x == 0 {
-//                                    targetCell.changeColorLabel(number: avgFollowersDetail)
-//                                } else if x == 1 {
-//                                    targetCell.changeColorLabel(number: avgLikesDetail)
-//                                }
-//                            }
-//                    }
-
                     
                     cell.numberLabel.text = firstDetailArray[indexPath.row]
                 }
@@ -930,7 +1032,7 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if collectionView == reportCollectionView {
-            
+            if indexPath.section == 0 {
                 let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: FirstDetailsCollectionReusableView.kind, withReuseIdentifier: FirstDetailsCollectionReusableView.reuseIdentifier, for: indexPath) as! FirstDetailsCollectionReusableView
                 
                 reuseView.configureProfile(with: .init(fullName: influencerDetails?.fullName,
@@ -941,6 +1043,12 @@ extension ReportDetailViewController: UICollectionViewDelegate, UICollectionView
                 reuseView.usernameButton.section = indexPath.section
                 reuseView.usernameButton.addTarget(self, action: #selector(headUsernameButtonTapped), for: .touchUpInside)
                 return reuseView
+            } else if indexPath.section == 1 {
+                let reuseView = collectionView.dequeueReusableSupplementaryView(ofKind: PopularPostsCollectionReusableView.kind, withReuseIdentifier: PopularPostsCollectionReusableView.reuseIdentifier, for: indexPath)
+                    
+                return reuseView
+            }
+              
             
         }
         

@@ -19,7 +19,84 @@ struct BuyingOptions {
 
 class BuyReportViewController: UIViewController {
     
+    // find me an influencer tap
     
+    private let influencerAmonutLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "İstenilen influencer sayısı:", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        return label
+    }()
+    
+    private lazy var influencerAmountTextField: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor().infpromoBorder.cgColor
+        let text = "Lütfen istediğiniz influencer miktarını giriniz.."
+        textField.attributedPlaceholder =  NSAttributedString(string: text, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.keyboardType = .numberPad
+        textField.leftViewMode = .always
+        textField.leftView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 0))
+        return textField
+    }()
+    
+    private let areaOfFocusLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Faaliyet alanınız:", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        return label
+    }()
+    
+    private lazy var areaOfFocusTextField: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor().infpromoBorder.cgColor
+        let text = "Lütfen çalışmakta olduğunuz faaliyet alanını belirtiniz.."
+        textField.attributedPlaceholder =  NSAttributedString(string: text, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.leftViewMode = .always
+        textField.leftView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 0))
+        return textField
+    }()
+    
+    private let sumOfPriceLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Ödenecek Toplam Fiyat:\n(Rapor sayısı + Hizmet Bedeli)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let totalPriceLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "0 TL", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 22, weight: .heavy), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        return label
+    }()
+    
+    private let informationLabel: UILabel = {
+        let label = UILabel()
+        
+
+        
+        label.attributedText = NSAttributedString(string: "    Bu hizmeti satın aldıktan sonra ekibimiz sizinle iletişime geçip daha detaylı bilgiyi sizlerden temin edicektir. Hizmetinizi en geç 7 iş günü içerisinde Profil > Raporlarım kısmından görebilirsiniz. Dilerseniz +90 216 599 01 38 numaralı hattı arayarak ya da info@infpromo.com mail adresine mail atarak destek alabilirsiniz.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+       
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let purchaseButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.layer.cornerRadius = 8
+        button.backgroundColor = UIColor().infpromo
+        button.setAttributedTitle(NSAttributedString(string: "Satın Al", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .bold)]), for: .normal)
+        return button
+    }()
+    
+    var customSegmented: CustomSegmentedControl!
     
     var buyingOptionsArray = [
         BuyingOptions(reportNumber: "2 Rapor", reportPriceBeforeDisc: "", reportPrice: "16 TL", earningPercent: ""),
@@ -94,8 +171,13 @@ class BuyReportViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor().infpromo]
 //        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor().infpromo]
         
-        addSubviews()
         
+        view.addSubview(scrollView)
+        customSegmented = CustomSegmentedControl(frame: CGRect(x: 20, y: 0, width: view.width - 40, height: 30), buttonTitle: ["Rapor Satın Al", "Bana Influencer Bul"])
+        customSegmented.delegate = self
+        
+        scrollView.addSubview(customSegmented)
+        addSubviews()
         
         scrollView.delegate = self
 
@@ -111,8 +193,11 @@ class BuyReportViewController: UIViewController {
         self.navigationController?.navigationBar.shouldRemoveShadow(true)
         navigationController?.navigationBar.barTintColor = .systemGray6
         
+        customSegmented.delegate?.changeToIndex(index: 0)
         
-        
+        influencerAmountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func populateCells() {
@@ -138,26 +223,45 @@ class BuyReportViewController: UIViewController {
     }
     
     func addSubviews() {
-        view.addSubview(scrollView)
+        
         scrollView.addSubview(mailButton)
         scrollView.addSubview(collectionView)
         scrollView.addSubview(FAQTitleTextLabel)
         scrollView.addSubview(FAQTableView)
         
+        scrollView.addSubview(influencerAmonutLabel)
+        scrollView.addSubview(influencerAmountTextField)
+        scrollView.addSubview(areaOfFocusLabel)
+        scrollView.addSubview(areaOfFocusTextField)
+        scrollView.addSubview(sumOfPriceLabel)
+        scrollView.addSubview(totalPriceLabel)
+        scrollView.addSubview(informationLabel)
+        scrollView.addSubview(purchaseButton)
+        
     }
     
-    override func viewWillLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        collectionView.frame = CGRect(x: 0, y: scrollView.top, width: view.width, height: view.width * 20 / 16)
+        collectionView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width, height: view.width * 20 / 16)
         mailButton.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
         FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: 100)
         scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height)
         
+        influencerAmonutLabel.frame = CGRect(x: 10, y: customSegmented.bottom + 20, width: view.width - 20, height: 20)
+        influencerAmountTextField.frame = CGRect(x: 10, y: influencerAmonutLabel.bottom + 10, width: view.width - 20, height: 40)
+        areaOfFocusLabel.frame = CGRect(x: 10, y: influencerAmountTextField.bottom + 10, width: view.width - 20, height: 20)
+        areaOfFocusTextField.frame = CGRect(x: 10, y: areaOfFocusLabel.bottom + 10, width: view.width - 20, height: 40)
+        sumOfPriceLabel.frame = CGRect(x: 10, y: areaOfFocusTextField.bottom + 10, width: view.width - 20, height: 40)
+        totalPriceLabel.frame = CGRect(x: 10, y: sumOfPriceLabel.bottom + 10, width: view.width - 20, height: 20)
+        informationLabel.frame = CGRect(x: 10, y: totalPriceLabel.bottom + 10, width: view.width - 20, height: 120)
+        purchaseButton.frame = CGRect(x: 80, y: informationLabel.bottom + 10, width: view.width - 160, height: 40)
     }
     
-    
-    
-   
+    override func viewWillLayoutSubviews() {
+        
+        
+    }
     
 }
 
@@ -225,33 +329,61 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//        sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
-//
-//        tableView.reloadSections([indexPath.section], with: .none)
-//
-//
-//        UIView.animate(withDuration: 0.6) {
-//            if self.sections[indexPath.section].isOpened {
-//                tableView.beginUpdates()
-//
-//                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
-//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
-//                self.FAQTableView.reloadData()
-//                tableView.endUpdates()
-//            } else {
-//                tableView.beginUpdates()
-//                self.FAQTableView.frame = CGRect(x: 0, y: self.FAQTitleTextLabel.bottom + 20, width: self.view.width, height: self.FAQTableView.contentSize.height)
-//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.collectionView.height + self.mailButton.height + self.FAQTableView.height + self.FAQTitleTextLabel.height + 60)
-//                self.FAQTableView.reloadData()
-//                tableView.endUpdates()
-//
-//            }
-//        }
-//
-//
-//    }
+
+}
+
+extension BuyReportViewController: CustomSegmentedControlDelegate {
+    func changeToIndex(index: Int) {
+        switch index {
+        case 0:
+            
+            influencerAmonutLabel.isHidden = true
+            influencerAmountTextField.isHidden = true
+            areaOfFocusLabel.isHidden = true
+            areaOfFocusTextField.isHidden = true
+            sumOfPriceLabel.isHidden = true
+            totalPriceLabel.isHidden = true
+            informationLabel.isHidden = true
+            purchaseButton.isHidden = true
+            collectionView.isHidden = false
+            mailButton.isHidden = false
+            FAQTableView.isHidden = false
+        case 1:
+            influencerAmonutLabel.isHidden = false
+            influencerAmountTextField.isHidden = false
+            areaOfFocusLabel.isHidden = false
+            areaOfFocusTextField.isHidden = false
+            sumOfPriceLabel.isHidden = false
+            totalPriceLabel.isHidden = false
+            informationLabel.isHidden = false
+            purchaseButton.isHidden = false
+            collectionView.isHidden = true
+            mailButton.isHidden = true
+            FAQTableView.isHidden = true
+        default:
+            print("segmented switch is not working")
+        }
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text {
+            if text.count < 6 {
+                let intText = Int(text) ?? 0
+                let fifteenIntText = intText * 13
+                let sumIntText = Int(Double(fifteenIntText) * 1.85)
+                DispatchQueue.main.async {
+                    self.totalPriceLabel.text = "\(sumIntText) TL"
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.totalPriceLabel.text = "0 TL"
+                }
+            }
+        }
+    }
+}
+
+
+extension BuyReportViewController: UITextFieldDelegate {
+   
 }
