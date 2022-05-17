@@ -40,6 +40,7 @@ class BuyReportViewController: UIViewController {
         textField.keyboardType = .numberPad
         textField.leftViewMode = .always
         textField.leftView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 0))
+        textField.backgroundColor = .white
         return textField
     }()
     
@@ -61,6 +62,7 @@ class BuyReportViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.leftViewMode = .always
         textField.leftView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 0))
+        textField.backgroundColor = .white
         return textField
     }()
     
@@ -145,13 +147,36 @@ class BuyReportViewController: UIViewController {
         return collectionView
     }()
     
-    private let mailButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Daha fazla seçenek için bizimle iletişime geçin", for: .normal)
-        
-        button.setTitleColor(.black, for: .normal)
+    private let toMailTextView: UITextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.textContainer.lineFragmentPadding = 0.0
+        textView.textContainerInset = .zero
+        let text = "Daha fazla seçenek için bizimle iletişime geçebilirsiniz."
+        let linkText = "bizimle"
 
-        return button
+        let linkRange = (text as NSString).range(of: linkText)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 14)
+        ]
+        
+        let linkTextAttributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .link: "info@infpromo.com",
+            .foregroundColor: UIColor().infpromo,
+            .strokeColor: UIColor().infpromo,
+            
+        ]
+        
+        let attributedString = NSMutableAttributedString(string: text, attributes: attributes)
+        attributedString.addAttributes(linkTextAttributes, range: linkRange)
+        
+        textView.attributedText = attributedString
+        textView.backgroundColor = .systemGray6
+        textView.textAlignment = .center
+        return textView
     }()
     
     private let FAQTitleTextLabel: UILabel = {
@@ -198,6 +223,11 @@ class BuyReportViewController: UIViewController {
         influencerAmountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        toMailTextView.delegate = self
     }
     
     func populateCells() {
@@ -224,7 +254,7 @@ class BuyReportViewController: UIViewController {
     
     func addSubviews() {
         
-        scrollView.addSubview(mailButton)
+        scrollView.addSubview(toMailTextView)
         scrollView.addSubview(collectionView)
         scrollView.addSubview(FAQTitleTextLabel)
         scrollView.addSubview(FAQTableView)
@@ -240,13 +270,12 @@ class BuyReportViewController: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    func arrangeSubviews() {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         collectionView.frame = CGRect(x: 0, y: customSegmented.bottom + 20, width: view.width, height: view.width * 20 / 16)
-        mailButton.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
-        FAQTableView.frame = CGRect(x: 0, y: mailButton.bottom + 20, width: view.width, height: 100)
-        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + mailButton.height + FAQTableView.height)
+        toMailTextView.frame = CGRect(x: 0, y: collectionView.bottom, width: view.width, height: 40)
+        FAQTableView.frame = CGRect(x: 0, y: toMailTextView.bottom + 10, width: view.width, height: 100)
+        scrollView.contentSize = CGSize(width: view.width, height: collectionView.height + toMailTextView.height + FAQTableView.height)
         
         influencerAmonutLabel.frame = CGRect(x: 10, y: customSegmented.bottom + 20, width: view.width - 20, height: 20)
         influencerAmountTextField.frame = CGRect(x: 10, y: influencerAmonutLabel.bottom + 10, width: view.width - 20, height: 40)
@@ -256,12 +285,18 @@ class BuyReportViewController: UIViewController {
         totalPriceLabel.frame = CGRect(x: 10, y: sumOfPriceLabel.bottom + 10, width: view.width - 20, height: 20)
         informationLabel.frame = CGRect(x: 10, y: totalPriceLabel.bottom + 10, width: view.width - 20, height: 120)
         purchaseButton.frame = CGRect(x: 80, y: informationLabel.bottom + 10, width: view.width - 160, height: 40)
+        
+        scrollView.contentSize.height = collectionView.height + toMailTextView.height + FAQTableView.height + 40
     }
     
-    override func viewWillLayoutSubviews() {
-        
-        
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        arrangeSubviews()
     }
+    
+//    override func viewWillLayoutSubviews() {
+//        customSegmented.delegate?.changeToIndex(index: 0)
+//    }
     
 }
 
@@ -346,7 +381,7 @@ extension BuyReportViewController: CustomSegmentedControlDelegate {
             informationLabel.isHidden = true
             purchaseButton.isHidden = true
             collectionView.isHidden = false
-            mailButton.isHidden = false
+            toMailTextView.isHidden = false
             FAQTableView.isHidden = false
         case 1:
             influencerAmonutLabel.isHidden = false
@@ -358,7 +393,7 @@ extension BuyReportViewController: CustomSegmentedControlDelegate {
             informationLabel.isHidden = false
             purchaseButton.isHidden = false
             collectionView.isHidden = true
-            mailButton.isHidden = true
+            toMailTextView.isHidden = true
             FAQTableView.isHidden = true
         default:
             print("segmented switch is not working")
@@ -386,4 +421,46 @@ extension BuyReportViewController: CustomSegmentedControlDelegate {
 
 extension BuyReportViewController: UITextFieldDelegate {
    
+}
+
+
+extension BuyReportViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if purchaseButton.frame.maxY > keyboardSize.minY {
+                informationLabel.alpha = 0
+                purchaseButton.frame = CGRect(x: 80, y: totalPriceLabel.bottom + 10, width: view.width - 160, height: 40)
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        arrangeSubviews()
+        informationLabel.alpha = 1.0
+    }
+}
+
+
+extension BuyReportViewController: UITextViewDelegate {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+
+    // Handle the user tapping the link however you like here
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        //(string: "mailto:\(email)")
+        
+        let email = "info@infpromo.com"
+        if let url = Foundation.URL(string: "mailto:\(email)") {
+          if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+          } else {
+            UIApplication.shared.openURL(url)
+          }
+        }
+        
+        
+        return false
+    }
 }

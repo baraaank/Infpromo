@@ -266,6 +266,32 @@ final class APICaller {
         }
     }
     
+    public func updateUser(name: String,
+                           surName: String,
+                           email: String,
+                           city: String,
+                           birthday: String,
+                           language: String,
+                           phone: String,
+                           socialMedia: String,
+                           title: String,
+                           website: String,
+                           completion: @escaping (Result<String, Error>) -> Void) {
+        guard let userId = AuthManager.shared.userId else {
+            return
+        }
+        
+        createRequest(with: URL(string: Constants.baseAPIURL + "/users/\(userId)"), type: .PATCH) { baseRequest in
+            var request = baseRequest
+            
+//            let parameters: [String: Any] = [
+//
+//            ]
+        }
+        
+    }
+    
+  
     
     // -MARK: Filteerrrrrrrrrrr
     

@@ -203,6 +203,46 @@ final class AuthManager {
         }
         task.resume()
     }
+    
+    enum APIError: Error {
+        case failedToGetData
+    }
+    
+    public func forgetPassword(email: String, completion: @escaping (Result<JsonResponses, Error>) -> Void) {
+        var request = URLRequest(url: URL(string: "\(baseURL)/users/forget-password")!)
+        let url = "https://infpromo.com"
+        let parameters: [String: Any] = [
+            "url": url,
+            "user": [
+                "email": email
+            ]
+        ]
+        
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        request.httpMethod = "POST"
+        request.timeoutInterval = Double.infinity
+        
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(.failure(APIError.failedToGetData))
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(JsonResponses.self, from: data)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+            
+        }
+        task.resume()
+    }
+
 }
 
 

@@ -29,7 +29,7 @@ class MyReportsPlatformCollectionReusableView: UICollectionReusableView {
 //
 //    }()
     
-    private let platformLabel: UILabel = {
+    let platformLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: " ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .regular)])
         label.textAlignment = .right

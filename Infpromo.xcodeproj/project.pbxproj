@@ -55,6 +55,8 @@
 		81453774282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453773282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift */; };
 		81453776282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453775282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift */; };
 		81453778282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */; };
+		8145377A282F8D5200413006 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453779282F8D4F00413006 /* EditProfileViewController.swift */; };
+		8145377C2833A33B00413006 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145377B2833A33A00413006 /* ForgetPasswordViewController.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -164,6 +166,8 @@
 		81453773282BDBB500413006 /* TiktokNotableUsersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokNotableUsersCollectionViewCell.swift; sourceTree = "<group>"; };
 		81453775282BDBCE00413006 /* YoutubeNotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeNotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
 		81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokNotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
+		81453779282F8D4F00413006 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		8145377B2833A33A00413006 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 			children = (
 				810AE0BF27D60EDA00F23713 /* LogInViewController.swift */,
 				810AE0C127D60EE900F23713 /* SignUpViewController.swift */,
+				8145377B2833A33A00413006 /* ForgetPasswordViewController.swift */,
 			);
 			path = "LogIn-SignUp";
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 			children = (
 				810AE0C427D641B400F23713 /* ProfileInformationsViewController.swift */,
 				810AE0C627D641F200F23713 /* ChangePswAndDeleteAccountViewController.swift */,
+				81453779282F8D4F00413006 /* EditProfileViewController.swift */,
 			);
 			path = ProfileExtra;
 			sourceTree = "<group>";
@@ -706,6 +712,7 @@
 				819CF177281D82B100119E96 /* TiktokInfluencerFilterCollectionViewCell.swift in Sources */,
 				819CF173281D828D00119E96 /* YoutubeInfluencerFilterCollectionViewCell.swift in Sources */,
 				819C5CAF27CBDE6600DAB0FE /* ProfileCollectionViewCell.swift in Sources */,
+				8145377A282F8D5200413006 /* EditProfileViewController.swift in Sources */,
 				81E9EE0027E8E70800FDA44B /* WhatsInReportsViewController.swift in Sources */,
 				81AF02B027A284070054F4C5 /* PastReportViewController.swift in Sources */,
 				81BAF1002812EFCA009E865D /* AbbreviationsHelper.swift in Sources */,
@@ -731,6 +738,7 @@
 				81F61F0227F1FCD000A91739 /* MyReportsDateCollectionReusableView.swift in Sources */,
 				81BAF0EF28128D2B009E865D /* FirstDetailsCollectionReusableView.swift in Sources */,
 				81AF0289279E9A960054F4C5 /* AppDelegate.swift in Sources */,
+				8145377C2833A33B00413006 /* ForgetPasswordViewController.swift in Sources */,
 				81453760282BACC100413006 /* TiktokPopularPostsCollectionViewCell.swift in Sources */,
 				810AE0C227D60EE900F23713 /* SignUpViewController.swift in Sources */,
 				81F61F0627F2671600A91739 /* MyReportsCollectionViewCellViewModel.swift in Sources */,

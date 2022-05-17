@@ -36,10 +36,10 @@ class ProfileInformationsViewController: UIViewController {
 
             let headerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: ProfileHeaderCollectionReusableView.kind, alignment: .top)
             
-            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.2))
-
-            let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: ProfileInformationCollectionReusableView.kind, alignment: .bottom)
-            
+//            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(0.2))
+//
+//            let footerView = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: ProfileInformationCollectionReusableView.kind, alignment: .bottom)
+//
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.14))
             let item = NSCollectionLayoutItem(layoutSize: itemSize/*, supplementaryItems: [headerView]*/)
@@ -49,26 +49,28 @@ class ProfileInformationsViewController: UIViewController {
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets.bottom = 8
-            section.boundarySupplementaryItems = [headerView, footerView]
+            section.boundarySupplementaryItems = [headerView, /*footerView*/]
             return section
         }))
         collectionView.backgroundColor = .clear
         collectionView.register(ProfileHeaderCollectionReusableView.self, forSupplementaryViewOfKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier)
         collectionView.register(ProfileInformationsCollectionViewCell.self, forCellWithReuseIdentifier: ProfileInformationsCollectionViewCell.reuseIdentifier)
-        collectionView.register(ProfileInformationCollectionReusableView.self, forSupplementaryViewOfKind: ProfileInformationCollectionReusableView.kind, withReuseIdentifier: ProfileInformationCollectionReusableView.reuseIdentifier)
+//        collectionView.register(ProfileInformationCollectionReusableView.self, forSupplementaryViewOfKind: ProfileInformationCollectionReusableView.kind, withReuseIdentifier: ProfileInformationCollectionReusableView.reuseIdentifier)
         return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(profileInfos)
         
         view.backgroundColor = .systemGray6
         addSubviews()
         
         profileInformationsCollectionView.delegate = self
         profileInformationsCollectionView.dataSource = self
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Güncelle", style: .plain, target: self, action: #selector(updateButtonTapped))
+        
         
         
     }
@@ -79,6 +81,11 @@ class ProfileInformationsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         profileInformationsCollectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+    }
+    
+    @objc func updateButtonTapped() {
+        let vc = EditProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 
@@ -129,14 +136,18 @@ extension ProfileInformationsViewController: UICollectionViewDelegate, UICollect
                                                socialMedia: profileInfos?.socialMedia,
                                                title: profileInfos?.title))
             return header
-        } else if kind == ProfileInformationCollectionReusableView.kind {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileInformationCollectionReusableView.kind, withReuseIdentifier: ProfileInformationCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileInformationCollectionReusableView
-            
-            
-            return footer
-        } else {
-            fatalError()
         }
+        
+//        else if kind == ProfileInformationCollectionReusableView.kind {
+//            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileInformationCollectionReusableView.kind, withReuseIdentifier: ProfileInformationCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileInformationCollectionReusableView
+//
+//            footer.updateButton.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
+//            return footer
+//        } else {
+//            fatalError()
+//        }
+        
+        return UICollectionReusableView()
         
     }
     

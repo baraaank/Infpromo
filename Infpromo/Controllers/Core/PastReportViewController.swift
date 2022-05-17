@@ -10,6 +10,13 @@ import SkeletonView
 
 class PastReportViewController: UIViewController {
     
+    private let thereIsNoReportLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Henüz hiç bir raporunuz yok.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.black])
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
    
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { (section, env) -> NSCollectionLayoutSection? in
@@ -73,8 +80,15 @@ class PastReportViewController: UIViewController {
         loadViewElements()
         self.navigationController?.navigationBar.shouldRemoveShadow(true)
         navigationController?.navigationBar.barTintColor = .systemGray6
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.collectionView.isHidden = true
+            self.thereIsNoReportLabel.isHidden = false
+            self.collectionView.reloadData()
+        }
     }
 //
+    
+   
     func loadViewElements() {
         APICaller.shared.getUserReports { response in
             switch response {
@@ -111,12 +125,14 @@ class PastReportViewController: UIViewController {
     
     func addSubviews() {
         view.addSubview(collectionView)
+        view.addSubview(thereIsNoReportLabel)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         collectionView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
+        thereIsNoReportLabel.frame = view.bounds
     }
     
     func directToAccount(urlString: String, name: String) {
@@ -196,6 +212,8 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         if profileResponseArray.count == 0 {
             return 10
         } else {
+            collectionView.isHidden = false
+            thereIsNoReportLabel.isHidden = true
             return profileResponseArray.count
         }
     }
@@ -217,6 +235,11 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
         if profileResponseArray.count == 0{
             //do skeleton view
 //            cell.contentView.backgroundColor = .white
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                self.collectionView.isHidden = true
+//                self.thereIsNoReportLabel.isHidden = false
+//            }
+            
             cell.isSkeletonable = true
             cell.showAnimatedGradientSkeleton()
         } else {

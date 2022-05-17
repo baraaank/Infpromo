@@ -29,7 +29,8 @@ class SignUpViewController: UIViewController {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .sentences
-        
+        textField.returnKeyType = .next
+        textField.tag = 1
         
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
@@ -46,7 +47,8 @@ class SignUpViewController: UIViewController {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .sentences
-        
+        textField.returnKeyType = .next
+        textField.tag = 2
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
         return textField
@@ -62,6 +64,8 @@ class SignUpViewController: UIViewController {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.returnKeyType = .next
+        textField.tag = 3
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
         return textField
@@ -79,6 +83,8 @@ class SignUpViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
         textField.leftViewMode = .always
+        textField.returnKeyType = .next
+        textField.tag = 4
         textField.enablePasswordToggle()
         return textField
     }()
@@ -95,6 +101,8 @@ class SignUpViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
         textField.leftViewMode = .always
+        textField.returnKeyType = .continue
+        textField.tag = 5
         textField.enablePasswordToggle()
         return textField
     }()
@@ -373,6 +381,18 @@ extension SignUpViewController: UITextFieldDelegate {
         
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let nextTag = textField.tag + 1
+
+        if let nextResponder = textField.superview?.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            self.signUpButtonTapped()
+        }
+        
+        return true
+    }
     
 }
 
@@ -380,7 +400,6 @@ extension SignUpViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                
                 if signUpButton.frame.maxY > keyboardSize.minY {
                     logoImageView.isHidden = true
                     logoImageView.alpha = 0.0
@@ -436,8 +455,6 @@ extension SignUpViewController {
     }))
     self.present(alertController, animated: true, completion: nil)
   }
-    
-    
 }
 
 extension SignUpViewController {

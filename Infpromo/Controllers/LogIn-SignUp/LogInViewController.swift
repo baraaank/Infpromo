@@ -29,7 +29,9 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
+        textField.returnKeyType = .next
 //        textField.backgroundColor = .systemGray6
+        textField.tag = 1
         return textField
     }()
     
@@ -46,6 +48,8 @@ class LogInViewController: UIViewController {
         textField.isSecureTextEntry = true
         //        textField.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         textField.leftViewMode = .always
+        textField.tag = 2
+        textField.returnKeyType = .continue
         textField.enablePasswordToggle()
         return textField
     }()
@@ -116,6 +120,8 @@ class LogInViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        forgotPasswordButton.addTarget(self, action: #selector(forgetPasswordButtonTapped), for: .touchUpInside)
     }
     
     func addSubViews() {
@@ -157,6 +163,12 @@ class LogInViewController: UIViewController {
     
     @objc func createAnAccountButtonTapped() {
         let vc = SignUpViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: false)
+    }
+    
+    @objc func forgetPasswordButtonTapped() {
+        let vc = ForgetPasswordViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: false)
     }
@@ -259,6 +271,19 @@ extension LogInViewController: UITextFieldDelegate {
             
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let nextTag = textField.tag + 1
+
+        if let nextResponder = textField.superview?.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            self.logInButtonTapped()
+        }
+        
+        return true
+    }
 }
 
 
@@ -277,6 +302,9 @@ extension LogInViewController {
                     forgotPasswordButton.isHidden = true
                     dontYouHaveAnAccountLabel.isHidden = true
                     createAnAccountButton.isHidden = true
+                    forgotPasswordButton.alpha = 0.0
+                    dontYouHaveAnAccountLabel.alpha = 0.0
+                    createAnAccountButton.alpha = 0.0
                 }
             }
         }
@@ -288,6 +316,10 @@ extension LogInViewController {
         forgotPasswordButton.isHidden = false
         dontYouHaveAnAccountLabel.isHidden = false
         createAnAccountButton.isHidden = false
+        
+        forgotPasswordButton.alpha = 1.0
+        dontYouHaveAnAccountLabel.alpha = 1.0
+        createAnAccountButton.alpha = 1.0
 //        if view.frame.origin.y != 0 {
 //                self.view.frame.origin.y = 0
 //            }

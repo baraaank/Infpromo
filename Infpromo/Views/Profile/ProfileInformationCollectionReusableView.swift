@@ -7,23 +7,20 @@
 
 import UIKit
 
-protocol ProfileInformationCollectionReusableViewDelegate: AnyObject {
-    func didTappedButton(textField: UITextField)
-}
+
 
 class ProfileInformationCollectionReusableView: UICollectionReusableView {
        
     static let reuseIdentifier = "profileInformationCollectionReusableViewIdentifier"
     static let kind = "profileInformationCollectionReusableViewKind"
     
-    weak var delegate: ProfileInformationCollectionReusableViewDelegate?
     
-    private let updateButton: UIButton = {
+    let updateButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
-        button.setTitle("Güncelle", for: .normal)
-        button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
+        button.setAttributedTitle(NSAttributedString(string: "Güncelle", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        
         return button
     }()
     
@@ -45,8 +42,6 @@ class ProfileInformationCollectionReusableView: UICollectionReusableView {
         updateButton.frame = CGRect(x: 50, y: 20, width: width - 100, height: height - 40)
     }
     
-    @objc func updateButtonTapped() {
-        delegate?.didTappedButton(textField: UITextField())
-    }
+    
     
 }

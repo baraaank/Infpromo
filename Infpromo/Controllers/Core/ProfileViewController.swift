@@ -18,9 +18,7 @@ class ProfileViewController: UIViewController {
     ]
     
     var userResponse: ProfileHeaderReusableViewModel?
-
     var profileInfos: ProfileInformationsCellViewModel?
-    
     
     private let profileCollectionView: UICollectionView = {
         

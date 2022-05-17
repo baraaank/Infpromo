@@ -3128,6 +3128,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
         
         
+//        DispatchQueue.main.async {
+//
+//            self.influencerOptionsTableView.frame = CGRect(x: self.influencerHeadingsTableView.right, y: self.customSegmented.bottom + 20, width: 2 * (self.view.width) / 3 - 20, height: self.followersOptionsTableView.contentSize.height)
+//            self.youtubeInfluencerOptionsTableView.frame = CGRect(x: self.influencerHeadingsTableView.right, y: self.customSegmented.bottom + 20, width: 2 * (self.view.width) / 3 - 20, height: self.youtubeInfluencerOptionsTableView.contentSize.height)
+//            self.tiktokInfluencerOptionsTableView.frame = CGRect(x: self.influencerHeadingsTableView.right, y: self.customSegmented.bottom + 20, width: 2 * (self.view.width) / 3 - 20, height: self.tiktokInfluencerOptionsTableView.contentSize.height)
+//        }
+//
+        
         hideSearchBar()
         
     }
@@ -3273,4 +3281,6 @@ extension SearchViewController: UITextFieldDelegate {
         searchButtonClicked()
         return true
     }
+    
+   
 }
