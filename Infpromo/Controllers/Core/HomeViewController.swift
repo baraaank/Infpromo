@@ -96,14 +96,15 @@ class HomeViewController: UIViewController {
     
     private let filterButton: UIButton = {
         let button = UIButton(type: .system)
-        let config = UIImage.SymbolConfiguration(weight: .regular)
-        button.setImage(UIImage(systemName: "slider.horizontal.3")?.withTintColor(UIColor().infpromo, renderingMode: .alwaysOriginal).withConfiguration(config), for: .normal)
-        //        button.imageView?.tintColor = UIColor().infpromo
-        
-        button.imageView?.clipsToBounds = true
-        button.imageView?.contentMode = .scaleAspectFit
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+//        let config = UIImage.SymbolConfiguration(weight: .regular)
+//        button.setImage(UIImage(systemName: "slider.horizontal.3")?.withTintColor(UIColor().infpromo, renderingMode: .alwaysOriginal).withConfiguration(config), for: .normal)
+//        button.imageView?.clipsToBounds = true
+//        button.imageView?.contentMode = .scaleAspectFit
+//        button.contentVerticalAlignment = .fill
+//        button.contentHorizontalAlignment = .fill
+        button.setAttributedTitle(NSAttributedString(string: "Filtrele", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        button.backgroundColor = UIColor().infpromo
+        button.layer.cornerRadius = 4
         return button
     }()
     
@@ -944,7 +945,9 @@ class HomeViewController: UIViewController {
         mostVisitedReportsLabel.frame = CGRect(x: 16, y: scrollView.top + 16, width: view.width, height: 20)
         mostVisitedReportsCollectionView.frame = CGRect(x: 0, y: mostVisitedReportsLabel.bottom, width: scrollView.width, height: scrollView.width * 0.65)
         accountCountLabel.frame = CGRect(x: 16, y: mostVisitedReportsCollectionView.bottom + 20, width: view.width - 100, height: 20)
-        filterButton.frame = CGRect(x: view.width - 36, y: mostVisitedReportsCollectionView.bottom + 22, width: 22, height: 22)
+//        filterButton.frame = CGRect(x: view.width - 36, y: mostVisitedReportsCollectionView.bottom + 22, width: 22, height: 22)
+        
+        filterButton.frame = CGRect(x: view.width - 72, y: mostVisitedReportsCollectionView.bottom + 18, width: 64, height: 22)
         searchResultCollectionView.frame = CGRect(x: 0, y: accountCountLabel.bottom, width: view.width, height: searchResultCollectionView.contentSize.height + 20)
         scrollView.contentSize = CGSize(width: view.width, height: mostVisitedReportsLabel.height + mostVisitedReportsCollectionView.height + accountCountLabel.height + searchResultCollectionView.height + 40)
     }

@@ -57,6 +57,7 @@
 		81453778282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */; };
 		8145377A282F8D5200413006 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81453779282F8D4F00413006 /* EditProfileViewController.swift */; };
 		8145377C2833A33B00413006 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145377B2833A33A00413006 /* ForgetPasswordViewController.swift */; };
+		814537A0283583C800413006 /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8145379F283583C700413006 /* EditableTableViewCell.swift */; };
 		816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B1929280DE5CD0016BDE6 /* GetUserLog.swift */; };
 		816B192C280DED050016BDE6 /* GetUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192B280DED050016BDE6 /* GetUser.swift */; };
 		816B192E280DF0C20016BDE6 /* JsonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B192D280DF0C20016BDE6 /* JsonResponses.swift */; };
@@ -168,6 +169,7 @@
 		81453777282BDBDA00413006 /* TiktokNotableLikersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiktokNotableLikersCollectionViewCell.swift; sourceTree = "<group>"; };
 		81453779282F8D4F00413006 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		8145377B2833A33A00413006 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
+		8145379F283583C700413006 /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
 		816B1929280DE5CD0016BDE6 /* GetUserLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLog.swift; sourceTree = "<group>"; };
 		816B192B280DED050016BDE6 /* GetUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUser.swift; sourceTree = "<group>"; };
 		816B192D280DF0C20016BDE6 /* JsonResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonResponses.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				819C5CB027CBE9CD00DAB0FE /* ProfileHeaderCollectionReusableView.swift */,
 				810AE0CC27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift */,
 				810AE0D027D9E61F00F23713 /* ProfileInformationCollectionReusableView.swift */,
+				8145379F283583C700413006 /* EditableTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 				819CF175281D82A000119E96 /* YoutubeFollowersFilterCollectionViewCell.swift in Sources */,
 				810AE0C027D60EDA00F23713 /* LogInViewController.swift in Sources */,
 				8194A8AC27FA135B0048314B /* SearchWithFilterCellViewModel.swift in Sources */,
+				814537A0283583C800413006 /* EditableTableViewCell.swift in Sources */,
 				814537562829301600413006 /* NotableUsersCollectionViewCell.swift in Sources */,
 				816B192A280DE5CD0016BDE6 /* GetUserLog.swift in Sources */,
 				810AE0CD27D8B83D00F23713 /* ProfileInformationsCollectionViewCell.swift in Sources */,

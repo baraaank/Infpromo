@@ -268,15 +268,15 @@ final class APICaller {
     
     public func updateUser(name: String,
                            surName: String,
-                           email: String,
-                           city: String,
-                           birthday: String,
-                           language: String,
-                           phone: String,
                            socialMedia: String,
                            title: String,
+                           email: String,
+                           language: String,
                            website: String,
-                           completion: @escaping (Result<String, Error>) -> Void) {
+                           birthday: String,
+                           city: String,
+                           phone: String,
+                           completion: @escaping (Result<JsonResponses, Error>) -> Void) {
         guard let userId = AuthManager.shared.userId else {
             return
         }
@@ -284,9 +284,41 @@ final class APICaller {
         createRequest(with: URL(string: Constants.baseAPIURL + "/users/\(userId)"), type: .PATCH) { baseRequest in
             var request = baseRequest
             
-//            let parameters: [String: Any] = [
-//
-//            ]
+            let parameters: [String: Any] = [
+                "name": name as Any,
+                "surName": surName as Any,
+                "socialMedia": socialMedia as Any,
+                "title": title as Any,
+                "email": email as Any,
+                "language": language as Any,
+                "website": website as Any,
+                "birthday": birthday as Any,
+                "city": city as Any,
+                "phone": phone as Any,
+            ]
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+            request.httpBody = jsonData
+            
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+//                    let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    let result = try JSONDecoder().decode(JsonResponses.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+            
+            
         }
         
     }

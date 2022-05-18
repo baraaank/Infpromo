@@ -7,178 +7,92 @@
 
 import UIKit
 
+
+
 class EditProfileViewController: UIViewController {
 
     //0.14
     
-    private lazy var nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "İsim"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.delegate = self
-        textField.backgroundColor = .white
-        textField.tag = 1
-        return textField
+    private let topLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Güncelle", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17, weight: .semibold), NSAttributedString.Key.foregroundColor : UIColor().infpromo])
+        label.textAlignment = .center
+        return label
     }()
     
-    private lazy var surnameTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Soyisim"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 2
-        return textField
+    private let saveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Kaydet", for: .normal)
+        button.setTitleColor(UIColor().infpromo, for: .normal)
+        return button
     }()
     
-    private lazy var professionTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Meslek"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 3
-        return textField
+    private let cancelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Vazgeç", for: .normal)
+        button.setTitleColor(UIColor().infpromo, for: .normal)
+        return button
     }()
     
-    private lazy var socialMediaTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Sosyal Medya"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 4
-        return textField
-    }()
+    enum TextFieldData: Int {
+        case name = 0
+        case surname
+        case socialMedia
+        case titleInfo
+        case email
+        case language
+        case webSite
+        case birthday
+        case location
+        case phone
+    }
     
-    private lazy var mailTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Email"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 5
-        return textField
-    }()
+    var name = ""
+    var surname = ""
+    var socialMedia = ""
+    var titleInfo = ""
+    var email = ""
+    var language = ""
+    var webSite = ""
+    var birthday = ""
+    var location = ""
+    var phone = ""
     
-    private lazy var birthdayTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Doğum Günü"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 6
-        return textField
-    }()
+    let infoModel: [String] = [
+        "İsim",
+        "Soyisim",
+        "Sosyal Medya",
+        "Title",
+        "Email",
+        "Dil",
+        "Web Sitesi",
+        "Doğum Günü",
+        "Lokasyon",
+        "Telefon",
+    ]
     
-    private lazy var languageTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Dil"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 7
-        return textField
-    }()
+  
     
-    private lazy var locationTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Lokasyon"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 8
-        return textField
-    }()
-    
-    private lazy var websiteTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Web Sitesi"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 9
-        return textField
-    }()
-    
-    private lazy var phoneNumberTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 5
-        textField.placeholder = "Telefon no"
-        textField.leftView = customLeftView(systemName: "person")
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .sentences
-        textField.returnKeyType = .next
-        textField.leftViewMode = .always
-        textField.backgroundColor = .white
-        textField.delegate = self
-        textField.tag = 10
-        return textField
-    }()
-    
-    private let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
-        scrollView.backgroundColor = .systemGray6
-        return scrollView
+    var textModel: [String] = []
+ 
+ 
+    private let editableTableView: UITableView = {
+       let tableView = UITableView()
+        tableView.register(EditableTableViewCell.self, forCellReuseIdentifier: EditableTableViewCell.reuseIdentifier)
+        tableView.backgroundColor = .systemGray6
+        return tableView
     }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
+        
         addSubviews()
+        
+        editableTableView.delegate = self
+        editableTableView.dataSource = self
         view.backgroundColor = .systemGray6
         title = "Profili Güncelle"
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Vazgeç", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Kaydet", style: .plain, target: self, action: #selector(saveButtonTapped))
-        
-        
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
         
@@ -186,71 +100,114 @@ class EditProfileViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-    }
-    
-    @objc func cancelButtonTapped() {
-        let alertController = UIAlertController(title: "Vazgeç", message:
-          "Yaptığınız değişiklikler silinecektir", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Devam", style: .default, handler: {action in
-        }))
-        alertController.addAction(UIAlertAction(title: "Vazgeç", style: .cancel, handler: {action in
-            self.navigationController?.popViewController(animated: true)
-        }))
-        self.present(alertController, animated: true, completion: nil)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        
+        
+        
     }
     
     @objc func saveButtonTapped() {
-        //
+        view.endEditing(true)
+        print(name)
+        print(surname)
+        print(socialMedia)
+        print(titleInfo)
+        print(email)
+        print(language)
+        print(webSite)
+        print(birthday)
+        print(location)
+        print(phone)
+        
+        APICaller.shared.updateUser(name: name, surName: surname, socialMedia: socialMedia, title: titleInfo, email: email, language: language, website: webSite, birthday: birthday, city: location, phone: phone) { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let model):
+                if model.success == true {
+                    print("succees babby")
+                    
+                    let success = ["success": "success"]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDatas"), object: nil, userInfo: success)
+                    
+                   
+                    
+                    DispatchQueue.main.async {
+                        self.view.endEditing(true)
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                    
+                }
+            }
+        }
     }
     
-    var currentTextFieldTag = 0
+    @objc func cancelButtonTapped() {
+        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
+    }
     
+//    let alertController = UIAlertController(title: "Vazgeç", message:
+//      "Yaptığınız değişiklikler silinecektir", preferredStyle: .alert)
+//    alertController.addAction(UIAlertAction(title: "Devam", style: .default, handler: {action in
+//    }))
+//    alertController.addAction(UIAlertAction(title: "Vazgeç", style: .cancel, handler: {action in
+//        self.navigationController?.popViewController(animated: true)
+//    }))
+//    self.present(alertController, animated: true, completion: nil)
+//
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
     func addSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(nameTextField)
-        scrollView.addSubview(surnameTextField)
-        scrollView.addSubview(professionTextField)
-        scrollView.addSubview(socialMediaTextField)
-        scrollView.addSubview(mailTextField)
-        scrollView.addSubview(birthdayTextField)
-        scrollView.addSubview(languageTextField)
-        scrollView.addSubview(locationTextField)
-        scrollView.addSubview(websiteTextField)
-        scrollView.addSubview(phoneNumberTextField)
+        view.addSubview(editableTableView)
+        view.addSubview(topLabel)
+        view.addSubview(cancelButton)
+        view.addSubview(saveButton)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        nameTextField.frame = CGRect(x: 8, y: scrollView.top, width: view.width - 16, height: view.width * 0.13)
-        surnameTextField.frame = CGRect(x: 8, y: nameTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        professionTextField.frame = CGRect(x: 8, y: surnameTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        socialMediaTextField.frame = CGRect(x: 8, y: professionTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        mailTextField.frame = CGRect(x: 8, y: socialMediaTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        birthdayTextField.frame = CGRect(x: 8, y: mailTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        languageTextField.frame = CGRect(x: 8, y: birthdayTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        locationTextField.frame = CGRect(x: 8, y: languageTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        websiteTextField.frame = CGRect(x: 8, y: locationTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        phoneNumberTextField.frame = CGRect(x: 8, y: websiteTextField.bottom + 8, width: view.width - 16, height: view.width * 0.13)
-        scrollView.contentSize.height = nameTextField.height + surnameTextField.height + professionTextField.height + socialMediaTextField.height + mailTextField.height + birthdayTextField.height + languageTextField.height + locationTextField.height + websiteTextField.height + phoneNumberTextField.height + ( 8 * 10 )
+        topLabel.frame = CGRect(x: 80, y: 20, width: view.width - 160, height: 30)
+        cancelButton.frame = CGRect(x: 10, y: topLabel.top, width: 60, height: 30)
+        saveButton.frame = CGRect(x: view.width - 70, y: topLabel.top, width: 60, height: 30)
+        editableTableView.frame = CGRect(x: 0, y: topLabel.bottom + 10, width: view.width, height: editableTableView.contentSize.height)
     }
     
-
-    func customLeftView(systemName: String) -> UIView {
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 60))
-        customView.backgroundColor = .clear
-        let customImageView = UIImageView()
-        customImageView.frame = CGRect(x: 5, y: 20, width: 30, height: 20)
-        let customImage = UIImage(systemName: systemName, withConfiguration: UIImage.SymbolConfiguration.init(weight: .light))
-        customImageView.tintColor = UIColor().infpromo
-        customImageView.contentMode = .scaleAspectFit
-        customImageView.image = customImage
-        customImageView.backgroundColor = .clear
-        customView.addSubview(customImageView)
-        return customView
+    @objc func valueChanged(_ textField: UITextField) {
+        if textModel.count == 10 {
+            switch textField.tag {
+            case TextFieldData.name.rawValue:
+                name = textField.text ?? textModel[0]
+            case TextFieldData.surname.rawValue:
+                surname = textField.text ?? textModel[1]
+            case TextFieldData.socialMedia.rawValue:
+                socialMedia = textField.text ?? textModel[2]
+            case TextFieldData.titleInfo.rawValue:
+                titleInfo = textField.text ?? textModel[3]
+            case TextFieldData.email.rawValue:
+                email = textField.text ?? textModel[4]
+            case TextFieldData.language.rawValue:
+                language = textField.text ?? textModel[5]
+            case TextFieldData.webSite.rawValue:
+                webSite = textField.text ?? textModel[6]
+            case TextFieldData.birthday.rawValue:
+                birthday = textField.text ?? textModel[7]
+            case TextFieldData.location.rawValue:
+                location = textField.text ?? textModel[8]
+            case TextFieldData.phone.rawValue:
+                phone = textField.text ?? textModel[9]
+            default:
+                break
+            }
+        }
+        
     }
    
-
 }
 
 extension EditProfileViewController: UITextFieldDelegate {
@@ -259,19 +216,32 @@ extension EditProfileViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        currentTextFieldTag = textField.tag
+        
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let nextTag = textField.tag + 1
+ 
+    
+    
+}
 
-        if let nextResponder = textField.superview?.viewWithTag(nextTag) {
-            nextResponder.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
+extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        infoModel.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: EditableTableViewCell.reuseIdentifier, for: indexPath) as! EditableTableViewCell
         
-        return true
+        let modelIndex = infoModel[indexPath.row]
+        let textIndex = textModel[indexPath.row]
+        cell.configureLabel(modelIndex)
+        cell.configureTextField(textIndex)
+        
+        cell.infoTextField.tag = indexPath.row
+        cell.infoTextField.delegate = self
+        cell.infoTextField.addTarget(self, action: #selector(valueChanged), for: .editingDidEnd)
+        
+        return cell
     }
     
     
@@ -282,25 +252,14 @@ extension EditProfileViewController: UITextFieldDelegate {
 extension EditProfileViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                
-                if currentTextFieldTag > 6 {
-                    self.view.frame.origin.y -= keyboardSize.height
-                }
-                
-                
-                
-              
-            }
+            editableTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
-            if self.view.frame.origin.y < 0 {
-                self.view.frame.origin.y += keyboardSize.height
-            }
+            editableTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         
     }

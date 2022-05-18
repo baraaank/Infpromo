@@ -10,7 +10,6 @@ import UIKit
 struct ProfileInformationOptions {
     let icon: String
     let header: String
-    
 }
 
 class ProfileInformationsViewController: UIViewController {
@@ -84,8 +83,35 @@ class ProfileInformationsViewController: UIViewController {
     }
     
     @objc func updateButtonTapped() {
+//        let vc = EditProfileViewController()
+//        navigationController?.pushViewController(vc, animated: true)
+        
         let vc = EditProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        
+        vc.name = profileInfos?.name ?? ""
+        vc.surname = profileInfos?.surName ?? ""
+        vc.socialMedia = profileInfos?.socialMedia ?? ""
+        vc.titleInfo = profileInfos?.title ?? ""
+        vc.email = profileInfos?.email ?? ""
+        vc.language = profileInfos?.language ?? ""
+        vc.webSite = profileInfos?.website ?? ""
+        vc.birthday = profileInfos?.birthday ?? ""
+        vc.location = profileInfos?.city ?? ""
+        vc.phone = profileInfos?.phone ?? ""
+        
+        vc.textModel.append(profileInfos?.name ?? "")
+        vc.textModel.append(profileInfos?.surName ?? "")
+        vc.textModel.append(profileInfos?.socialMedia ?? "")
+        vc.textModel.append(profileInfos?.title ?? "")
+        vc.textModel.append(profileInfos?.email ?? "")
+        vc.textModel.append(profileInfos?.language ?? "")
+        vc.textModel.append(profileInfos?.website ?? "")
+        vc.textModel.append(profileInfos?.birthday ?? "")
+        vc.textModel.append(profileInfos?.city ?? "")
+        vc.textModel.append(profileInfos?.phone ?? "")
+        
+        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
     }
     
 

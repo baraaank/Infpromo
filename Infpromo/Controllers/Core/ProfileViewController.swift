@@ -87,6 +87,8 @@ class ProfileViewController: UIViewController {
         startBlur()
         
         APIisNotWorking()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshByEdit), name: NSNotification.Name(rawValue: "reloadDatas"), object: nil)
     }
     
     func APIisNotWorking() {
@@ -112,6 +114,14 @@ class ProfileViewController: UIViewController {
 
     }
     
+    @objc func refreshByEdit(_ notification: NSNotification) {
+        if let reload = notification.userInfo?["success"] as? String {
+            DispatchQueue.main.async {
+                self.loadViewElements()
+            }
+        }
+    }
+    
     func loadViewElements() {
         APICaller.shared.getUser { response in
             switch response {
@@ -132,7 +142,8 @@ class ProfileViewController: UIViewController {
                                                                      socialMedia: infos.socialMedia,
                                                                      title: infos.title,
                                                                      website: infos.website)
-                print(infos)
+                
+                
                 
                 DispatchQueue.main.async {
                     self.profileCollectionView.reloadData()
