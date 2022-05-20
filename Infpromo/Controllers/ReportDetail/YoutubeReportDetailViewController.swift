@@ -52,28 +52,28 @@ class YoutubeReportDetailViewController: UIViewController {
     private let audienceDatasLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Takipçilere göre kitle verileri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
-        label.backgroundColor = .blue
+        
         return label
     }()
     
     private let audienceAgeGenderLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Takipçi Yaş ve Cinsiyet Grafikleri", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
-        label.backgroundColor = .blue
+        
         return label
     }()
     
     private let notableFollowersLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Takipçilerin referans kullanıcıları (Notable followers)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
-        label.backgroundColor = .blue
+        
         return label
     }()
     
     private let notableLikersLabel: UILabel = {
        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Beğenenlerin referans kullanıcıları (Notable likers)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
-        label.backgroundColor = .blue
+        
         return label
     }()
     
@@ -83,19 +83,19 @@ class YoutubeReportDetailViewController: UIViewController {
                                               collectionViewLayout: UICollectionViewCompositionalLayout { sectionNumber,env in
             
             if sectionNumber == 0 {
-                let inset: CGFloat = 4
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
                 section.boundarySupplementaryItems = [
                     .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5)), elementKind: YoutubeFirstDetailsCollectionReusableView.kind, alignment: .top)
                 ]
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+               
                 return section
             }
             else {
@@ -103,11 +103,11 @@ class YoutubeReportDetailViewController: UIViewController {
                 //populer posts
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.8))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.leading = 8
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
                 section.boundarySupplementaryItems = [
                                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: YoutubePopularPostsCollectionReusableView.kind, alignment: .topLeading)
                                ]
@@ -219,7 +219,7 @@ class YoutubeReportDetailViewController: UIViewController {
         notableLikersCollectionView.delegate = self
         notableLikersCollectionView.dataSource = self
         
-        
+        navigationController?.navigationBar.tintColor = UIColor().infpromo
         
         addSubviews()
         
@@ -230,19 +230,19 @@ class YoutubeReportDetailViewController: UIViewController {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 0.1)
 
-        audienceDatasLabel.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        audienceDatasLabel.frame = CGRect(x: 10, y: reportCollectionView.bottom + 2, width: view.width - 20, height: view.width * 0.1)
         notableSubsView.frame = CGRect(x: 10, y: audienceDatasLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
         
         followersGenderDistributionView.frame = CGRect(x: 10, y: notableSubsView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
         followersLocationView.frame = CGRect(x: 10, y: followersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.4)
         audienceAgeGenderLabel.frame = CGRect(x: 10, y: followersLocationView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        agesCollectionView.frame = CGRect(x: 0, y: audienceAgeGenderLabel.bottom + 10, width: scrollView.width, height: agesCollectionView.contentSize.height + 0.1)
-        notableLikersLabel.frame = CGRect(x: 10, y: agesCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        notableUsersCollectionView.frame = CGRect(x: 0, y: notableLikersLabel.bottom + 10, width: view.width, height: notableUsersCollectionView.contentSize.height + 0.1)
-        notableFollowersLabel.frame = CGRect(x: 10, y: notableUsersCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        notableLikersCollectionView.frame = CGRect(x: 0, y: notableFollowersLabel.bottom + 10, width: view.width, height: notableLikersCollectionView.contentSize.height + 0.1)
+        agesCollectionView.frame = CGRect(x: 0, y: audienceAgeGenderLabel.bottom + 2, width: scrollView.width, height: agesCollectionView.contentSize.height + 0.1)
+        notableLikersLabel.frame = CGRect(x: 10, y: agesCollectionView.bottom + 2, width: view.width - 20, height: view.width * 0.1)
+        notableUsersCollectionView.frame = CGRect(x: 0, y: notableLikersLabel.bottom + 2, width: view.width, height: notableUsersCollectionView.contentSize.height + 0.1)
+        notableFollowersLabel.frame = CGRect(x: 10, y: notableUsersCollectionView.bottom + 2, width: view.width - 20, height: view.width * 0.1)
+        notableLikersCollectionView.frame = CGRect(x: 0, y: notableFollowersLabel.bottom + 2, width: view.width, height: notableLikersCollectionView.contentSize.height + 0.1)
         
-        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + notableSubsView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height +  notableUsersCollectionView.height + notableLikersCollectionView.height + 300 + view.width * 0.8)
+        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + notableSubsView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height +  notableUsersCollectionView.height + notableLikersCollectionView.height + 200)
     }
     
     

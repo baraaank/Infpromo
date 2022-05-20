@@ -18,6 +18,30 @@ class ChartsView: UIView {
         chart.borderLineWidth = 3.0
         chart.gridBackgroundColor = .gray
         chart.xAxis.labelRotationAngle = -30
+ 
+        
+//        chart.xAxis.gridLineDashPhase = 0.0
+        chart.xAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.xAxis.gridLineWidth = 1
+        chart.xAxis.gridLineCap = .butt
+        chart.xAxis.gridLineDashLengths = [2.0]
+        
+        chart.leftAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.leftAxis.gridLineWidth = 1
+        chart.leftAxis.gridLineCap = .butt
+        chart.leftAxis.gridLineDashLengths = [2.0]
+        
+        chart.rightAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.rightAxis.gridLineWidth = 1
+        chart.rightAxis.gridLineCap = .butt
+        chart.rightAxis.gridLineDashLengths = [2.0]
+        
+        chart.highlightPerTapEnabled = false
+        chart.highlightPerDragEnabled = false
+        
+        chart.rightAxis.drawGridLinesEnabled = false
+        chart.rightAxis.drawAxisLineEnabled = false
+        
         return chart
     }()
     
@@ -41,6 +65,8 @@ class ChartsView: UIView {
     
     func prepareChartsWithData(yValues: [Double], labels: [String]) {
 
+        
+        
         var lineChartValues: [ChartDataEntry] = []
         
         let intY = yValues.map({Int($0)})
@@ -56,11 +82,12 @@ class ChartsView: UIView {
 
         let setLineChart = LineChartDataSet(entries: lineChartValues, label: "")
         
-        
+        setLineChart.circleRadius = 6.6
         setLineChart.circleColors = [NSUIColor().infpromo]
         setLineChart.colors = [NSUIColor().infpromo]
-        
         setLineChart.valueTextColor = .clear
+        setLineChart.lineWidth = 1
+        
         
         let dataLineChart = LineChartData(dataSet: setLineChart)
         
@@ -70,6 +97,7 @@ class ChartsView: UIView {
         lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
         lineChartView.xAxis.axisLineColor = UIColor().infpromo
         lineChartView.xAxis.granularity = 1
+
         lineChartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
         lineChartView.rightAxis.drawLabelsEnabled = false
         lineChartView.legend.form = .none

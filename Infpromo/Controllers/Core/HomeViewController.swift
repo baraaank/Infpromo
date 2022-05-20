@@ -124,9 +124,9 @@ class HomeViewController: UIViewController {
     
     let customLabel: UILabel = {
         let deviceWidth = UIScreen.main.bounds.width
-        let label = UILabel(frame: CGRect(x: deviceWidth - 110, y: 10, width: 80, height: 24))
+        let label = UILabel(frame: CGRect(x: deviceWidth - 116, y: 10, width: 90, height: 24))
         //        let label = UILabel(frame: CGRect(x: 260, y: 8, width: 120, height: 30))
-        label.attributedText = NSAttributedString(string: "Rapor: ?", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor :  UIColor().infpromo])
+        label.attributedText = NSAttributedString(string: "Rapor:", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor :  UIColor().infpromo])
         label.numberOfLines = 0
         
         return label
@@ -136,12 +136,7 @@ class HomeViewController: UIViewController {
         let image = UIImage(systemName: "doc", withConfiguration: UIImage.SymbolConfiguration.init(weight: .medium))
         let imageView = UIImageView(image: image)
         imageView.tintColor = UIColor().infpromo
-        
-        
         imageView.contentMode = .scaleAspectFit
-        
-        
-        
         let deviceWidth = UIScreen.main.bounds.width
         
         imageView.frame = CGRect(x: deviceWidth - 30, y: 12, width: 20, height: 20)

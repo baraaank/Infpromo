@@ -12,7 +12,7 @@ class ProgressBarWithInfos: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "-", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         label.textAlignment = .left
         return label
     }()
@@ -28,7 +28,7 @@ class ProgressBarWithInfos: UIView {
     
     private let percentageLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "---", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "-", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     

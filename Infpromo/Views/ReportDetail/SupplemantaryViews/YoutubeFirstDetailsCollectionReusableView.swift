@@ -57,8 +57,8 @@ class YoutubeFirstDetailsCollectionReusableView: UICollectionReusableView {
         
         profileImageView.frame = CGRect(x: (width / 2) - (height / 4), y: divideByTen, width: height / 2, height: height / 2)
         profileImageView.layer.cornerRadius = profileImageView.width / 2
-        nameLabel.frame = CGRect(x: 40, y: profileImageView.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
-        usernameButton.frame = CGRect(x: 40, y: nameLabel.bottom + divideByTen, width: width - 80, height: divideByTen * 2.5)
+        nameLabel.frame = CGRect(x: 40, y: profileImageView.bottom + (2 * divideByTen), width: width - 80, height: divideByTen * 2)
+        usernameButton.frame = CGRect(x: 40, y: nameLabel.bottom, width: width - 80, height: divideByTen * 2)
     }
     
     func configureProfile(with viewModel: ReportDetailViewModel) {

@@ -99,9 +99,9 @@ class PopularPostsCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         let oneOfTwenty = height / 24
         dateLabel.frame = CGRect(x: 10, y: oneOfTwenty, width: width - 20, height: oneOfTwenty * 2)
-        photoImageView.frame = CGRect(x: 10, y: dateLabel.bottom + oneOfTwenty, width: width - 20, height: width * 0.6)
-        firstStackView.frame = CGRect(x: 20, y: photoImageView.bottom + oneOfTwenty, width: width - 40, height: height - dateLabel.height - photoImageView.height - oneOfTwenty * 7.2)
-        secondStackView.frame = CGRect(x: 20, y: firstStackView.bottom + oneOfTwenty, width: width - 40, height: height - dateLabel.height - photoImageView.height - oneOfTwenty * 7.2)
+        photoImageView.frame = CGRect(x: 10, y: dateLabel.bottom + oneOfTwenty, width: width - 20, height: height * 0.6)
+        firstStackView.frame = CGRect(x: 40, y: photoImageView.bottom + oneOfTwenty, width: width - 80, height: height - dateLabel.height - photoImageView.height - oneOfTwenty * 6.4)
+        secondStackView.frame = CGRect(x: 40, y: firstStackView.bottom + oneOfTwenty, width: width - 80, height: height - dateLabel.height - photoImageView.height - oneOfTwenty * 6.4)
         
     }
     

@@ -14,7 +14,7 @@ class PopularPostsCollectionReusableView: UICollectionReusableView {
     
     let label: UILabel = {
        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Popular Postlar", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: " Popular Postlar", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
         return label
     }()
     

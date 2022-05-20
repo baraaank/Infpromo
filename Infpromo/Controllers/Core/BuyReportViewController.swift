@@ -167,7 +167,6 @@ class BuyReportViewController: UIViewController {
             .link: "info@infpromo.com",
             .foregroundColor: UIColor().infpromo,
             .strokeColor: UIColor().infpromo,
-            
         ]
         
         let attributedString = NSMutableAttributedString(string: text, attributes: attributes)

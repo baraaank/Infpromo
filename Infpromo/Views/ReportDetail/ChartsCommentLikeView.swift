@@ -15,6 +15,27 @@ class ChartsCommentLikeView: UIView, IValueFormatter {
        let chart = BarChartView()
         chart.backgroundColor = .white
         chart.xAxis.labelRotationAngle = -30
+        
+        chart.xAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.xAxis.gridLineWidth = 1
+        chart.xAxis.gridLineCap = .butt
+        chart.xAxis.gridLineDashLengths = [2.0]
+        
+        chart.leftAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.leftAxis.gridLineWidth = 1
+        chart.leftAxis.gridLineCap = .butt
+        chart.leftAxis.gridLineDashLengths = [2.0]
+        
+        chart.rightAxis.gridColor = .lightGray.withAlphaComponent(0.5)
+        chart.rightAxis.gridLineWidth = 1
+        chart.rightAxis.gridLineCap = .butt
+        chart.rightAxis.gridLineDashLengths = [2.0]
+        
+        chart.highlightPerTapEnabled = false
+        chart.highlightPerDragEnabled = false
+        
+        chart.rightAxis.drawGridLinesEnabled = false
+        chart.rightAxis.drawAxisLineEnabled = false
         return chart
     }()
     

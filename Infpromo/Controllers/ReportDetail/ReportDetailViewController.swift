@@ -159,30 +159,30 @@ class ReportDetailViewController: UIViewController {
                                               collectionViewLayout: UICollectionViewCompositionalLayout { sectionNumber,env in
             
             if sectionNumber == 0 {
-                let inset: CGFloat = 4
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
                 section.boundarySupplementaryItems = [
                     .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5)), elementKind: FirstDetailsCollectionReusableView.kind, alignment: .top)
                 ]
                 
-                section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+                
                 return section
             } else {
 
                 //populer posts
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.6))
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 0, trailing: 4)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.8))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets.leading = 8
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8)
                 section.boundarySupplementaryItems = [
                                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.1)), elementKind: PopularPostsCollectionReusableView.kind, alignment: .topLeading)
                                ]
@@ -319,6 +319,8 @@ class ReportDetailViewController: UIViewController {
         print(influencerId)
         view.backgroundColor = .white
         
+        navigationController?.navigationBar.tintColor = UIColor().infpromo
+        
         
     }
     
@@ -330,13 +332,13 @@ class ReportDetailViewController: UIViewController {
         scrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         reportCollectionView.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: reportCollectionView.contentSize.height + 1)
         firstChartLabel.frame = CGRect(x: 10, y: reportCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        followersChart.frame = CGRect(x: 10, y: firstChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        followersChart.frame = CGRect(x: 10, y: firstChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.8)
         secondChartLabel.frame = CGRect(x: 10, y: followersChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        followingChart.frame = CGRect(x: 10, y: secondChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        followingChart.frame = CGRect(x: 10, y: secondChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.8)
         thirdChartLabel.frame = CGRect(x: 10, y: followingChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        commentLikeChart.frame = CGRect(x: 10, y: thirdChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        commentLikeChart.frame = CGRect(x: 10, y: thirdChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.8)
         fourthChartLabel.frame = CGRect(x: 10, y: commentLikeChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        avgLikesChart.frame = CGRect(x: 10, y: fourthChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
+        avgLikesChart.frame = CGRect(x: 10, y: fourthChartLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.8)
         hashtagsLabel.frame = CGRect(x: 10, y: avgLikesChart.bottom + 10, width: view.width - 20, height: view.width * 0.1)
         
         hashtagsView.frame = CGRect(x: 10, y: hashtagsLabel.bottom + 10, width: scrollView.width - 20, height: view.width * 0.6)
@@ -351,18 +353,18 @@ class ReportDetailViewController: UIViewController {
         followersGenderDistributionView.frame = CGRect(x: 10, y: fakeFollowersView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
         followersLocationView.frame = CGRect(x: 10, y: followersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.4)
         audienceAgeGenderLabel.frame = CGRect(x: 10, y: followersLocationView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        agesCollectionView.frame = CGRect(x: 0, y: audienceAgeGenderLabel.bottom + 10, width: scrollView.width, height: agesCollectionView.contentSize.height + 0.1)
+        agesCollectionView.frame = CGRect(x: 0, y: audienceAgeGenderLabel.bottom + 2, width: scrollView.width, height: agesCollectionView.contentSize.height + 0.1)
         
-        likersDataLabel.frame = CGRect(x: 10, y: agesCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        likersDataLabel.frame = CGRect(x: 10, y: agesCollectionView.bottom + 2, width: view.width - 20, height: view.width * 0.1)
         likersCredibilityView.frame = CGRect(x: 10, y: likersDataLabel.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
         likersNonFollowersLikesView.frame = CGRect(x: likersCredibilityView.right + 10, y: likersDataLabel.bottom + 10, width: (view.width / 2) - 15, height: view.width * 0.6)
         
         likersFollowersGenderDistributionView.frame = CGRect(x: 10, y: likersNonFollowersLikesView.bottom + 10, width: view.width - 20, height: view.width * 0.6)
         likersFollowersLocationView.frame = CGRect(x: 10, y: likersFollowersGenderDistributionView.bottom + 10, width: view.width - 20, height: view.width * 1.4)
         likersAgeGenderLabel.frame = CGRect(x: 10, y: likersFollowersLocationView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
-        likersAgesCollectionView.frame = CGRect(x: 0, y: likersAgeGenderLabel.bottom + 10, width: scrollView.width, height: likersAgesCollectionView.contentSize.height + 0.1)
+        likersAgesCollectionView.frame = CGRect(x: 0, y: likersAgeGenderLabel.bottom + 2, width: scrollView.width, height: likersAgesCollectionView.contentSize.height + 0.1)
         
-        notableLikersLabel.frame = CGRect(x: 10, y: likersAgesCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
+        notableLikersLabel.frame = CGRect(x: 10, y: likersAgesCollectionView.bottom + 2, width: view.width - 20, height: view.width * 0.1)
         notableUsersCollectionView.frame = CGRect(x: 0, y: notableLikersLabel.bottom + 10, width: view.width, height: notableUsersCollectionView.contentSize.height + 0.1)
         notableFollowersLabel.frame = CGRect(x: 10, y: notableUsersCollectionView.bottom + 10, width: view.width - 20, height: view.width * 0.1)
         notableLikersCollectionView.frame = CGRect(x: 0, y: notableFollowersLabel.bottom + 10, width: view.width, height: notableLikersCollectionView.contentSize.height + 0.1)
@@ -372,7 +374,7 @@ class ReportDetailViewController: UIViewController {
         
         
         
-        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + notableUsersCollectionView.height + notableLikersCollectionView.height + 300 + view.width * 1.2)
+        scrollView.contentSize = CGSize(width: view.width, height: reportCollectionView.height + followersChart.height + followingChart.height + avgLikesChart.height + hashtagsView.height + mentionsView.height + fakeFollowersView.height + followersGenderDistributionView.height + followersLocationView.height + agesCollectionView.height + likersCredibilityView.height + likersNonFollowersLikesView.height + likersFollowersGenderDistributionView.height + likersFollowersLocationView.height + likersAgesCollectionView.height + notableUsersCollectionView.height + notableLikersCollectionView.height + 300 + view.width * 1.4)
     }
     
     func addSubviews() {
@@ -524,6 +526,41 @@ class ReportDetailViewController: UIViewController {
                                          likeCompared: avgDetail.stats?.avgLikes.compared ?? 1,
                                          followersValue: avgDetail.avgComments,
                                          followersCompared: avgDetail.stats?.followers.compared ?? 1)
+                
+                print(avgDetail.stats?.avgLikes.compared)
+                print(avgDetail.stats?.followers.compared)
+                
+                
+                
+//                DispatchQueue.main.async {
+//                    if let avgLikes = avgDetail.stats?.avgLikes.compared {
+//                        let clearAvgLikes = AbbreviationsHelper.clear(doubleOne: avgLikes)
+//                        var stringOne = ""
+//                        if clearAvgLikes > 0 {
+//                            stringOne = "Beğeniler bu ay % \(clearAvgLikes) artış göstermiş"
+//                        } else {
+//                            stringOne = "Beğeniler bu ay % \(clearAvgLikes) azalma göstermiş"
+//                        }
+//
+//                        let stringTwo = "\(clearAvgLikes)"
+//                        let range = (stringOne as NSString).range(of: stringTwo)
+//
+//                        let attributedText = NSMutableAttributedString.init(string: stringOne, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+//
+//                        if avgLikes > 0 {
+//                            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.green , range: range)
+//
+//                        } else {
+//                            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
+//                        }
+//
+//                        self.fourthChartLabel.attributedText = attributedText
+//
+//                    }
+//                }
+                
+               
+               
                 
                 self.colors = Array(repeating: .green, count: 2)
                 if avgDetail.avgLikes! > 0 {
@@ -690,7 +727,19 @@ class ReportDetailViewController: UIViewController {
     }
     
     
-    
+    func attributedIncreaseDecrease(avg: Double, stringOne: String) -> NSMutableAttributedString {
+        let clearAvg = AbbreviationsHelper.clear(doubleOne: avg)
+        let stringTwo = "\(clearAvg)%"
+        let range = (stringOne as NSString).range(of: stringTwo)
+        let attributedText = NSMutableAttributedString.init(string: stringOne, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        
+        if avg > 0 {
+            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.green , range: range)
+        } else {
+            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
+        }
+        return attributedText
+    }
     
     @objc func notableUsersNameButtonClicked(sender: CustomFilterButton) {
         let indexPath = IndexPath(row: sender.row, section: sender.section)
@@ -750,6 +799,7 @@ extension ReportDetailViewController {
     
     func callFillingFuncs() {
         self.reportCollectionView.reloadData()
+        self.attributedLabel()
         self.handleCharts()
         self.handleBarChart()
         self.handleHashtagsMentions()
@@ -763,6 +813,31 @@ extension ReportDetailViewController {
         self.likersAgesCollectionView.reloadData()
         self.notableUsersCollectionView.reloadData()
         self.notableLikersCollectionView.reloadData()
+    }
+    
+    func attributedLabel() {
+        let firstDetailAvarages = firstDetail?.likeCompared
+        if let avg = firstDetailAvarages {
+            let clearAvg = AbbreviationsHelper.clear(doubleOne: avg)
+            var attributesFrom: NSMutableAttributedString?
+            if avg > 0 {
+                attributesFrom = self.attributedIncreaseDecrease(avg: avg, stringOne: "Beğeniler bu ay \(clearAvg)% artış göstermiş")
+            } else {
+                attributesFrom = self.attributedIncreaseDecrease(avg: avg, stringOne: "Beğeniler bu ay \(clearAvg)% azalma göstermiş")
+            }
+            self.fourthChartLabel.attributedText = attributesFrom
+        }
+        let firstDetailFollowersAvarage = firstDetail?.followersCompared
+        if let avgFollowers = firstDetailFollowersAvarage {
+            let clearAvgFollowers = AbbreviationsHelper.clear(doubleOne: avgFollowers)
+            var attributesFromFollowers: NSMutableAttributedString?
+            if avgFollowers > 0 {
+                attributesFromFollowers = self.attributedIncreaseDecrease(avg: avgFollowers, stringOne: "Takipçiler bu ay \(clearAvgFollowers)% artış göstermiş")
+            } else {
+                attributesFromFollowers = self.attributedIncreaseDecrease(avg: avgFollowers, stringOne: "Takipçiler bu ay \(clearAvgFollowers)% azalma göstermiş")
+            }
+            self.firstChartLabel.attributedText = attributesFromFollowers
+        }
     }
     
     func handleBarChart() {

@@ -162,16 +162,18 @@ class YoutubeNotableLikersCollectionViewCell: UICollectionViewCell {
     
     
     func configureCellByFilter(with viewModel: SearchWithFilterCellViewModel) {
+        
+        
         if let username = viewModel.username {
             usernameButton.setAttributedTitle(NSAttributedString(string: "@\(username)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             
-        }
-        
-        if viewModel.username == "" {
+        } else {
             if let name = viewModel.fullname {
                 usernameButton.setAttributedTitle(NSAttributedString(string: "\(name)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor().infpromo]), for: .normal)
             }
         }
+        
+       
         
         if let engagements = viewModel.engagements {
             
