@@ -7,25 +7,15 @@
 
 import Foundation
 
-struct JsonResponses: Codable, Error {
+struct JsonResponses: Decodable, Error {
     let success: Bool
     let message: String
     let code: Int
     let data: IsCreated?
 }
 
-struct IsCreated: Codable {
-    
+struct IsCreated: Decodable {
+    let userPublic: UserResponse?
 }
 
 
-struct JsonResponsesInt: Codable, Error {
-    let success: Int
-    let message: String
-    let code: Int
-    let data: IsCreatedInt?
-}
-
-struct IsCreatedInt: Codable {
-    
-}

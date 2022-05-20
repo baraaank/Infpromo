@@ -131,7 +131,24 @@ class EditProfileViewController: UIViewController {
                     let success = ["success": "success"]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDatas"), object: nil, userInfo: success)
                     
-                   
+                    var editedModelFrom: ProfileInformationsCellViewModel?
+                    if let data = model.data {
+                        if let userPub = data.userPublic {
+                            editedModelFrom = .init(name: userPub.name,
+                                                    surName: userPub.surName,
+                                                    email: userPub.email,
+                                                    birthday: userPub.birthday,
+                                                    city: userPub.city,
+                                                    language: userPub.language,
+                                                    phone: userPub.phone,
+                                                    socialMedia: userPub.socialMedia,
+                                                    title: userPub.title,
+                                                    website: userPub.website)
+                        }
+                    }
+                    
+                    let editedOnes: [String: Any] = ["editedOnes": editedModelFrom]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDatasFromEdited"), object: nil, userInfo: editedOnes)
                     
                     DispatchQueue.main.async {
                         self.view.endEditing(true)

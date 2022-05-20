@@ -70,7 +70,7 @@ class ProfileInformationsViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Güncelle", style: .plain, target: self, action: #selector(updateButtonTapped))
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshByEditedOnes), name: NSNotification.Name(rawValue: "reloadDatasFromEdited"), object: nil)
         
     }
     
@@ -114,7 +114,19 @@ class ProfileInformationsViewController: UIViewController {
         present(vc, animated: true)
     }
     
+   
 
+    @objc func refreshByEditedOnes(_ notification: NSNotification) {
+        print("insidinggg")
+        if let reload = notification.userInfo?["editedOnes"] as? ProfileInformationsCellViewModel {
+            profileInfosArray.removeAll()
+            print("reload \(reload)")
+            DispatchQueue.main.async {
+                self.profileInfos = reload
+                self.profileInformationsCollectionView.reloadData()
+            }
+        }
+    }
    
  
 
