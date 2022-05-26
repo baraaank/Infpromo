@@ -205,8 +205,8 @@ class LogInViewController: UIViewController {
         
         AuthManager.shared.logInUser(email: email, password: password) { response in
             switch response {
-            case .success(_):
-                
+            case .success(let model):
+                print(model.decode.exp)
                 DispatchQueue.main.async {
                     let vc = TabBarController()
                     vc.modalPresentationStyle = .fullScreen

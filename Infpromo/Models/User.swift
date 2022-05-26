@@ -14,10 +14,12 @@ struct User: Decodable {
     let decode: DecodeResponse
     let code: Int?
     let message: String?
+    let refreshToken: String
 }
 
 struct DecodeResponse: Codable {
-    let _id: String
+    let _id: String?
+    let exp: Int
 }
 
 

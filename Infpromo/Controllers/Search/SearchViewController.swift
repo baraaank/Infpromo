@@ -750,7 +750,8 @@ class SearchViewController: UIViewController {
     private let followersHeadingsTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "followersHeadingsTableView")
-        
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGray6
         return tableView
     }()
     
@@ -759,8 +760,6 @@ class SearchViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "followersOptionsTableView")
         return tableView
     }()
-    
-    
     
     private let youtubeInfluencerHeadingsTableView: UITableView = {
         let tableView = UITableView()
@@ -779,7 +778,8 @@ class SearchViewController: UIViewController {
     private let youtubeFollowersHeadingsTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "youtubeFollowersHeadingsTableView")
-        
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGray6
         return tableView
     }()
     
@@ -806,7 +806,8 @@ class SearchViewController: UIViewController {
     private let tiktokFollowersHeadingsTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tiktokFollowersHeadingsTableView")
-        
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGray6
         return tableView
     }()
     
@@ -983,7 +984,14 @@ class SearchViewController: UIViewController {
 //            }
 //        }
 //
-       
+        
+        //for additional empty rows deleting
+        influencerOptionsTableView.tableFooterView = UIView()
+        followersOptionsTableView.tableFooterView = UIView()
+        youtubeInfluencerOptionsTableView.tableFooterView = UIView()
+        youtubeFollowersOptionsTableView.tableFooterView = UIView()
+        tiktokInfluencerOptionsTableView.tableFooterView = UIView()
+        tiktokFollowersOptionsTableView.tableFooterView = UIView()
     }
     
     func delegatesAndDataSources() {

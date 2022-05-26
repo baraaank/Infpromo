@@ -58,6 +58,8 @@ class ProfileViewController: UIViewController {
         return blurEffectView
     }()
     
+    let refreshControl = UIRefreshControl()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,13 +91,33 @@ class ProfileViewController: UIViewController {
         APIisNotWorking()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshByEdit), name: NSNotification.Name(rawValue: "reloadDatas"), object: nil)
+        
+        refreshControl.backgroundColor = UIColor.systemGray6
+        refreshControl.tintColor = UIColor().infpromo
+//        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        profileCollectionView.refreshControl = refreshControl
+        profileCollectionView.alwaysBounceVertical = true
+        profileCollectionView.refreshControl?.layer.zPosition = -1
     }
     
     func APIisNotWorking() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.stopBlur()
-                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                    self.stopBlur()
+//                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
+//                }
+        
+    }
+    
+    @objc func pullToRefresh(refreshControl: UIRefreshControl) {
+        userResponse = nil
+        profileInfos = nil
+        
+        DispatchQueue.main.async {
+            self.loadViewElements()
+        }
+        
+       
         
     }
     
@@ -113,16 +135,24 @@ class ProfileViewController: UIViewController {
         blurEffectView.removeFromSuperview()
 
     }
+  
     
     @objc func refreshByEdit(_ notification: NSNotification) {
+   
         if let reload = notification.userInfo?["success"] as? String {
+            print("inside it right?")
             DispatchQueue.main.async {
                 self.loadViewElements()
+                self.profileCollectionView.reloadData()
             }
         }
     }
     
     func loadViewElements() {
+        DispatchQueue.main.async {
+            self.startBlur()
+        }
+        
         APICaller.shared.getUser { response in
             switch response {
             case .success(let model):
@@ -131,6 +161,7 @@ class ProfileViewController: UIViewController {
                                                                    socialMedia: model.data.userPublic.socialMedia,
                                                                    title: model.data.userPublic.title)
 
+                print("user response: \(self.userResponse)")
                 let infos = model.data.userPublic
                 self.profileInfos = ProfileInformationsCellViewModel(name: infos.name,
                                                                      surName: infos.surName,
@@ -151,8 +182,17 @@ class ProfileViewController: UIViewController {
                 }
             case .failure(let error):
                 print("failure \(error)")
+                DispatchQueue.main.async {
+                    self.stopBlur()
+                    self.showAlert(title: "Hata!", message: "Bilgileriniz yüklenirken hata oluştu.")
+                }
                 print("profile informations are not loading")
             }
+        }
+        
+        DispatchQueue.main.async {
+            self.profileCollectionView.refreshControl?.endRefreshing()
+            
         }
     }
     
@@ -192,10 +232,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         if kind == ProfileHeaderCollectionReusableView.kind {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: ProfileHeaderCollectionReusableView.kind, withReuseIdentifier: ProfileHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! ProfileHeaderCollectionReusableView
             header.isSkeletonable = true
-            header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name,
-                                                                        surName: userResponse?.surName,
-                                                                        socialMedia: userResponse?.socialMedia,
-                                                                        title: userResponse?.title))
+            header.configureHeader(with: ProfileHeaderReusableViewModel(name: userResponse?.name ?? "",
+                                                                        surName: userResponse?.surName ?? "",
+                                                                        socialMedia: userResponse?.socialMedia ?? "",
+                                                                        title: userResponse?.title ?? ""))
             
             return header
         } else {

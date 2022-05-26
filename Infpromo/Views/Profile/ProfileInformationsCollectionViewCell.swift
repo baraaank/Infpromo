@@ -113,7 +113,13 @@ class ProfileInformationsCollectionViewCell: UICollectionViewCell, UITextFieldDe
     func fillWithInfos(with viewModel: String) {
         if viewModel != "" {
             informationsLabel.text = viewModel
+            informationsLabel.textColor = .black
+        } else {
+            informationsLabel.text = "henüz girilmemiş.."
+            informationsLabel.textColor = .lightGray
         }
+        
+        
         
     }
     

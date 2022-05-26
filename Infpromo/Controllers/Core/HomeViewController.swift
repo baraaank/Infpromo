@@ -197,9 +197,9 @@ class HomeViewController: UIViewController {
     
     var matchingOutputs: [String] = []
     
-    var instagramNext = 1
-    var youtubeNext = 0
-    var tiktokNext = 0
+    var instagramNext = false
+    var youtubeNext = false
+    var tiktokNext = false
     
     
     var reportsCount = 0
@@ -222,6 +222,8 @@ class HomeViewController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return blurEffectView
     }()
+    
+    let refreshControl = UIRefreshControl()
     
     
     override func viewDidLoad() {
@@ -325,10 +327,31 @@ class HomeViewController: UIViewController {
 //        userLogForButton()
         
 //        tabBarController?.tabBar.isUserInteractionEnabled = false
+        
+        refreshControl.backgroundColor = UIColor.systemGray6
+        refreshControl.tintColor = UIColor().infpromo
+        scrollView.refreshControl = refreshControl
+//        scrollView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        
+    }
+    
+    @objc func pullToRefresh() {
+        removeLogics()
+        DispatchQueue.main.async {
+            self.loadViewElements()
+        }
+        
+        DispatchQueue.main.async {
+            self.scrollView.refreshControl?.endRefreshing()
+        }
+        
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("appear")
 //        userLogForButton()
     }
     
@@ -342,23 +365,39 @@ class HomeViewController: UIViewController {
     
     //loading gif blur functionality
     func startBlur() {
-//        view.addSubview(blurEffectView)
-//        view.addSubview(gif)
-//
-//        gif.startAnimation()
+        view.addSubview(blurEffectView)
+        view.addSubview(gif)
+        gif.startAnimation()
 
     }
     
     func stopBlur() {
-//        gif.stopAnimation()
-//        gif.removeFromSuperview()
-//        blurEffectView.removeFromSuperview()
+        gif.stopAnimation()
+        gif.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
 //        tabBarController?.tabBar.barTintColor = .white
 //        tabBarController?.tabBar.isUserInteractionEnabled = true
     
     }
     
     
+    func removeLogics() {
+        initialPage = 0
+        maxPage = -1
+        searchByFilterResultArray.removeAll()
+        directProfileResponseArray.removeAll()
+        influencerIds.removeAll()
+        
+        instagramNext = false
+        youtubeNext = false
+        tiktokNext = false
+        
+        buttonColors.removeAll()
+        titlesOfButton.removeAll()
+       
+        scrollView.isScrollEnabled = true
+        searchResultCollectionView.isScrollEnabled = true
+    }
     
     func userLogForButton()  {
         
@@ -389,35 +428,27 @@ class HomeViewController: UIViewController {
             self.startBlur()
         }
         
+        
+        
         if let deleted = notification.userInfo?["maxPage"] as? Int {
-            initialPage = 0
-            maxPage = deleted
-            searchByFilterResultArray.removeAll()
-            directProfileResponseArray.removeAll()
-            influencerIds.removeAll()
-            
-            instagramNext = 0
-            youtubeNext = 0
-            tiktokNext = 0
-            
-            buttonColors.removeAll()
-            titlesOfButton.removeAll()
-           
-            scrollView.isScrollEnabled = true
-            searchResultCollectionView.isScrollEnabled = true
+            self.removeLogics()
 //
 //            print("eeeyyyyooooo")
 //            print(initialPage)
 //            print(maxPage)
             
+            DispatchQueue.main.async {
+                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.mostVisitedReportsLabel.height + self.mostVisitedReportsCollectionView.height + self.accountCountLabel.height + self.searchResultCollectionView.height + 40)
+            }
         }
         
     }
     
     @objc func totalByFilterYoutube(_ notification: NSNotification) {
         
-       
-        youtubeNext = 2
+       instagramNext = false
+        youtubeNext = true
+        tiktokNext = false
         
         if let byTotalFilter = notification.userInfo?["totalYoutube"] as? Int {
             
@@ -509,8 +540,9 @@ class HomeViewController: UIViewController {
     }
     
     @objc func totalByFilterTiktok(_ notification: NSNotification) {
-        
-        tiktokNext = 3
+        instagramNext = false
+        youtubeNext = false
+        tiktokNext = true
         
         if let byTotalFilter = notification.userInfo?["total"] as? Int {
             total = byTotalFilter
@@ -589,7 +621,9 @@ class HomeViewController: UIViewController {
     
     //filter objects and total numb
     @objc func totalByFilter(_ notification: NSNotification) {
-        instagramNext = 1
+        instagramNext = true
+        youtubeNext = false
+        tiktokNext = false
         
 //        var buttonColorsIn: [UIColor] = []
 //        var buttonTitlesIn: [String] = []
@@ -686,7 +720,7 @@ class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 self.stopBlur()
                 self.searchResultCollectionView.reloadData()
-               
+                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.mostVisitedReportsLabel.height + self.mostVisitedReportsCollectionView.height + self.accountCountLabel.height + self.searchResultCollectionView.height + 40)
             }
         }
     }
@@ -694,7 +728,11 @@ class HomeViewController: UIViewController {
     //username by filter
     @objc func refreshUIByUsername(_ notification: NSNotification) {
         
+        
+        
+        
         if let byUsernameDict = notification.userInfo?["dataDict"] as? [SearchWithFilterCellViewModel] {
+           
             directProfileResponseArray = byUsernameDict
             total = 1
             
@@ -709,10 +747,11 @@ class HomeViewController: UIViewController {
                 self.stopBlur()
                 self.searchResultCollectionView.reloadData()
                 self.accountCountLabel.text = "\"\(self.total)\" hesap bulundu."
-                self.scrollView.isScrollEnabled = false
+//                self.scrollView.isScrollEnabled = false
                 self.searchResultCollectionView.isScrollEnabled = false
 //                self.searchResultCollectionView.sizeToFit()
-//                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.view.height * 0.6)
+//                searchResultCollectionView.contentSize = CGSize(width: view.width, height: searchResultCollectionView.contentSize.height + 0.1)
+                self.scrollView.contentSize = CGSize(width: self.view.width, height: self.view.height)
             }
             
         }
@@ -754,9 +793,13 @@ class HomeViewController: UIViewController {
     }
     
     func loadViewElements() {
-        
+        DispatchQueue.main.async {
+            self.startBlur()
+        }
         //get user reports count--------
-        
+        instagramNext = true
+        youtubeNext = false
+        tiktokNext = false
         APICaller.shared.getUser { result in
             switch result {
             case .success(let result):
@@ -819,11 +862,15 @@ class HomeViewController: UIViewController {
                     self.mostVisitedReportsLabel.hideSkeleton()
                     self.mostVisitedReportsLabel.stopSkeletonAnimation()
                     self.stopBlur()
+                    self.scrollView.contentSize = CGSize(width: self.view.width, height: self.mostVisitedReportsLabel.height + self.mostVisitedReportsCollectionView.height + self.accountCountLabel.height + self.searchResultCollectionView.height + 40)
+                    
                 }
                 
                 
                 
             case .failure(let error):
+                self.stopBlur()
+                self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
                 print(error.localizedDescription)
             }
         }
@@ -894,12 +941,15 @@ class HomeViewController: UIViewController {
                 
             case .failure(let error):
                 print(error)
+                self.stopBlur()
+                self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
                 print("base result is not loading")
             }
             
             
         })
         
+      
         
     }
     
@@ -971,12 +1021,18 @@ class HomeViewController: UIViewController {
     
     
     @objc func nextButtonClicked() {
+        
+       
+        
         maxPage = Int(total / 15)
         print("maxPage: \(maxPage)")
         initialPage += 1
         print("initialnext: \(initialPage)")
         if initialPage <= Int(maxPage) {
-            if instagramNext == 1 {
+            if instagramNext == true {
+                DispatchQueue.main.async {
+                    self.startBlur()
+                }
                 APICaller.shared.filter(page: initialPage, minFollowers: minFollowers, maxFollowers: maxFollowers, gender: gender, interests: interests, language: language, engagementRate: engagementRate, hasYoutube: hasYoutube, audienceGender: audinenceGender, audienceAges: audienceAges, audienceInterests: audienceInterests, audienceLanguage: audienceLanguage, completion: { response in
                     switch response {
                     case .success(let model):
@@ -1020,23 +1076,30 @@ class HomeViewController: UIViewController {
 
     //
                         DispatchQueue.main.async {
+                            self.stopBlur()
                             self.searchResultCollectionView.reloadData()
                         }
                         
                     case .failure(let error):
                         print(error)
+                        DispatchQueue.main.async {
+                            self.stopBlur()
+                            self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                        }
                     }
                 })
                 
             }
             
-            if youtubeNext == 2 {
+            if youtubeNext == true {
+                DispatchQueue.main.async {
+                    self.startBlur()
+                }
                 let platform = "youtube"
                 APICaller.shared.filterYoutubeTiktok(platform: platform, page: initialPage, minFollowers: minFollowersYoutube, maxFollowers: maxFollowersYoutube, minViews: minViewsYoutube, maxViews: maxViewsYoutube, gender: genderYoutube, language: languageYoutube, engagementRate: engagementRateYoutube, audienceGender: audinenceGenderYoutube, audienceAges: audienceAgesYoutube, audienceLanguage: audienceLanguageYoutube) { result in
                     switch result {
                     case .success(let model):
                         var filterResultArrayYoutube: [SearchWithFilterCellViewModel] = []
-                        
                         let tupleButton = self.buttonTitlesLogic(myIds: self.myInfluencerIds, ids: model.data.bodyNew.lookalikes.map({$0.userId}), reportCount: self.reportsCount)
                         self.titlesOfButton.append(contentsOf: tupleButton.0)
                         self.buttonColors.append(contentsOf: tupleButton.1)
@@ -1059,19 +1122,26 @@ class HomeViewController: UIViewController {
 
     //
                         DispatchQueue.main.async {
+                            self.stopBlur()
                             self.searchResultCollectionView.reloadData()
                         }
                         
                     case .failure(let error):
                         print(error)
-                        
+                        DispatchQueue.main.async {
+                            self.stopBlur()
+                            self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                        }
                         
                     }
                     
                 }
             }
             
-            if tiktokNext == 3 {
+            if tiktokNext == true {
+                DispatchQueue.main.async {
+                    self.startBlur()
+                }
                 let platform = "tiktok"
                 APICaller.shared.filterYoutubeTiktok(platform: platform, page: initialPage, minFollowers: minFollowersTiktok, maxFollowers: maxFollowersTiktok, minViews: minViewsTiktok, maxViews: maxViewsTiktok, gender: genderTiktok, language: languageTiktok, engagementRate: engagementRateTiktok, audienceGender: audinenceGenderTiktok, audienceAges: audienceAgesTiktok, audienceLanguage: audienceLanguageTiktok) { result in
                     switch result {
@@ -1100,12 +1170,16 @@ class HomeViewController: UIViewController {
                         
                         //
                         DispatchQueue.main.async {
+                            self.stopBlur()
                             self.searchResultCollectionView.reloadData()
                         }
                         
                     case .failure(let error):
                         print(error)
-                        
+                        DispatchQueue.main.async {
+                            self.stopBlur()
+                            self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                        }
                         
                     }
                     
@@ -1120,6 +1194,9 @@ class HomeViewController: UIViewController {
         
         print("\(maxPage) : maxPage")
         print("\(initialPage) : initialPage")
+       
+        
+        
         
     }
     

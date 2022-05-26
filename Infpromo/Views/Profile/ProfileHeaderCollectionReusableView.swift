@@ -51,14 +51,14 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "henüz girilmemiş..", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "henüz girilmemiş..", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         label.textAlignment = .left
         return label
     }()
     
     private let socialMediaLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "henüz girilmemiş..", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
+        label.attributedText = NSAttributedString(string: "henüz girilmemiş..", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         label.textAlignment = .left
         return label
     }()
@@ -119,13 +119,26 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         
        
 
-        if let socialMedia = viewModel.socialMedia, socialMedia != "" {
+        if let socialMedia = viewModel.socialMedia {
             socialMediaLabel.text = socialMedia
+            socialMediaLabel.textColor = .black
+        }
+        
+        if viewModel.socialMedia == "" {
+            socialMediaLabel.text = "henüz girilmemiş.."
+            socialMediaLabel.textColor = .lightGray
         }
 
-        if let title = viewModel.title, title != "" {
+        if let title = viewModel.title {
             titleLabel.text = title
+            titleLabel.textColor = .black
         }
+        
+        if viewModel.title == "" {
+            titleLabel.text = "henüz girilmemiş.."
+            titleLabel.textColor = .lightGray
+        }
+        
 
         
         

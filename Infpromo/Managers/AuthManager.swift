@@ -24,6 +24,24 @@ final class AuthManager {
         return UserDefaults.standard.string(forKey: "token")
     }
     
+    private var refreshToken: String? {
+        return UserDefaults.standard.string(forKey: "refreshToken")
+    }
+    
+    private var tokenExpDate: Date? {
+        return UserDefaults.standard.object(forKey: "tokenExpDate") as? Date
+    }
+    
+    private var shouldRefreshToken: Bool {
+        guard let expirationDate = tokenExpDate else {
+            return false
+        }
+        let currentDate = Date()
+        let fiveMinutes: TimeInterval = 300 + (3600 * 3)
+        print("exp: \(expirationDate), currr: \(currentDate.addingTimeInterval(fiveMinutes))")
+        return currentDate.addingTimeInterval(fiveMinutes) >= expirationDate
+    }
+    
     let baseURL = "https://www.api.infpromo.com"
     
     public var signInURL: URL? {
@@ -35,6 +53,72 @@ final class AuthManager {
     
     public var signUpURL: URL? {
         return URL(string: "\(baseURL)/users/register")
+    }
+    
+    private var refreshingToken = false
+    
+    
+    public func refreshIfNeeded(completion: ((Bool) -> Void)?) {
+        
+        
+        guard !refreshingToken else {
+            return
+        }
+
+        guard shouldRefreshToken else {
+            completion?(true)
+            return
+        }
+
+        guard let refreshToken = self.refreshToken else {
+            return
+        }
+        
+        print("refresh token: \(refreshToken)")
+
+        // Refresh the token
+        guard let url = URL(string: baseURL + "/token") else {
+            return
+        }
+        
+        print("url: \(url)")
+        
+        guard let accessToken = accessToken else {
+            return
+        }
+        
+        print("access token: \(accessToken)")
+        
+        refreshingToken = true
+        
+        var request = URLRequest(url: url)
+        request.setValue("\(refreshToken)", forHTTPHeaderField: "x-auth-token")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.timeoutInterval = Double.infinity
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            self.refreshingToken = false
+            guard let data = data, error == nil else {
+                completion?(false)
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(RefreshToken.self, from: data)
+                self.tokenAndExp(result: result)
+                print("successfully refreshed token")
+                print("new token: \(result.token)")
+                completion?(true)
+            } catch {
+                print(error.localizedDescription)
+                print("false alarmmmm")
+                completion?(false)
+            }
+            
+        }
+        task.resume()
+        
     }
     
     
@@ -76,8 +160,7 @@ final class AuthManager {
             
             do {
                 if let result = try? JSONDecoder().decode(User.self, from: data) {
-                    self.cacheToken(result: result)
-                    self.cacheUserId(result: result)
+                    self.cacheInfos(result: result)
                     completion(.success(result))
                 }
                 
@@ -89,29 +172,65 @@ final class AuthManager {
         task.resume()
     }
     
-    private func cacheUserId(result: User) {
-        UserDefaults.standard.setValue(result.decode._id, forKey: "userId")
-    }
-    private func cacheToken(result: User) {
+    private func tokenAndExp(result: RefreshToken) {
         UserDefaults.standard.setValue(result.token, forKey: "token")
+        let epochTime = TimeInterval(result.decode.exp + 10800)
+        let date = Date(timeIntervalSince1970: epochTime)   // "Apr 16, 2015, 2:40 AM"
+        UserDefaults.standard.setValue(date, forKey: "tokenExpDate")
     }
     
+    private func cacheInfos(result: User) {
+        UserDefaults.standard.setValue(result.decode._id, forKey: "userId")
+        UserDefaults.standard.setValue(result.token, forKey: "token")
+        UserDefaults.standard.setValue(result.refreshToken, forKey: "refreshToken")
+        
+        let epochTime = TimeInterval(result.decode.exp + 10800)
+        let date = Date(timeIntervalSince1970: epochTime)  // "Apr 16, 2015, 2:40 AM"
+        print("expiration date: \(date)")
+        UserDefaults.standard.setValue(date, forKey: "tokenExpDate")
+    }
+    
+    
+    
     public func withToken(completion: @escaping (String) -> Void) {
-        if isSignedIn {
-            guard let accessToken = accessToken else {
-                return
-            }
-            completion(accessToken)
-            
-        } else {
-            //token is not exist
-            print("token is not exist")
+//        if isSignedIn {
+//            guard let accessToken = accessToken else {
+//                return
+//            }
+//            completion(accessToken)
+//
+//        } else {
+//            //token is not exist
+//            print("token is not exist")
+//        }
+        
+        guard !refreshingToken else {
+            return
         }
+        
+        if shouldRefreshToken {
+            refreshIfNeeded { success in
+                if let token = self.accessToken, success {
+                    completion(token)
+                }
+            }
+        }
+        
+        else if let token = accessToken {
+            completion(token)
+        }
+        
     }
     
     
     public func signOut(completion: (Bool) -> Void) {
         UserDefaults.standard.setValue(nil, forKey: "token")
+        UserDefaults.standard.setValue(nil, forKey: "refreshToken")
+        UserDefaults.standard.setValue(nil, forKey: "userId")
+        UserDefaults.standard.setValue(nil, forKey: "tokenExpDate")
+        
+        
+        
         completion(true)
     }
     

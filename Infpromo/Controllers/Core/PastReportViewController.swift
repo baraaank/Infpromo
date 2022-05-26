@@ -62,6 +62,20 @@ class PastReportViewController: UIViewController {
     
     var profileResponseArray: [MyReportsCollectionViewCellViewModel] = []
     
+    let refreshControl = UIRefreshControl()
+    
+    //loading gifs
+    var gif: LoadingGif!
+    
+    let blurEffectView: UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView()
+        let style = UIBlurEffect.Style.light
+        let effect = UIBlurEffect(style: style)
+        blurEffectView.effect = effect
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurEffectView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +84,10 @@ class PastReportViewController: UIViewController {
 //        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
 //        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor().infpromo]
+        
+        gif = LoadingGif.init(imageName: "infpromoLoadingGif", frame: CGRect(x: (view.frame.size.width / 2) - 40, y: (view.frame.size.height / 2) - 40, width: 80, height: 80), duration: 0.8, repeatCount: 0)
+        blurEffectView.frame = view.bounds
+        
         addSubviews()
         
         
@@ -85,11 +103,54 @@ class PastReportViewController: UIViewController {
             self.thereIsNoReportLabel.isHidden = false
             self.collectionView.reloadData()
         }
+        refreshControl.backgroundColor = UIColor.systemGray6
+        refreshControl.tintColor = UIColor().infpromo
+//        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+        collectionView.alwaysBounceVertical = true
+        collectionView.refreshControl?.layer.zPosition = -1
+        
+        startBlur()
+        
     }
+    
+    func startBlur() {
+        view.addSubview(blurEffectView)
+        view.addSubview(gif)
+        gif.startAnimation()
+
+    }
+    
+    func stopBlur() {
+        gif.stopAnimation()
+        gif.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
+//        tabBarController?.tabBar.barTintColor = .white
+//        tabBarController?.tabBar.isUserInteractionEnabled = true
+    
+    }
+    
+   
 //
+    
+    @objc func pullToRefresh(refreshControl: UIRefreshControl) {
+        logDates.removeAll()
+        profileResponseArray.removeAll()
+        
+        DispatchQueue.main.async {
+            self.loadViewElements()
+        }
+        
+       
+        
+    }
     
    
     func loadViewElements() {
+        DispatchQueue.main.async {
+            self.startBlur()
+        }
         APICaller.shared.getUserReports { response in
             switch response {
             case .success(let model):
@@ -114,13 +175,24 @@ class PastReportViewController: UIViewController {
                 
                 self.profileResponseArray = responseArray
                 DispatchQueue.main.async {
+                    self.stopBlur()
                     self.collectionView.reloadData()
                 }
                 
             case .failure(let error):
+                self.stopBlur()
+                self.showAlert(title: "Hata!", message: "Raporlar yüklenirken bir hata oluştu.")
                 print(error)
             }
         }
+        
+        DispatchQueue.main.async {
+            self.collectionView.refreshControl?.endRefreshing()
+            
+        }
+     
+       
+       
     }
     
     func addSubviews() {
@@ -315,6 +387,19 @@ extension PastReportViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     
+    
+    
+}
+
+
+extension PastReportViewController {
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message:
+                                                    message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Tamam", style: .default, handler: {action in
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     
 }

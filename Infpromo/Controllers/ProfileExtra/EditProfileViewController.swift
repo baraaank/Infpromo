@@ -132,19 +132,19 @@ class EditProfileViewController: UIViewController {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDatas"), object: nil, userInfo: success)
                     
                     var editedModelFrom: ProfileInformationsCellViewModel?
-                    if let data = model.data {
-                        if let userPub = data.userPublic {
-                            editedModelFrom = .init(name: userPub.name,
-                                                    surName: userPub.surName,
-                                                    email: userPub.email,
-                                                    birthday: userPub.birthday,
-                                                    city: userPub.city,
-                                                    language: userPub.language,
-                                                    phone: userPub.phone,
-                                                    socialMedia: userPub.socialMedia,
-                                                    title: userPub.title,
-                                                    website: userPub.website)
-                        }
+                    if let userPub = model.data?.userPublic {
+                        
+                            editedModelFrom = .init(name: userPub.name ?? "henüz girilmemiş..",
+                                                    surName: userPub.surName ?? "henüz girilmemiş..",
+                                                    email: userPub.email ?? "henüz girilmemiş..",
+                                                    birthday: userPub.birthday ?? "henüz girilmemiş..",
+                                                    city: userPub.city ?? "henüz girilmemiş..",
+                                                    language: userPub.language ?? "henüz girilmemiş..",
+                                                    phone: userPub.phone ?? "henüz girilmemiş..",
+                                                    socialMedia: userPub.socialMedia ?? "henüz girilmemiş..",
+                                                    title: userPub.title ?? "henüz girilmemiş..",
+                                                    website: userPub.website ?? "henüz girilmemiş..")
+                        
                     }
                     
                     let editedOnes: [String: Any] = ["editedOnes": editedModelFrom]

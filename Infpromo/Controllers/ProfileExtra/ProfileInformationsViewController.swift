@@ -120,6 +120,7 @@ class ProfileInformationsViewController: UIViewController {
         print("insidinggg")
         if let reload = notification.userInfo?["editedOnes"] as? ProfileInformationsCellViewModel {
             profileInfosArray.removeAll()
+            profileInfos = nil
             print("reload \(reload)")
             DispatchQueue.main.async {
                 self.profileInfos = reload
@@ -152,12 +153,12 @@ extension ProfileInformationsViewController: UICollectionViewDelegate, UICollect
             return UICollectionViewCell()
         }
         
-        profileInfosArray.append(profileInfo.email ?? "")
-        profileInfosArray.append(profileInfo.language ?? "")
-        profileInfosArray.append(profileInfo.website ?? "")
-        profileInfosArray.append(profileInfo.birthday ?? "")
-        profileInfosArray.append(profileInfo.city ?? "")
-        profileInfosArray.append(profileInfo.phone ?? "")
+        profileInfosArray.append(profileInfo.email ?? "henüz girilmemiş..")
+        profileInfosArray.append(profileInfo.language ?? "henüz girilmemiş..")
+        profileInfosArray.append(profileInfo.website ?? "henüz girilmemiş..")
+        profileInfosArray.append(profileInfo.birthday ?? "henüz girilmemiş..")
+        profileInfosArray.append(profileInfo.city ?? "henüz girilmemiş..")
+        profileInfosArray.append(profileInfo.phone ?? "henüz girilmemiş..")
         
         
         cell.fillWithInfos(with: profileInfosArray[indexPath.row])

@@ -76,6 +76,7 @@ class MostVisitedReportsCollectionViewCell: UICollectionViewCell {
         addSubviews()
         configureCell()
         
+        
 //        isSkeletonable = true
 //        contentView.isSkeletonable = true
         contentView.isHidden = true

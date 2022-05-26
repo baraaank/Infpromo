@@ -118,10 +118,8 @@ class BuyReportViewController: UIViewController {
     private let FAQTableView: UITableView  = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        tableView.isScrollEnabled = false
-        
         tableView.backgroundColor = .systemGray6
+        tableView.allowsSelection = true
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -163,15 +161,15 @@ class BuyReportViewController: UIViewController {
         ]
         
         let linkTextAttributes: [NSAttributedString.Key: Any] = [
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .link: "info@infpromo.com",
             .foregroundColor: UIColor().infpromo,
-            .strokeColor: UIColor().infpromo,
+            .link: "info@infpromo.com",
+//            .strokeColor: UIColor().infpromo,
+//            .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         
         let attributedString = NSMutableAttributedString(string: text, attributes: attributes)
         attributedString.addAttributes(linkTextAttributes, range: linkRange)
-        
+        textView.linkTextAttributes = linkTextAttributes
         textView.attributedText = attributedString
         textView.backgroundColor = .systemGray6
         textView.textAlignment = .center
@@ -185,6 +183,7 @@ class BuyReportViewController: UIViewController {
         return label
     }()
     
+    var tap: UITapGestureRecognizer?
     var planResponseArray: [PlanCellViewModel] = []
     
     override func viewDidLoad() {
@@ -220,8 +219,11 @@ class BuyReportViewController: UIViewController {
         customSegmented.delegate?.changeToIndex(index: 0)
         
         influencerAmountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
+        tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        if let tap = self.tap {
+            tap.cancelsTouchesInView = false
+            view.addGestureRecognizer(tap)
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -358,7 +360,6 @@ extension BuyReportViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let vc = WhatsInReportsViewController()
-//        vc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -414,6 +415,7 @@ extension BuyReportViewController: CustomSegmentedControlDelegate {
                 }
             }
         }
+        
     }
 }
 
