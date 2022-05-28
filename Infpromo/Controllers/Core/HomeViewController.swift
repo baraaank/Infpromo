@@ -92,17 +92,17 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    
+   
     
     private let filterButton: UIButton = {
         let button = UIButton(type: .system)
-//        let config = UIImage.SymbolConfiguration(weight: .regular)
-//        button.setImage(UIImage(systemName: "slider.horizontal.3")?.withTintColor(UIColor().infpromo, renderingMode: .alwaysOriginal).withConfiguration(config), for: .normal)
-//        button.imageView?.clipsToBounds = true
-//        button.imageView?.contentMode = .scaleAspectFit
-//        button.contentVerticalAlignment = .fill
-//        button.contentHorizontalAlignment = .fill
-        button.setAttributedTitle(NSAttributedString(string: "Filtrele", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(systemName: "slider.horizontal.3", withConfiguration: UIImage.SymbolConfiguration.init(font: .systemFont(ofSize: 12, weight: .semibold), scale: .medium))?.withTintColor(.white)
+        imageAttachment.image = image
+        let fullString = NSMutableAttributedString(string: "Filtrele ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.white])
+        fullString.append(NSAttributedString(attachment: imageAttachment))
+        button.setAttributedTitle(fullString, for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "Filtrele", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12, weight: .regular), NSAttributedString.Key.foregroundColor : UIColor.white]), for: .normal)
         button.backgroundColor = UIColor().infpromo
         button.layer.cornerRadius = 4
         return button
@@ -368,6 +368,10 @@ class HomeViewController: UIViewController {
         view.addSubview(blurEffectView)
         view.addSubview(gif)
         gif.startAnimation()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+//            self.stopBlur()
+//            self.showAlert(title: "Ooops!", message: "Influencerlar yüklenirken bir hata oluştu!")
+//        }
 
     }
     
@@ -869,8 +873,11 @@ class HomeViewController: UIViewController {
                 
                 
             case .failure(let error):
-                self.stopBlur()
-                self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                DispatchQueue.main.async {
+                    self.stopBlur()
+                    self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                }
+                
                 print(error.localizedDescription)
             }
         }
@@ -941,8 +948,11 @@ class HomeViewController: UIViewController {
                 
             case .failure(let error):
                 print(error)
-                self.stopBlur()
-                self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                DispatchQueue.main.async {
+                    self.stopBlur()
+                    self.showAlert(title: "Hata!", message: "Influencerlar yüklenirken bir hata oluştu.")
+                }
+                
                 print("base result is not loading")
             }
             
@@ -992,7 +1002,7 @@ class HomeViewController: UIViewController {
         accountCountLabel.frame = CGRect(x: 16, y: mostVisitedReportsCollectionView.bottom + 20, width: view.width - 100, height: 20)
 //        filterButton.frame = CGRect(x: view.width - 36, y: mostVisitedReportsCollectionView.bottom + 22, width: 22, height: 22)
         
-        filterButton.frame = CGRect(x: view.width - 72, y: mostVisitedReportsCollectionView.bottom + 18, width: 64, height: 22)
+        filterButton.frame = CGRect(x: view.width - 82, y: mostVisitedReportsCollectionView.bottom + 18, width: 74, height: 22)
         searchResultCollectionView.frame = CGRect(x: 0, y: accountCountLabel.bottom, width: view.width, height: searchResultCollectionView.contentSize.height + 20)
         scrollView.contentSize = CGSize(width: view.width, height: mostVisitedReportsLabel.height + mostVisitedReportsCollectionView.height + accountCountLabel.height + searchResultCollectionView.height + 40)
     }

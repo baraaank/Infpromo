@@ -36,6 +36,7 @@ final class AuthManager {
         guard let expirationDate = tokenExpDate else {
             return false
         }
+        
         let currentDate = Date()
         let fiveMinutes: TimeInterval = 300 + (3600 * 3)
         print("exp: \(expirationDate), currr: \(currentDate.addingTimeInterval(fiveMinutes))")

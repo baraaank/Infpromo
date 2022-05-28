@@ -108,6 +108,7 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func saveButtonTapped() {
+        
         view.endEditing(true)
         print(name)
         print(surname)
@@ -156,6 +157,10 @@ class EditProfileViewController: UIViewController {
                     }
                     
                     
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(title: "Hata!", message: "Bilgileriniz güncellenirken hata oluştu.")
+                    }
                 }
             }
         }

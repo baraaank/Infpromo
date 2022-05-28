@@ -58,10 +58,23 @@ class ProfileInformationsViewController: UIViewController {
         return collectionView
     }()
     
+    var gif: LoadingGif!
+    
+    let blurEffectView: UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView()
+        let style = UIBlurEffect.Style.light
+        let effect = UIBlurEffect(style: style)
+        blurEffectView.effect = effect
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurEffectView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        gif = LoadingGif.init(imageName: "infpromoLoadingGif", frame: CGRect(x: (view.frame.size.width / 2) - 40, y: (view.frame.size.height / 2) - 40, width: 80, height: 80), duration: 0.8, repeatCount: 0)
+        blurEffectView.frame = view.bounds
+
         view.backgroundColor = .systemGray6
         addSubviews()
         
@@ -72,6 +85,20 @@ class ProfileInformationsViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshByEditedOnes), name: NSNotification.Name(rawValue: "reloadDatasFromEdited"), object: nil)
         
+    }
+    
+    func startBlur() {
+        view.addSubview(blurEffectView)
+        view.addSubview(gif)
+        gif.startAnimation()
+
+    }
+    
+    func stopBlur() {
+        gif.stopAnimation()
+        gif.removeFromSuperview()
+        blurEffectView.removeFromSuperview()
+
     }
     
     func addSubviews() {
@@ -118,6 +145,10 @@ class ProfileInformationsViewController: UIViewController {
 
     @objc func refreshByEditedOnes(_ notification: NSNotification) {
         print("insidinggg")
+        DispatchQueue.main.async {
+            self.startBlur()
+        }
+        
         if let reload = notification.userInfo?["editedOnes"] as? ProfileInformationsCellViewModel {
             profileInfosArray.removeAll()
             profileInfos = nil
@@ -125,6 +156,7 @@ class ProfileInformationsViewController: UIViewController {
             DispatchQueue.main.async {
                 self.profileInfos = reload
                 self.profileInformationsCollectionView.reloadData()
+                self.stopBlur()
             }
         }
     }
