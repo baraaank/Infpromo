@@ -295,6 +295,8 @@ class YoutubeReportDetailViewController: UIViewController {
         
     }
     
+    
+    
     func buttonTitlesLogic(myIds: [String], ids: [String], reportCount: Int) -> ([String], [UIColor]) {
         let myCount = myIds.count
         var idsIn: [String] = []
@@ -322,7 +324,9 @@ class YoutubeReportDetailViewController: UIViewController {
             case .failure(let error):
                 print(error)
             case .success(let model):
-                self.myInfluencerIds.append(contentsOf: model.data.reports.map({$0.data.userId}))
+                DispatchQueue.main.async {
+                    self.myInfluencerIds.append(contentsOf: model.data.reports.map({$0.data.userId}))
+                }
                 
             }
         }
@@ -331,7 +335,10 @@ class YoutubeReportDetailViewController: UIViewController {
             switch result {
             case .success(let result):
                 if let reportsCount = result.data.userPublic.credit {
-                    self.reportsCount = reportsCount
+                    DispatchQueue.main.async {
+                        self.reportsCount = reportsCount
+                    }
+                    
                 }
                 
             case .failure(let error):
@@ -349,66 +356,89 @@ class YoutubeReportDetailViewController: UIViewController {
                 let modelToProfile = model.data.pdfBody.data.profile
                 let influencerDetail = modelToProfile.profile
                 
+                if let influencerDetail = influencerDetail {
+                    self.influencerDetails = .init(fullName: influencerDetail.fullname,
+                                                   username: influencerDetail.username,
+                                                   picture: influencerDetail.picture, url: influencerDetail.url)
+                }
                 
-                self.influencerDetails = .init(fullName: influencerDetail.fullname,
-                                               username: influencerDetail.username,
-                                               picture: influencerDetail.picture, url: influencerDetail.url)
-                
-                let viewsFrom = modelToProfile.recentPosts.map({$0.views})
-                let commentsFrom = modelToProfile.recentPosts.map({$0.comments})
-                
-                var allViews = 0
-                var allComments = 0
-                
-                print(viewsFrom.count)
-                
-                for i in 0..<viewsFrom.count {
-                    allViews += viewsFrom[i]!
-                    allComments += commentsFrom[i]
+               
+                if let recent = modelToProfile.recentPosts {
+                    let viewsFrom = recent.map({$0.views ?? 0})
+                    let commentsFrom = recent.map({$0.comments ?? 0})
+                    var allViews = 0
+                    var allComments = 0
+                    for i in 0..<viewsFrom.count {
+                        allViews += viewsFrom[i]
+                        allComments += commentsFrom[i]
+                    }
+                    
+                    let views = allViews / viewsFrom.count
+                    let comments = allComments / commentsFrom.count
+                    
+                    if let profile = modelToProfile.profile {
+                        let followers = Double(profile.followers ?? 0)
+                        let engagements = Double(profile.engagements)
+                        let engagementRate = Double(profile.engagementRate)
+                        
+                        self.lastPosts = .init(followers: followers, engagementRate: engagementRate, engagements: engagements, views: Double(views), comments: Double(comments))
+
+                    }
                 }
                 
                 
-                let views = allViews / viewsFrom.count
-                let comments = allComments / commentsFrom.count
                 
-                let followers = Double(modelToProfile.profile.followers)
-                let engagements = Double(modelToProfile.profile.engagements)
-                let engagementRate = Double(modelToProfile.profile.engagementRate)
                 
-                self.lastPosts = .init(followers: followers, engagementRate: engagementRate, engagements: engagements, views: Double(views), comments: Double(comments))
                 
-                let popularPostsFromModel = modelToProfile.popularPosts
-                self.popularPosts.append(contentsOf: popularPostsFromModel.map({
-                    .init(url: $0.url,
-                          created: $0.created,
-                          likes: $0.likes,
-                          comments: $0.comments,
-                          views: $0.views ?? 0,
-                          thumbnail: $0.thumbnail ?? "",
-                          video: $0.video ?? "")
-                }))
+                
+                
+               
+                
+                
+                
+                
+                if let popularPostsFromModel = modelToProfile.popularPosts {
+                    self.popularPosts.append(contentsOf: popularPostsFromModel.map({
+                        .init(url: $0.url ?? "",
+                              created: $0.created ?? "",
+                              likes: $0.likes ?? 0,
+                              comments: $0.comments ?? 0,
+                              views: $0.views ?? 0,
+                              thumbnail: $0.thumbnail ?? "",
+                              video: $0.video ?? "")
+                    }))
+                }
+                
                 
                 print("popular ??? : \(self.popularPosts.count)")
                 
                 
                 
-                if let notableSubs = modelToProfile.audience.notable {
+                if let notableSubs = modelToProfile.audience?.notable {
                     self.credibility = .init(credibility: notableSubs)
                 }
                 
-                let genderDistributionModel = modelToProfile.audience.genders
-                self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
+                if let genderDistributionModel = modelToProfile.audience?.genders {
+                    self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
+                }
                 
-                let audienceLocations = modelToProfile.audience.geoCountries
-                self.followersCountryLocation = audienceLocations.map({.init(code: $0.name, weight: $0.weight)})
                 
-                let audienceCityLocations = modelToProfile.audience.geoCities
-                self.followersCityLocation = audienceCityLocations.map({.init(name: $0.name)})
+                if let audienceLocations = modelToProfile.audience?.geoCountries {
+                    self.followersCountryLocation = audienceLocations.map({.init(code: $0.name, weight: $0.weight)})
+                }
                 
-                let gendersPerAge = modelToProfile.audience.gendersPerAge
-                self.gendersPerAge = gendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
                 
-                let userNotableLikes = modelToProfile.audience.notableUsers
+                if let audienceCityLocations = modelToProfile.audience?.geoCities {
+                    self.followersCityLocation = audienceCityLocations.map({.init(name: $0.name)})
+                }
+                
+                
+                if let gendersPerAge = modelToProfile.audience?.gendersPerAge {
+                    self.gendersPerAge = gendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
+                }
+                
+                
+                let userNotableLikes = modelToProfile.audience?.notableUsers
                 
                 if let userNotableLikes = userNotableLikes {
                     self.notableUsersModel = userNotableLikes.map({.init(engagementRate: nil,

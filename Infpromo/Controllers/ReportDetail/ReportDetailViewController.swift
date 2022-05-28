@@ -416,7 +416,10 @@ class ReportDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         nilForViewWillAppear()
-        loadViewElements()
+        DispatchQueue.main.async {
+            self.loadViewElements()
+        }
+        
     }
     
     func nilForViewWillAppear() {
@@ -510,56 +513,29 @@ class ReportDetailViewController: UIViewController {
                 
                 let modelToProfile = model.data.pdfBody.data.profile
                 let influencerDetail = modelToProfile.profile
-                self.influencerDetails = .init(fullName: influencerDetail.fullname,
-                                               username: influencerDetail.username,
-                                               picture: influencerDetail.picture,
-                                               url: influencerDetail.url
-                )
+                
+                    self.influencerDetails = .init(fullName: influencerDetail?.fullname,
+                                                   username: influencerDetail?.username,
+                                                   picture: influencerDetail?.picture,
+                                                   url: influencerDetail?.url)
+                
+                
+                
                 
                 let avgDetail = modelToProfile
                 
                 
-                self.firstDetail = .init(followers: influencerDetail.followers,
-                                         engagementRate: influencerDetail.engagementRate,
-                                         engagements: influencerDetail.engagements,
+                self.firstDetail = .init(followers: influencerDetail?.followers ?? 0,
+                                         engagementRate: influencerDetail?.engagementRate ?? 0,
+                                         engagements: influencerDetail?.engagements ?? 0,
                                          likeValue: avgDetail.avgLikes,
-                                         likeCompared: avgDetail.stats?.avgLikes.compared ?? 1,
+                                         likeCompared: avgDetail.stats?.avgLikes?.compared ?? 1,
                                          followersValue: avgDetail.avgComments,
-                                         followersCompared: avgDetail.stats?.followers.compared ?? 1)
-                
-                print(avgDetail.stats?.avgLikes.compared)
-                print(avgDetail.stats?.followers.compared)
+                                         followersCompared: avgDetail.stats?.followers?.compared ?? 1)
                 
                 
                 
-//                DispatchQueue.main.async {
-//                    if let avgLikes = avgDetail.stats?.avgLikes.compared {
-//                        let clearAvgLikes = AbbreviationsHelper.clear(doubleOne: avgLikes)
-//                        var stringOne = ""
-//                        if clearAvgLikes > 0 {
-//                            stringOne = "Beğeniler bu ay % \(clearAvgLikes) artış göstermiş"
-//                        } else {
-//                            stringOne = "Beğeniler bu ay % \(clearAvgLikes) azalma göstermiş"
-//                        }
-//
-//                        let stringTwo = "\(clearAvgLikes)"
-//                        let range = (stringOne as NSString).range(of: stringTwo)
-//
-//                        let attributedText = NSMutableAttributedString.init(string: stringOne, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.black])
-//
-//                        if avgLikes > 0 {
-//                            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.green , range: range)
-//
-//                        } else {
-//                            attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
-//                        }
-//
-//                        self.fourthChartLabel.attributedText = attributedText
-//
-//                    }
-//                }
-                
-               
+          
                
                 
                 self.colors = Array(repeating: .green, count: 2)
@@ -577,64 +553,92 @@ class ReportDetailViewController: UIViewController {
                 
                 
                 let popularPostsFromModel = modelToProfile.popularPosts
-                self.popularPosts.append(contentsOf: popularPostsFromModel.map({
-                    .init(url: $0.url,
-                          created: $0.created,
-                          likes: $0.likes,
-                          comments: $0.comments,
-                          image: $0.image ?? "")
-                }))
+                if let popularPostsFromModel = popularPostsFromModel {
+                    self.popularPosts.append(contentsOf: popularPostsFromModel.map({
+                        .init(url: $0.url ?? "",
+                              created: $0.created ?? "",
+                              likes: $0.likes ?? 0,
+                              comments: $0.comments ?? 0,
+                              image: $0.image ?? "")
+                    }))
+                }
+                
                 
                 
                 let chartHistory = modelToProfile.statHistory
                 
-                self.chartStatHistory.append(contentsOf: chartHistory.map({
-                    .init(month: $0.month,
-                          followers: $0.followers ?? 1,
-                          avgLikes: $0.avgLikes,
-                          following: $0.following ?? 1)
-                }))
+                if let chartHistory = chartHistory {
+                    self.chartStatHistory.append(contentsOf: chartHistory.map({
+                        .init(month: $0.month,
+                              followers: $0.followers ?? 1,
+                              avgLikes: $0.avgLikes,
+                              following: $0.following ?? 1)
+                    }))
+                }
+               
                 
                 
                 let chartCommentLike = modelToProfile.recentPosts
                 
-                self.chartStatHistoryComLike.append(contentsOf: chartCommentLike.map({
-                    .init(likes: $0.likes,
-                          comments: $0.comments,
-                          created: $0.created)
-                }))
+                if let chartCommentLike = chartCommentLike {
+                    self.chartStatHistoryComLike.append(contentsOf: chartCommentLike.map({
+                        .init(likes: $0.likes ?? 0,
+                              comments: $0.comments ?? 0,
+                              created: $0.created ?? "")
+                    }))
+                }
+                
                 
                 
                 let tagModel = modelToProfile
+                if let tagHashtags = tagModel.hashtags {
+                    self.hashtags.append(contentsOf: tagHashtags.map({
+                        .init(hashtag: $0.tag)
+                    }))
+                }
                 
-                self.hashtags.append(contentsOf: tagModel.hashtags.map({
-                    .init(hashtag: $0.tag)
-                }))
+                if let tagMentions = tagModel.mentions {
+                    self.mentions.append(contentsOf: tagMentions.map({
+                        .init(mention: $0.tag)
+                    }))
+                }
                 
-                self.mentions.append(contentsOf: tagModel.mentions.map({
-                    .init(mention: $0.tag)
-                }))
+               
                 
-                let credibilityModel = modelToProfile.audience
-                self.credibility = .init(credibility: credibilityModel.credibility ?? 0)
+                if let credibilityModel = modelToProfile.audience {
+                    self.credibility = .init(credibility: credibilityModel.credibility ?? 0)
+                }
                 
-                let genderDistributionModel = modelToProfile.audience.genders
-                self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
                 
-                let audienceLocations = modelToProfile.audience.geoCountries
-                self.followersCountryLocation = audienceLocations.map({.init(code: $0.name, weight: $0.weight)})
+                if let genderDistributionModel = modelToProfile.audience?.genders {
+                    self.gendersDistribution = genderDistributionModel.map({.init(code: $0.code, weight: $0.weight)})
+                }
                 
-                let audienceCityLocations = modelToProfile.audience.geoCities
-                self.followersCityLocation = audienceCityLocations.map({.init(name: $0.name)})
                 
-                let gendersPerAge = modelToProfile.audience.gendersPerAge
-                self.gendersPerAge = gendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
+                if let audienceLocations = modelToProfile.audience?.geoCountries {
+                    self.followersCountryLocation = audienceLocations.map({.init(code: $0.name, weight: $0.weight)})
+                }
                 
-                let likersCredibilityModel = modelToProfile.audienceLikers
-                self.likersCredibility = .init(credibility: likersCredibilityModel?.credibility ?? 0.0)
                 
-                let likersNonFollowersLikesModel = modelToProfile.audienceLikers
-                self.likersNonFollowersLikes = .init(credibility: likersNonFollowersLikesModel?.nonFollowerLikes ?? 0.0)
+                if let audienceCityLocations = modelToProfile.audience?.geoCities {
+                    self.followersCityLocation = audienceCityLocations.map({.init(name: $0.name)})
+                }
+                
+                
+                if let gendersPerAge = modelToProfile.audience?.gendersPerAge {
+                    self.gendersPerAge = gendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
+                }
+                
+                
+                if let likersCredibilityModel = modelToProfile.audienceLikers {
+                    self.likersCredibility = .init(credibility: likersCredibilityModel.credibility ?? 0.0)
+                }
+                
+                
+                if let likersNonFollowersLikesModel = modelToProfile.audienceLikers {
+                    self.likersNonFollowersLikes = .init(credibility: likersNonFollowersLikesModel.nonFollowerLikes ?? 0.0)
+                }
+                
                 
                 let likersGenderDistributionModel = modelToProfile.audienceLikers?.genders
                 
@@ -661,7 +665,7 @@ class ReportDetailViewController: UIViewController {
                     self.likersGendersPerAge = likersGendersPerAge.map({ .init(code: $0.code, male: $0.male, female: $0.female)})
                 }
                 
-                let userNotableLikes = modelToProfile.audience.notableUsers
+                let userNotableLikes = modelToProfile.audience?.notableUsers
                 
                 if let userNotableLikes = userNotableLikes {
                     self.notableUsersModel = userNotableLikes.map({.init(engagementRate: nil,
@@ -796,6 +800,8 @@ class ReportDetailViewController: UIViewController {
 
 //functions to fill views with datas
 extension ReportDetailViewController {
+    
+    
     
     func callFillingFuncs() {
         self.reportCollectionView.reloadData()

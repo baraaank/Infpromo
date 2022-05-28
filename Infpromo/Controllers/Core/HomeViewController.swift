@@ -356,7 +356,7 @@ class HomeViewController: UIViewController {
     }
     
     func APIisNotWorking() {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
 //                    self.stopBlur()
 //                    self.showAlert(title: "Ooops!", message: "İnternet bağlantınızı kontrol edin!")
 //                }
@@ -812,6 +812,8 @@ class HomeViewController: UIViewController {
                         self.customLabel.text = "Rapor: \(reportsCount)"
                     }
                     self.reportsCount = reportsCount
+                    
+                    
                 }
                 
             case .failure(let error):
@@ -1545,3 +1547,5 @@ extension HomeViewController {
     
     
 }
+
+

@@ -65,15 +65,19 @@ final class AuthManager {
         guard !refreshingToken else {
             return
         }
+        print("1")
 
         guard shouldRefreshToken else {
             completion?(true)
             return
         }
+        print("2")
 
         guard let refreshToken = self.refreshToken else {
             return
         }
+        
+        print("3")
         
         print("refresh token: \(refreshToken)")
 
@@ -82,11 +86,15 @@ final class AuthManager {
             return
         }
         
+        print("4")
+        
         print("url: \(url)")
         
         guard let accessToken = accessToken else {
             return
         }
+        
+        print("5")
         
         print("access token: \(accessToken)")
         
@@ -106,6 +114,7 @@ final class AuthManager {
             }
             
             do {
+                print("inside decoder")
                 let result = try JSONDecoder().decode(RefreshToken.self, from: data)
                 self.tokenAndExp(result: result)
                 print("successfully refreshed token")
@@ -174,6 +183,7 @@ final class AuthManager {
     }
     
     private func tokenAndExp(result: RefreshToken) {
+        print("token and exp")
         UserDefaults.standard.setValue(result.token, forKey: "token")
         let epochTime = TimeInterval(result.decode.exp + 10800)
         let date = Date(timeIntervalSince1970: epochTime)   // "Apr 16, 2015, 2:40 AM"
@@ -184,7 +194,6 @@ final class AuthManager {
         UserDefaults.standard.setValue(result.decode._id, forKey: "userId")
         UserDefaults.standard.setValue(result.token, forKey: "token")
         UserDefaults.standard.setValue(result.refreshToken, forKey: "refreshToken")
-        
         let epochTime = TimeInterval(result.decode.exp + 10800)
         let date = Date(timeIntervalSince1970: epochTime)  // "Apr 16, 2015, 2:40 AM"
         print("expiration date: \(date)")
@@ -194,18 +203,12 @@ final class AuthManager {
     
     
     public func withToken(completion: @escaping (String) -> Void) {
-//        if isSignedIn {
-//            guard let accessToken = accessToken else {
-//                return
-//            }
-//            completion(accessToken)
-//
-//        } else {
-//            //token is not exist
-//            print("token is not exist")
-//        }
-        
+
         guard !refreshingToken else {
+            if let token = accessToken {
+                completion(token)
+            }
+            print("else refreshing")
             return
         }
         
@@ -213,12 +216,14 @@ final class AuthManager {
             refreshIfNeeded { success in
                 if let token = self.accessToken, success {
                     completion(token)
+                    print("with refreshed token: \(token)")
                 }
             }
         }
         
         else if let token = accessToken {
             completion(token)
+            print("else token: \(token)")
         }
         
     }

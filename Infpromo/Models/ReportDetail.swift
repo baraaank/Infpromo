@@ -27,16 +27,16 @@ struct PDFData: Codable {
 
 
 struct PDFProfile: Codable {
-    let profile: PDFInfluencerProfile
+    let profile: PDFInfluencerProfile?
     let stats: StatsResponse?
     let avgLikes: Int?
     let avgComments: Int?
-    let popularPosts: [PopularPostResponse]
-    let recentPosts: [RecentPostsResponse]
-    let statHistory: [StatHistoryResponse] // data for charts
-    let hashtags: [HashtagsResponse]
-    let mentions: [MentionsResponse]
-    let audience: AudienceResponse //followers datas
+    let popularPosts: [PopularPostResponse]?
+    let recentPosts: [RecentPostsResponse]?
+    let statHistory: [StatHistoryResponse]? // data for charts
+    let hashtags: [HashtagsResponse]?
+    let mentions: [MentionsResponse]?
+    let audience: AudienceResponse? //followers datas
     let audienceLikers: AudienceLikersResponse?
     let audienceCommenters: AudienceCommentersResponse?
 }
@@ -46,7 +46,7 @@ struct PDFInfluencerProfile: Codable {
     let fullname: String?
     let username: String?
     let picture: String?
-    let followers: Int
+    let followers: Int?
     let engagementRate: Double
     let engagements: Int
     let avarageViews: Int?
@@ -55,10 +55,10 @@ struct PDFInfluencerProfile: Codable {
 }
 
 struct RecentPostsResponse: Codable {
-    let url: String
-    let created: String
-    let likes: Int
-    let comments: Int
+    let url: String?
+    let created: String?
+    let likes: Int?
+    let comments: Int?
     let views: Int?
     let image: String?
     let video: String?
@@ -66,8 +66,8 @@ struct RecentPostsResponse: Codable {
 }
 
 struct StatsResponse: Codable {
-    let avgLikes: AvgLikesResponse
-    let followers: FollowersResponse
+    let avgLikes: AvgLikesResponse?
+    let followers: FollowersResponse?
 }
 
 struct AvgLikesResponse: Codable {
@@ -82,10 +82,10 @@ struct FollowersResponse: Codable {
 
 
 struct PopularPostResponse: Codable {
-    let url: String
-    let created: String
-    let likes: Int
-    let comments: Int
+    let url: String?
+    let created: String?
+    let likes: Int?
+    let comments: Int?
     let views: Int?
     let image: String?
     let video: String?
@@ -114,10 +114,10 @@ struct MentionsResponse: Codable {
 struct AudienceResponse: Codable {
     let credibility: Double?
     let notable: Double?
-    let genders: [GendersResponse]
-    let geoCities: [GeoCitiesResponse]
-    let geoCountries: [GeoCountriesResponse]
-    let gendersPerAge: [GendersPerAgeResponse]
+    let genders: [GendersResponse]?
+    let geoCities: [GeoCitiesResponse]?
+    let geoCountries: [GeoCountriesResponse]?
+    let gendersPerAge: [GendersPerAgeResponse]?
     let notableUsers: [NotableUsersResponse]?
 }
 
